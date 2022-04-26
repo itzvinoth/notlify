@@ -1,0 +1,15 @@
+.workspace {
+	.workspace-title {
+		border: 1px solid transparent;
+		padding: 10px 20px;
+		display: inline-block;
+		background-color: #e5e7eb;
+		cursor: pointer;
+		border-radius: 3px;
+		-webkit-transition: background .2s;
+		transition: background .2s;
+	}
+	.workspace-title:hover {
+        border: 1px solid #969799;
+    }
+}

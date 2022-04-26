@@ -6,7 +6,6 @@ import WorkSpace from "@/components/WorkSpace.vue";
 <template>
 	<div class="main-container">
 		<!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
-		<div>Hello</div>
 		<div class="wrapper">
 			<WorkSpace />
 		</div>

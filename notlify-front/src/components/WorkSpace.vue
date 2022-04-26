@@ -1,27 +1,34 @@
 <template>
-	<div class="workspace">ello</div>
+	<div class="workspace">
+		<Transition>
+			<div v-if="!isEditingTitle">
+				<span @click="handleEditTitle('edit')" class="workspace-title">{{ workspaceTitle }}</span>
+			</div>
+			<div v-else>
+				<input type="text" v-model="workspaceTitle" @keypress.enter="handleEditTitle('save')" />
+				<div @click="handleEditTitle('save')">Save</div>
+			</div>
+		</Transition>
+	</div>
 </template>
 
-<style scoped>
-h1 {
-	font-weight: 500;
-	font-size: 2.6rem;
-	top: -10px;
+<script>
+export default {
+	name: 'WorkSpace',
+	data () {
+		return {
+			workspaceTitle: 'Board title',
+			isEditingTitle: false
+		}
+	},
+	methods: {
+		handleEditTitle (type) {
+			if (type === 'edit') {
+				this.isEditingTitle = true
+			} else if (type === 'save') {
+				this.isEditingTitle = false
+			}
+		}
+	},
 }
-
-h3 {
-	font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-	text-align: center;
-}
-
-@media (min-width: 1024px) {
-	.greetings h1,
-	.greetings h3 {
-		text-align: left;
-	}
-}
-</style>
+</script>
