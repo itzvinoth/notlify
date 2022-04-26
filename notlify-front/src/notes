@@ -1,0 +1,14 @@
+
+
+Workspace-container
+|--Workspace-wrapper
+|  |--Workspace-content
+|  |  |--Notelify-space
+|  |  |  |--Notelify-wrapper
+|  |  |  |  |--Each-Note
+|  |  |--All-notes
+|  |  |  |--Notecards-wrapper
+|  |  |  |  |--Each-card
+|--Workspace-editor
+|  |--Editor-container
+|  |  |--Note-modal
