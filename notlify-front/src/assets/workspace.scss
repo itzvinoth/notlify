@@ -9,7 +9,20 @@
 		-webkit-transition: background .2s;
 		transition: background .2s;
 	}
-	.workspace-title:hover {
-        border: 1px solid #969799;
-    }
+	.drop-zone {
+		width: 200px;
+		background-color: #ecf0f1;
+		margin: 25px auto;
+		padding: 10px;
+		min-height: 10px;
+	}
+	.drag-el {
+		background-color: #3498db;
+		color: #fff;
+		padding: 5px;
+		margin-bottom: 10px;
+	}
+	.drag-el:nth-last-of-type(1) {
+		margin-bottom: 0px;
+	}
 }

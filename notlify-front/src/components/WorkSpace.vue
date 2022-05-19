@@ -9,45 +9,60 @@
 				<div @click="handleEditTitle('save')">Save</div>
 			</div>
 		</Transition>
-		<!-- <TaskBoard></TaskBoard> -->
-		<draggable
-			:list="list"
-			:disabled="!enabled"
-			item-key="name"
-			class="list-group"
-			ghost-class="ghost"
-			:move="checkMove"
-			@start="dragging = true"
-			@end="dragging = false"
-		>
-			<template #item="{ element }">
-				<div class="list-group-item" :class="{ 'not-draggable': !enabled }">
-					{{ element.name }}
-				</div>
-			</template>
-      </draggable>
+		<div class="drop-zone" @drop="onDrop($event, 1)" @dragenter.prevent @dragover.prevent>
+			<div v-for="item in getList(1)" :key="item.id" class="drag-el" draggable="true" @dragstart="startDrag($event, item)">
+				{{ item.title }}
+			</div>
+		</div>
+		<div class="drop-zone" @drop="onDrop($event, 2)" @dragenter.prevent @dragover.prevent>
+			<div v-for="item in getList(2)" :key="item.id" class="drag-el" draggable="true" @dragstart="startDrag($event, item)">
+				{{ item.title }}
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
-import draggable from 'vuedraggable'
+import { ref } from 'vue'
 
 export default {
 	name: 'WorkSpace',
-	components: {
-		draggable
+	setup() {
+		const listItems = ref([
+			{ id: 0, title: 'John', list: 1 },
+			{ id: 1, title: 'Joao', list: 1 },
+			{ id: 2, title: 'Jean', list: 2 }
+		])
+		const getList = (list) => {
+			return listItems.value.filter((item) => item.list === list)
+		}
+
+		const startDrag = (event, item) => {
+			event.dataTransfer.dropEffect = 'move'
+			event.dataTransfer.effectAllowed = 'move'
+			event.dataTransfer.setData('itemId', item.id)
+		}
+		const onDrop = (event, list) => {
+			const itemId = event.dataTransfer.getData('itemId')
+			const item = listItems.value.find((item) => item.id === Number(itemId))
+			item.list = list
+		}
+		return {
+			getList,
+			startDrag,
+			onDrop
+		}
 	},
 	data () {
 		return {
 			enabled: true,
 			workspaceTitle: 'Board title',
 			isEditingTitle: false,
-			list: [
-				{ name: 'John', id: 0 },
-				{ name: 'Joao', id: 1 },
-				{ name: 'Jean', id: 2 }
-			],
-			dragging: false
+			listItems: [
+				{ id: 0, name: 'John', list: 1 },
+				{ id: 1, name: 'Joao', list: 1 },
+				{ id: 2, name: 'Jean', list: 2 }
+			]
 		}
 	},
 	methods: {
@@ -57,10 +72,17 @@ export default {
 			} else if (type === 'save') {
 				this.isEditingTitle = false
 			}
-		},
-		checkMove (e) {
-			window.console.log('Future index: ' + e.draggedContext.futureIndex)
 		}
 	},
 }
 </script>
+
+<style scoped>
+.buttons {
+  margin-top: 35px;
+}
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
+}
+</style>
