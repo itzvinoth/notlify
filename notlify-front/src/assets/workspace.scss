@@ -1,13 +1,39 @@
 .workspace {
-	.workspace-title {
+	.add-card {
+		width: 100%;
+		box-sizing: border-box;
 		border: 1px solid transparent;
-		padding: 10px 20px;
+		padding: 5px;
 		display: inline-block;
-		background-color: #e5e7eb;
+		// background-color: #e5e7eb;
+		background-color: #3498db;
+		color: #fff;
 		cursor: pointer;
 		border-radius: 3px;
 		-webkit-transition: background .2s;
 		transition: background .2s;
+		&:hover {
+			// background-color: #b5b5b5;
+			opacity: 0.9;
+		}
+	}
+	.save-card {
+		margin-top: 5px;
+		padding: 5px;
+		cursor: pointer;
+		// background-color: #3498db;
+		background-color: #3498db;
+		color: #fff;
+		// color: #fff;
+		display: inline-block;
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+	input {
+		height: 28px;
+		box-sizing: border-box;
+		width: 100%;
 	}
 	.drop-zone {
 		width: 200px;
@@ -17,8 +43,10 @@
 		min-height: 10px;
 	}
 	.drag-el {
-		background-color: #3498db;
-		color: #fff;
+		// background-color: #3498db;
+		// color: #fff;
+		background-color: #d5dbdf;
+		color: #240202;
 		padding: 5px;
 		margin-bottom: 10px;
 	}
