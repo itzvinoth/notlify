@@ -1,11 +1,11 @@
 .workspace {
+	display: flex;
 	.add-card {
 		width: 100%;
 		box-sizing: border-box;
 		border: 1px solid transparent;
 		padding: 5px;
 		display: inline-block;
-		// background-color: #e5e7eb;
 		background-color: #3498db;
 		color: #fff;
 		cursor: pointer;
@@ -21,10 +21,8 @@
 		margin-top: 5px;
 		padding: 5px;
 		cursor: pointer;
-		// background-color: #3498db;
 		background-color: #3498db;
 		color: #fff;
-		// color: #fff;
 		display: inline-block;
 		&:hover {
 			opacity: 0.8;
@@ -38,13 +36,11 @@
 	.drop-zone {
 		width: 200px;
 		background-color: #ecf0f1;
-		margin: 25px auto;
+		margin-right: 25px;
 		padding: 10px;
 		min-height: 10px;
 	}
 	.drag-el {
-		// background-color: #3498db;
-		// color: #fff;
 		background-color: #d5dbdf;
 		color: #240202;
 		padding: 5px;
@@ -52,5 +48,8 @@
 	}
 	.drag-el:nth-last-of-type(1) {
 		margin-bottom: 0px;
+	}
+	.list-title {
+		padding-bottom: 10px;
 	}
 }
