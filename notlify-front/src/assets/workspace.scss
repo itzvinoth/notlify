@@ -1,5 +1,9 @@
 .workspace {
 	display: flex;
+	align-items: flex-start;
+	.add-card__container {
+		padding-top: 10px;
+	}
 	.add-card {
 		width: 100%;
 		box-sizing: border-box;
