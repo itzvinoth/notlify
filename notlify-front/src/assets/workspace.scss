@@ -49,6 +49,8 @@
 		color: #240202;
 		padding: 5px;
 		margin-bottom: 10px;
+		cursor: move;
+    	user-select: none;
 	}
 	.drag-el:nth-last-of-type(1) {
 		margin-bottom: 0px;

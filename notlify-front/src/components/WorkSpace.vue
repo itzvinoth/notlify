@@ -17,11 +17,11 @@
 			</div>
 			<div class="add-card__container">
 				<div v-if="list.key !== listKey">
-					<span @click="handleEditTitle('add', list.key)" class="add-card">Add card</span>
+					<span @click="cardHandler('add', list.key)" class="add-card">Add card</span>
 				</div>
 				<div v-if="list.key === listKey && isAddingCard">
-					<input type="text" v-model="list.newCard" :ref="`cardtitle-${list.key}`"  @keypress.enter="handleEditTitle('save', list.key)" placeholder="Enter a card title"/>
-					<div @click="handleEditTitle('save', list.key)" class="save-card">Save</div>
+					<input type="text" v-model="list.newCard" :ref="`cardtitle-${list.key}`"  @keypress.enter="cardHandler('save', list.key)" placeholder="Enter a card title"/>
+					<div @click="cardHandler('save', list.key)" class="save-card">Save</div>
 				</div>
 			</div>
 		</div>
@@ -68,9 +68,10 @@ export default {
 					"title": "More to try",
 					"newCard": "",
 					"cards": [
-						{ "id": 0, "title": "Drag notes around to rearrange." },
+						{ "id": 0, "title": "Drag notes within list to rearrange." },
 						{ "id": 1, "title": "Works between the lists too." },
-						{ "id": 2, "title": "Try adding a new list." }
+						{ "id": 2, "title": "Option to add a new list." },
+						{ "id": 3, "title": "List title should be editable." }
 					]
 				}
 			]
@@ -82,7 +83,8 @@ export default {
 		}
 	},
 	methods: {
-		handleEditTitle (type, key) {
+		runQueue () {},
+		cardHandler (type, key) {
 			this.listKey = key
 			if (type === 'add') {
 				this.isAddingCard = true
@@ -90,13 +92,16 @@ export default {
 					this.$refs[`cardtitle-${key}`][0].focus()
 				})
 			} else if (type === 'save') {
-				let newCard = {
-					id: this.lists[key].length,
-					title: this.lists[key]['newCard']
-				}
-				this.lists[key]['cards'].push(newCard)
-				this.resetNewCardAdd(key)
+				this.addCard(key)
 			}
+		},
+		addCard (key) {
+			let newCard = {
+				id: this.lists[key].length,
+				title: this.lists[key]['newCard']
+			}
+			this.lists[key]['cards'].push(newCard)
+			this.resetting(key)
 		},
 		getList (list) {
 			return this.listItems.filter((item) => item.list === list)
@@ -116,7 +121,7 @@ export default {
 			let cardIndex = cards.map(c => c.id).indexOf(card.id)
 			cards = cards.splice(cardIndex, 1)
 		},
-		resetNewCardAdd (key) {
+		resetting (key) {
 			this.lists[key]['newCard'] = ''
 			this.cardTitle = ''
 			this.listKey = null
