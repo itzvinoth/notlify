@@ -136,6 +136,8 @@ export default {
 				// So the next element won't move up
 				placeholder = document.createElement('div');
 				placeholder.classList.add('placeholder');
+				// inserting the placeholder before the next sibling of the dragging element
+				// insertBefore(newNode, referenceNode)
 				draggingEle.parentNode.insertBefore(placeholder, draggingEle.nextSibling);
 				placeholder.style.height = `${draggingRect.height}px`;
 			}
