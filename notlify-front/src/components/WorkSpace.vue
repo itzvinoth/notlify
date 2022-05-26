@@ -157,6 +157,10 @@ export default {
 			// User moves the dragging element to the top
 			// case applies when dragging element is above previous element
 			if (prevEle && isAbove(draggingEle, prevEle)) {
+				// The current order    -> The new order
+				// prevEle              -> placeholder
+				// draggingEle          -> draggingEle
+				// placeholder          -> prevEle
 				swap(placeholder, draggingEle);
 				swap(placeholder, prevEle);
 				return;
@@ -169,10 +173,8 @@ export default {
 				// draggingEle          -> nextEle
 				// placeholder          -> placeholder
 				// nextEle              -> draggingEle
-				swap(nextEle, placeholder)
-				swap(placeholder, draggingEle)
-				// swap(nextEle, placeholder);
-				// swap(nextEle, draggingEle);
+				swap(nextEle, placeholder);
+				swap(nextEle, draggingEle);
 				return
 			}
 		},
