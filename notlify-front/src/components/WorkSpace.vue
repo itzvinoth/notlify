@@ -157,24 +157,20 @@ export default {
 			// User moves the dragging element to the top
 			// case applies when dragging element is above previous element
 			if (prevEle && isAbove(draggingEle, prevEle)) {
-				// The current order    -> The new order
-				// prevEle              -> placeholder
-				// draggingEle          -> draggingEle
-				// placeholder          -> prevEle
-				swap(placeholder, draggingEle);
-				swap(placeholder, prevEle);
+				// inserting the placeholder before the prev element
+				draggingEle.parentNode.insertBefore(placeholder, prevEle)
+				// inserting the dragging element before the prev element
+				draggingEle.parentNode.insertBefore(draggingEle, prevEle)
 				return;
 			}
 
 			// The dragging element is below the next element
 			// User moves the dragging element to the bottom
 			if (nextEle && isAbove(nextEle, draggingEle)) {
-				// The current order    -> The new order
-				// draggingEle          -> nextEle
-				// placeholder          -> placeholder
-				// nextEle              -> draggingEle
-				swap(nextEle, placeholder);
-				swap(nextEle, draggingEle);
+				// inserting the placeholder before the next element
+				draggingEle.parentNode.insertBefore(nextEle, placeholder)
+				// inserting the dragging element before the next element
+				draggingEle.parentNode.insertBefore(nextEle, draggingEle)
 				return
 			}
 		},
