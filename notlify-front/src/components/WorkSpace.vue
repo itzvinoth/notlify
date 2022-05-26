@@ -61,7 +61,7 @@ const isAbove = function (nodeA, nodeB) {
 	const rectA = nodeA.getBoundingClientRect();
 	const rectB = nodeB.getBoundingClientRect();
 
-	return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
+	return rectA.top < rectB.top;
 };
 
 export default {
@@ -155,11 +155,8 @@ export default {
 
 			// The dragging element is above the previous element
 			// User moves the dragging element to the top
+			// case applies when dragging element is above previous element
 			if (prevEle && isAbove(draggingEle, prevEle)) {
-				// The current order    -> The new order
-				// prevEle              -> placeholder
-				// draggingEle          -> draggingEle
-				// placeholder          -> prevEle
 				swap(placeholder, draggingEle);
 				swap(placeholder, prevEle);
 				return;
@@ -172,8 +169,11 @@ export default {
 				// draggingEle          -> nextEle
 				// placeholder          -> placeholder
 				// nextEle              -> draggingEle
-				swap(nextEle, placeholder);
-				swap(nextEle, draggingEle);
+				swap(nextEle, placeholder)
+				swap(placeholder, draggingEle)
+				// swap(nextEle, placeholder);
+				// swap(nextEle, draggingEle);
+				return
 			}
 		},
 		mouseUpHandler () {
