@@ -32,6 +32,13 @@
 			<div class="draggable" @mousedown="mouseDown">D</div>
 			<div class="draggable" @mousedown="mouseDown">E</div>
 		</div>
+		<div id="list2">
+			<div class="draggable" @mousedown="mouseDown">F</div>
+			<div class="draggable" @mousedown="mouseDown">G</div>
+			<div class="draggable" @mousedown="mouseDown">H</div>
+			<div class="draggable" @mousedown="mouseDown">I</div>
+			<div class="draggable" @mousedown="mouseDown">J</div>
+		</div>
 	</div>
 </template>
 
@@ -137,7 +144,7 @@ export default {
 				placeholder = document.createElement('div');
 				placeholder.classList.add('placeholder');
 				// inserting the placeholder before the next sibling of the dragging element
-				// insertBefore(newNode, referenceNode)
+				// ex: insertBefore(newNode, referenceNode)
 				draggingEle.parentNode.insertBefore(placeholder, draggingEle.nextSibling);
 				placeholder.style.height = `${draggingRect.height}px`;
 			}
@@ -157,10 +164,10 @@ export default {
 			// User moves the dragging element to the top
 			// case applies when dragging element is above previous element
 			if (prevEle && isAbove(draggingEle, prevEle)) {
-				// inserting the placeholder before the prev element
-				draggingEle.parentNode.insertBefore(placeholder, prevEle)
 				// inserting the dragging element before the prev element
 				draggingEle.parentNode.insertBefore(draggingEle, prevEle)
+				// inserting the placeholder before the prev element
+				draggingEle.parentNode.insertBefore(placeholder, prevEle)
 				return;
 			}
 
@@ -168,7 +175,7 @@ export default {
 			// User moves the dragging element to the bottom
 			if (nextEle && isAbove(nextEle, draggingEle)) {
 				// inserting the placeholder before the next element
-				draggingEle.parentNode.insertBefore(nextEle, placeholder)
+				// draggingEle.parentNode.insertBefore(nextEle, placeholder)
 				// inserting the dragging element before the next element
 				draggingEle.parentNode.insertBefore(nextEle, draggingEle)
 				return
