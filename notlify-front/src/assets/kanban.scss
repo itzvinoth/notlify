@@ -1,0 +1,27 @@
+.kb-container {
+	display: flex;	
+}
+.kb__columns {
+	// flex: 1;
+	width: 200px;
+	background-color: #ecf0f1;
+	margin-right: 25px;
+	padding: 10px;
+	min-height: 10px;
+}
+.kb__card--item {
+	background-color: #d5dbdf;
+	color: #240202;
+	padding: 5px;
+	// margin-bottom: 10px;
+	cursor: pointer;
+	user-select: none;
+}
+.kb__drop-zone {
+	height: 10px;
+	// transition: background 0.15s, height 0.15s;
+}
+.kb__drop-zone__active {
+	height: 25px;
+	background: rgba(0, 0, 0, 0.25);
+}

@@ -219,9 +219,6 @@ export default {
 			this.lists[key]['cards'].push(newCard)
 			this.resetting(key)
 		},
-		getList (list) {
-			return this.listItems.filter((item) => item.list === list)
-		},
 		startDrag (event, card, listKey) {
 			this.draggableCardOriginListId = listKey
 			event.dataTransfer.dropEffect = 'move'

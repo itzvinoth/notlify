@@ -1,0 +1,29 @@
+[
+	{
+		"key": 0,
+		"title": "User manual",
+		"cards": [
+			{ "id": 0, "title": "Set of lists is a board" },
+			{ "id": 1, "title": "Set of cards is a list" },
+			{ "id": 2, "title": "All data is saved" }
+		]
+	},
+	{
+		"key": 1,
+		"title": "Things to try",
+		"cards": [
+			{ "id": 0, "title": "Click on a card to edit" },
+			{ "id": 1, "title": "Click save after editing" },
+			{ "id": 2, "title": "To discard chages press esc" }
+		]
+	},
+	{
+		"key": 2,
+		"title": "More to try",
+		"cards": [
+			{ "id": 0, "title": "Drag notes around to rearrange." },
+			{ "id": 1, "title": "Works between the lists too." },
+			{ "id": 2, "title": "Try adding a new list." }
+		]
+	}
+]
