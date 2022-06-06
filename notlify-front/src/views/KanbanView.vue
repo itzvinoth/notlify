@@ -1,10 +1,10 @@
 <template>
 	<div class="kb-container">
-		<div class="kb__columns">
-			<div class="kb__title">
+		<div class="kb__column">
+			<div class="kb__column--title">
 				Column title
 			</div>
-			<div class="kb__cards">
+			<div class="kb__column--cards">
 				<div class="kb__card--item" contenteditable>Card</div>
 				<div class="kb__drop-zone"></div>
 			</div>
@@ -18,7 +18,16 @@ export default {
 	name: 'kanban',
 	data () {
 		return {
-
+			columns: [{
+				'id': 1,
+				'title': 'User manual'
+			}, {
+				'id': 2,
+				'title': 'Things to try'
+			}, {
+				'id': 3,
+				'title': 'More to try'
+			}]
 		}
 	}
 }
