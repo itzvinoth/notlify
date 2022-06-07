@@ -1,21 +1,17 @@
 <template>
 	<div class="kb-container">
-		<div class="kb__column">
-			<div class="kb__column--title">
-				Column title
-			</div>
-			<div class="kb__column--cards">
-				<div class="kb__card--item" contenteditable>Card</div>
-				<div class="kb__drop-zone"></div>
-			</div>
-			<button class="kb__add-item" type="button">Add item</button>
-		</div>
+		<column :columns="columns" />
 	</div>
 </template>
 
 <script>
+import Column from "@/components/kanban/Column.vue";
+
 export default {
 	name: 'kanban',
+	components: {
+		'column': Column
+	},
 	data () {
 		return {
 			columns: [{
