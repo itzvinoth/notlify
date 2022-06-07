@@ -1,21 +1,36 @@
 <template>
 	<div class="kb__columns">
-		<div class="kb__column" v-for="column in columns" :key="column.id">
+		<div class="kb__column" v-for="column in columns" :key="column.id" :data-id="column.id">
 			<div class="kb__column--title">
 				{{ column.title }}
 			</div>
-			<div class="kb__column--cards"></div>
-			<button class="kb__add-item" type="button">Add item</button>
+			<card />
+			<button class="kb__add-item" type="button" @click="addCard">Add card</button>
 		</div>
 	</div>
 </template>
 
 <script>
+import Card from "@/components/kanban/Card.vue";
+
 export default {
+	components: {
+		'card': Card
+	},
+	data() {
+		return {
+			
+		}
+	},
 	props: {
 		columns: {
 			type: Object
 		}
-	}
+	},
+	methods: {
+		addCard () {
+			console.log('add card')
+		}
+	},
 }
 </script>
