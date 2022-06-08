@@ -12,13 +12,15 @@
 	padding: 10px;
 	min-height: 10px;
 }
-.kb__card--item {
+.kb__card {
 	background-color: #d5dbdf;
 	color: #240202;
 	padding: 5px;
 	// margin-bottom: 10px;
 	cursor: pointer;
 	user-select: none;
+    margin-bottom: 5px
+;
 }
 .kb__drop-zone {
 	height: 10px;
