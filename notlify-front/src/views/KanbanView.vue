@@ -6,6 +6,7 @@
 
 <script>
 import Column from "@/components/kanban/Column.vue";
+import KanbanApi from "../api/index"
 
 export default {
 	name: 'kanban',
@@ -38,6 +39,9 @@ export default {
 				]
 			}]
 		}
+	},
+	mounted () {
+		console.log('for sample testing: ', KanbanApi.getCards(1))
 	}
 }
 </script>
