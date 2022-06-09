@@ -22,11 +22,11 @@
     margin-bottom: 5px
 ;
 }
-.kb__drop-zone {
-	height: 10px;
+.kb__dropzone {
+	// height: 10px;
 	// transition: background 0.15s, height 0.15s;
 }
-.kb__drop-zone__active {
+.kb__dropzone--active {
 	height: 25px;
 	background: rgba(0, 0, 0, 0.25);
 }
