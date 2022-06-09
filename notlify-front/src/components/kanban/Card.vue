@@ -2,7 +2,7 @@
 	<div class="kb__column--cards">
 		<div class="kb__card" draggable="true" v-for="card in cards" :key="card.id" :data-id="card.id" @dragstart="onDragStart($event, card.id)" @dragenter.prevent @dragover.prevent>
 			<div class="kb__card--input" contenteditable>{{ card.title }}</div>
-			<drop-zone />
+			<drop-zone :cardId="card.id"/>
 		</div>
 	</div>
 </template>

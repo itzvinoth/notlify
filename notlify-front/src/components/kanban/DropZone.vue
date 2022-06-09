@@ -1,5 +1,5 @@
 <template>
-	<div class="kb__dropzone" @drop="handleDrop" @dragenter.prevent @dragover.prevent>
+	<div class="kb__dropzone" @drop="checkDrop">
 
 	</div>
 </template>
@@ -7,11 +7,17 @@
 <script>
 export default {
 	name: 'DropZone',
+	props: {
+		cardId: {
+			type: Number
+		}
+	},
 	methods: {
-		handleDrop (e) {
+		checkDrop (e) {
 			e.preventDefault()
-			let dropZone = document.getElementsByClassName('kb__dropzone')[0]
-			dropZone.classList.add('kb__dropzone--active')
+			let dropZone = document.getElementsByClassName('kb__card')
+			let elems = Array.from(dropZone).filter(el => Number(el.getAttribute('data-id')) === this.cardId)
+			elems.forEach(el => el.classList.add('kb__dropzone--active'))
 		}
 	},
 }
