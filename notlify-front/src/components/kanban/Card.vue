@@ -17,7 +17,6 @@ export default {
 	methods: {
 		onDragStart (event, id) {
 			event.dataTransfer.setData('text/plain', id)
-			console.log('event: ', event, id)
 		}
 	},
 }
