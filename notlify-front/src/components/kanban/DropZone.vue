@@ -25,16 +25,16 @@ export default {
 			dropZone.forEach(el => el.querySelector('.kb__dropzone').classList.remove('kb__dropzone--active'))
 		},
 		dropHandler (e) {
-			console.log(e)
 			e.preventDefault()
 			let dropZone = Array.from(document.getElementsByClassName('kb__card'))
-			dropZone.forEach(el => el.classList.remove('kb__dropzone--active'))
+			dropZone.forEach(el => el.querySelector('.kb__dropzone').classList.remove('kb__dropzone--active'))
 			
 			let elem = Array.from(document.getElementsByClassName('kb__card')).find(el => Number(el.getAttribute('data-id')) === this.cardId)
 
 			let columnElement = elem.parentElement.parentElement
 			let columnId = Number(columnElement.dataset.id)
 			console.log('columnId: ', columnId)
+			
 		}
 	},
 }
