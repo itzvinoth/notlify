@@ -17,11 +17,6 @@ export default {
 	components: {
 		'card': Card
 	},
-	data() {
-		return {
-			
-		}
-	},
 	props: {
 		columns: {
 			type: Object
