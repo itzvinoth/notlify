@@ -24,7 +24,7 @@ export default {
 			event.preventDefault()
 			event.target.classList.remove('kb__dropzone--active')
 
-			let columnElement = event.target.parentElement.parentElement.parentElement
+			let columnElement = event.target.closest('.kb__column')
 			let columnId = Number(columnElement.dataset.id)
 
 			let dropZonesInColumn = Array.from(columnElement.querySelectorAll('.kb__dropzone'))
