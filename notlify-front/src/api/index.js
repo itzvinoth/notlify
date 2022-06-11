@@ -43,7 +43,6 @@ export default class KanbanApi {
 		}
 
 		card.title = newProps.title === undefined ? card.title : newProps.title;
-		console.log('newProps: ', newProps)
 
 		// update column and position
 		if (newProps.columnId !== undefined && newProps.position !== undefined) {

@@ -28,20 +28,24 @@ export default {
 			let columnId = Number(columnElement.dataset.id)
 
 			let dropZonesInColumn = Array.from(columnElement.querySelectorAll('.kb__dropzone'))
+			
+			// to get position in the column
 			let droppedIndex = dropZonesInColumn.indexOf(event.target)
+			
 			let cardId = Number(event.dataTransfer.getData('text/plain'))
-			let droppedItemElement = document.querySelector(`[data-id="${cardId}"]`);
-			const insertAfter = event.target.parentElement.classList.contains("kb__card") ? event.target.parentElement : event.target;
+			let droppedItemElement = document.querySelector(`[data-id="${cardId}"]`)
+
+			const insertAfter = event.target.parentElement.classList.contains("kb__card") ? event.target.parentElement : event.target
 
 			if (droppedItemElement.contains(event.target)) {
-				return;
+				return
 			}
 
-			insertAfter.after(droppedItemElement);
+			insertAfter.after(droppedItemElement)
 			KanbanApi.updateCard(cardId, {
 				columnId,
 				position: droppedIndex
-			});
+			})
 		}
 	},
 }

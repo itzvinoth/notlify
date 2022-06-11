@@ -1,5 +1,5 @@
 <template>
-	<div class="kb-container">
+	<div class="kb-container" v-if="columns.length > 0">
 		<column :columns="columns" />
 	</div>
 </template>
@@ -21,7 +21,6 @@ export default {
 	mounted () {
 		let json = localStorage.getItem('kanban-data')
 		this.columns = JSON.parse(json)
-		console.log('for sample testing: ', json)
 	}
 }
 </script>
