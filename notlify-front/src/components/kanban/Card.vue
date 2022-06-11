@@ -39,7 +39,7 @@ export default {
 			}
 			this.content = newContent
 			KanbanApi.updateCard(id, {
-				content: this.content
+				title: this.content
 			});
 
 			console.log('newContent: ', newContent)

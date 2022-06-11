@@ -26,7 +26,6 @@ export default class KanbanApi {
 	}
 
 	static updateCard (cardId, newProps) {
-		console.log('updateCard: ', cardId, newProps)
 		let data = read();
 
 		const [card, currentColumn] = (() => {
@@ -43,11 +42,12 @@ export default class KanbanApi {
 			throw new Error('Card not exists');
 		}
 
-		card.content = newProps.content === undefined ? card.content : newProps.content;
+		card.title = newProps.title === undefined ? card.title : newProps.title;
+		console.log('newProps: ', newProps)
 
 		// update column and position
-		if (newProps.columnId && newProps.position) {
-			const targetColumn = data.find(column => column.id == newProps.columnId);
+		if (newProps.columnId !== undefined && newProps.position !== undefined) {
+			const targetColumn = data.find(column => column.id == newProps.columnId);			
 
 			if (!targetColumn) {
 				throw new Error('Target column not found.');
