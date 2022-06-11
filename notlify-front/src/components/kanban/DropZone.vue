@@ -1,5 +1,5 @@
 <template>
-	<div class="kb__dropzone" @dragover="dragOverHandler" @dragleave="dragLeaveHandler" @drop="dropHandler" @dragenter.prevent></div>
+	<div class="kb__dropzone" @dragover="onDragOver" @dragleave="onDragLeave" @drop="onDrop" @dragenter.prevent></div>
 </template>
 
 <script>
@@ -11,19 +11,19 @@ export default {
 		}
 	},
 	methods: {
-		dragOverHandler (e) {
-			e.preventDefault()
-			e.target.classList.add('kb__dropzone--active')
+		onDragOver (event) {
+			event.preventDefault()
+			event.target.classList.add('kb__dropzone--active')
 		},
-		dragLeaveHandler (e) {
-			e.preventDefault()
-			e.target.classList.remove('kb__dropzone--active')
+		onDragLeave (event) {
+			event.preventDefault()
+			event.target.classList.remove('kb__dropzone--active')
 		},
-		dropHandler (e) {
-			e.preventDefault()
-			e.target.classList.remove('kb__dropzone--active')
+		onDrop (event) {
+			event.preventDefault()
+			event.target.classList.remove('kb__dropzone--active')
 
-			let columnElement = e.target.parentElement.parentElement.parentElement
+			let columnElement = event.target.parentElement.parentElement.parentElement
 			let columnId = Number(columnElement.dataset.id)
 			console.log('columnId: ', columnId)
 			

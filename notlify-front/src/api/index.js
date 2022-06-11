@@ -26,6 +26,7 @@ export default class KanbanApi {
 	}
 
 	static updateCard (cardId, newProps) {
+		console.log('updateCard: ', cardId, newProps)
 		let data = read();
 
 		const [card, currentColumn] = (() => {
