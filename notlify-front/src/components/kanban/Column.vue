@@ -5,13 +5,14 @@
 				{{ column.title }}
 			</div>
 			<card :cards="column.cards" />
-			<button class="kb__add-item" type="button" @click="addCard">Add card</button>
+			<button class="kb__add-item" type="button" @click="addCard(column.id)">Add card</button>
 		</div>
 	</div>
 </template>
 
 <script>
 import Card from "@/components/kanban/Card.vue";
+import KanbanApi from "../../api/index";
 
 export default {
 	components: {
@@ -23,8 +24,9 @@ export default {
 		}
 	},
 	methods: {
-		addCard () {
-			console.log('add card')
+		addCard (id) {
+			// console.log('add card')
+			let newItem = KanbanApi.insertCard(id, "");
 		}
 	},
 }
