@@ -1,6 +1,6 @@
 <template>
 	<div class="kb-container" v-if="columns.length > 0">
-		<column :columns="columns" />
+		<column :columns="columns" @addNewCard="callStorage" />
 	</div>
 </template>
 

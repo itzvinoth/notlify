@@ -25,7 +25,8 @@ export default {
 	},
 	methods: {
 		addCard (id) {
-			let newItem = KanbanApi.insertCard(id, "")
+			let newCard = KanbanApi.insertCard(id, "")
+			this.$emit('addNewCard')
 		}
 	},
 }
