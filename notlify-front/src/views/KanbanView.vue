@@ -19,8 +19,13 @@ export default {
 		}
 	},
 	mounted () {
-		let json = localStorage.getItem('kanban-data')
-		this.columns = JSON.parse(json)
+		this.callStorage()		
+	},
+	methods: {
+		callStorage() {
+			let json = localStorage.getItem('kanban-data')
+			this.columns = JSON.parse(json)
+		}
 	}
 }
 </script>
