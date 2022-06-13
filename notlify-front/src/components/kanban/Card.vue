@@ -40,6 +40,9 @@ export default {
 			KanbanApi.updateCard(id, {
 				title: newContent
 			});
+		},
+		onDelete (id) {
+			KanbanApi.deleteCard(id)
 		}
 	},
 }
