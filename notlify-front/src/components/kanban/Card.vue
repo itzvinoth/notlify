@@ -1,7 +1,7 @@
 <template>
 	<div class="kb__column--cards">
 		<drop-zone />
-		<div class="kb__card" draggable="true" v-for="card in cards" :key="card.id" :data-id="card.id" @dragstart="onDragStart($event, card.id)" @dragenter.prevent @dragover.prevent>
+		<div class="kb__card" draggable="true" v-for="card in cards" :key="card.id" :data-id="card.id" @dragstart="onDragStart($event, card.id)" @dragenter.prevent @dragover.prevent @dblclick="onDblClick($event, card.id)">
 			<div class="kb__card--input" @blur="onBlur($event, card.id)" contenteditable>{{ card.title }}</div>
 			<drop-zone :cardId="card.id"/>
 		</div>
@@ -41,7 +41,13 @@ export default {
 				title: newContent
 			});
 		},
-		onDelete (id) {
+		onDblClick (event, id) {
+			let check = confirm('Are you sure you want to delete this card')
+			if (check) {
+				this.deleteCard(id)
+			}
+		},
+		deleteCard (id) {
 			KanbanApi.deleteCard(id)
 		}
 	},
