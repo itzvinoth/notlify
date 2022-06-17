@@ -3,7 +3,7 @@
 		<div class="kb-container" v-if="columns && columns.length > 0">
 			<column :columns="columns" @addNewCard="callStorage" />
 		</div>
-		<div>No columns available.</div>		
+		<div v-if="!columns">No columns available.</div>		
 	</div>
 </template>
 
