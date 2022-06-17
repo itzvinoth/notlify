@@ -1,6 +1,9 @@
 <template>
-	<div class="kb-container" v-if="columns.length > 0">
-		<column :columns="columns" @addNewCard="callStorage" />
+	<div>
+		<div class="kb-container" v-if="columns && columns.length > 0">
+			<column :columns="columns" @addNewCard="callStorage" />
+		</div>
+		<div>No columns available.</div>		
 	</div>
 </template>
 
