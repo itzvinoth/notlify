@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="kb-container" v-if="columns && columns.length > 0">
-			<column :columns="columns" @addNewCard="callStorage" />
+			<column :columns="columns" />
 		</div>
 		<div v-if="!columns">No columns available.</div>		
 	</div>
@@ -30,16 +30,7 @@ export default {
 	},
 	created () {
 		this.$store.dispatch('kanban/getColumns')
-	},
-	// mounted () {
-	// 	this.callStorage()		
-	// },
-	// methods: {
-	// 	callStorage() {
-	// 		let json = localStorage.getItem('kanban-data')
-	// 		this.columns = JSON.parse(json)
-	// 	}
-	// }
+	}
 	
 }
 </script>
