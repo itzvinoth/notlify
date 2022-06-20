@@ -11,24 +11,35 @@
 import Column from "@/components/kanban/Column.vue";
 import KanbanApi from "../api/index"
 
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
 	name: 'kanban',
 	components: {
 		'column': Column
 	},
-	data () {
-		return {
-			columns: []
-		}
+	// data () {
+	// 	return {
+	// 		columns: []
+	// 	}
+	// },
+	computed: {
+		...mapGetters('kanban', {
+			columns: 'columns'
+		})
 	},
-	mounted () {
-		this.callStorage()		
+	created () {
+		this.$store.dispatch('kanban/getColumns')
 	},
-	methods: {
-		callStorage() {
-			let json = localStorage.getItem('kanban-data')
-			this.columns = JSON.parse(json)
-		}
-	}
+	// mounted () {
+	// 	this.callStorage()		
+	// },
+	// methods: {
+	// 	callStorage() {
+	// 		let json = localStorage.getItem('kanban-data')
+	// 		this.columns = JSON.parse(json)
+	// 	}
+	// }
+	
 }
 </script>

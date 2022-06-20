@@ -49,6 +49,8 @@ export default {
 		},
 		deleteCard (id) {
 			KanbanApi.deleteCard(id)
+			// vuex commit update kanban
+			this.$store.dispatch('kanban/getColumns')
 		}
 	},
 }

@@ -26,7 +26,9 @@ export default {
 	methods: {
 		addCard (id) {
 			let newCard = KanbanApi.insertCard(id, "")
-			this.$emit('addNewCard')
+			// this.$emit('addNewCard')
+			// vuex commit update kanban
+			this.$store.dispatch('kanban/getColumns')
 		}
 	},
 }
