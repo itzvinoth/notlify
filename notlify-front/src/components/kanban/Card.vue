@@ -12,6 +12,10 @@
 import DropZone from "@/components/kanban/DropZone.vue";
 import KanbanApi from "../../api/index"
 
+let draggingEle;
+let x = 0;
+let y = 0;
+
 export default {
 	name: 'card',
 	components: {
@@ -30,6 +34,11 @@ export default {
 	methods: {
 		onDragStart (event, id) {
 			event.dataTransfer.setData('text/plain', id)
+			draggingEle = event.target
+			let rect = draggingEle.getBoundingClientRect()
+			x = event.pageX - rect.left
+			y = event.pageY - rect.top
+			console.log('x: ', x, 'y: ', y)
 		},
 		onBlur (event, id) {
 			let newContent = event.target.textContent.trim()
