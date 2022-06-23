@@ -17,7 +17,7 @@
 			</div>
 			<div class="add-card__container">
 				<div v-if="list.key !== listKey">
-					<span @click="cardHandler('add', list.key)" class="add-card">Add card</span>
+					<span @click="cardHandler('add', list.key)" class="add-card">Add a card</span>
 				</div>
 				<div v-if="list.key === listKey && isAddingCard">
 					<input type="text" v-model="list.newCard" :ref="`cardtitle-${list.key}`"  @keypress.enter="cardHandler('save', list.key)" placeholder="Enter a card title"/>

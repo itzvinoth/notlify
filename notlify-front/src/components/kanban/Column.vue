@@ -5,7 +5,7 @@
 				{{ column.title }}
 			</div>
 			<card :cards="column.cards" />
-			<button class="kb__add-item" type="button" @click="addCard(column.id)">Add card</button>
+			<button class="kb__add-item" type="button" @click="addCard(column.id)">Add a card</button>
 		</div>
 	</div>
 </template>
