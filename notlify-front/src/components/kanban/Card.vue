@@ -35,10 +35,14 @@ export default {
 		onDragStart (event, id) {
 			event.dataTransfer.setData('text/plain', id)
 			draggingEle = event.target
+			console.log(event.target)
 			let rect = draggingEle.getBoundingClientRect()
 			x = event.pageX - rect.left
 			y = event.pageY - rect.top
-			console.log('x: ', x, 'y: ', y)
+			// draggingEle.querySelector('.kb__card--input').style.display = 'none'
+			draggingEle.querySelector('.kb__card--input').classList.add('placeholder')
+			draggingEle.querySelector('.kb__dropzone').style.height = `${rect.height - 10}px`
+			console.log('draggingEle: ', rect.height)
 		},
 		onBlur (event, id) {
 			let newContent = event.target.textContent.trim()
