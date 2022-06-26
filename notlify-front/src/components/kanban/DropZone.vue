@@ -14,15 +14,15 @@ export default {
 	methods: {
 		onDragOver (event) {
 			event.preventDefault()
-			event.target.classList.add('kb__dropzone--active')
+			event.target.classList.add('placeholder')
 		},
 		onDragLeave (event) {
 			event.preventDefault()
-			event.target.classList.remove('kb__dropzone--active')
+			event.target.classList.remove('placeholder')
 		},
 		onDrop (event) {
 			event.preventDefault()
-			event.target.classList.remove('kb__dropzone--active')
+			event.target.classList.remove('placeholder')
 
 			let columnElement = event.target.closest('.kb__column')
 			let columnId = Number(columnElement.dataset.id)

@@ -20,17 +20,23 @@
 	// margin-bottom: 10px;
 	cursor: pointer;
 	user-select: none;
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
 }
 .kb__dropzone {
 	height: 5px;
+	margin-bottom: 5px;
+}
+.kb__dropzone.placeholder {
 	transition: background 0.15s, height 0.15s;
+	height: 28px;
+	background: #FFF;
+	margin-bottom: 10px;
 }
-.kb__card--input.placeholder {
-	background-color: #edf2f7;
-	height: 1px;
-	// margin-bottom: 1rem;
-}
+// .kb__card--input.placeholder {
+// 	background-color: #edf2f7;
+// 	height: 1px;
+// 	// margin-bottom: 1rem;
+// }
 .kb__dropzone--active {
 	height: 25px;
 	background: rgba(0, 0, 0, 0.25);
