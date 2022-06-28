@@ -34,15 +34,17 @@ export default {
 			
 			let cardId = Number(event.dataTransfer.getData('text/plain'))
 
+			// kb-card__container contains data-id attribute
 			let droppedItemElement = document.querySelector(`[data-id="${cardId}"]`)
 			
 			const insertAfter = event.target.previousSibling.classList.contains('kb__card') ? event.target.previousSibling : event.target
-			console.log('droppedItemElement: ', droppedItemElement)
 
+			// we should exit, if dragging element agains drops into the same place.
 			if (droppedItemElement.contains(event.target)) {
 				return
 			}
 
+			// updating the UI
 			insertAfter.parentElement.after(droppedItemElement)
 			KanbanApi.updateCard(cardId, {
 				columnId,
