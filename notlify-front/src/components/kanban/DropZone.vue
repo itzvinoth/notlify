@@ -33,15 +33,17 @@ export default {
 			let droppedIndex = dropZonesInColumn.indexOf(event.target)
 			
 			let cardId = Number(event.dataTransfer.getData('text/plain'))
-			let droppedItemElement = document.querySelector(`[data-id="${cardId}"]`)
 
-			const insertAfter = event.target.parentElement.classList.contains("kb__card") ? event.target.parentElement : event.target
+			let droppedItemElement = document.querySelector(`[data-id="${cardId}"]`)
+			
+			const insertAfter = event.target.previousSibling.classList.contains('kb__card') ? event.target.previousSibling : event.target
+			console.log('droppedItemElement: ', droppedItemElement)
 
 			if (droppedItemElement.contains(event.target)) {
 				return
 			}
 
-			insertAfter.after(droppedItemElement)
+			insertAfter.parentElement.after(droppedItemElement)
 			KanbanApi.updateCard(cardId, {
 				columnId,
 				position: droppedIndex
