@@ -3,7 +3,7 @@
 		<drop-zone />
 		<div class="kb-card__container" v-for="card in cards" :key="card.id" :data-id="card.id">
 			<div class="kb__card" draggable="true" @dragstart="onDragStart($event, card.id)" @drag="onDrag" @dragenter.prevent @dragover.prevent @dblclick="onDblClick($event, card.id)">
-				<div class="kb__card--input" @blur="onBlur($event, card.id)" contenteditable>{{ card.title }}</div>
+				<div class="kb__card--input" @blur="onBlur($event, card.id)" :contenteditable="!card.content">{{ card.title }}</div>
 			</div>
 			<drop-zone :cardId="card.id"/>
 		</div>
@@ -31,6 +31,15 @@ export default {
 	props: {
 		cards: {
 			type: Object
+		},
+		columnId: {
+			type: Number
+		},
+		editable: {
+			type: Boolean
+		},
+		newCardColumnIndex: {
+			type: Number
 		}
 	},
 	data() {
@@ -66,7 +75,7 @@ export default {
 				return
 			}
 			KanbanApi.updateCard(id, {
-				title: newContent
+				'title': newContent
 			});
 		},
 		onDblClick (event, id) {

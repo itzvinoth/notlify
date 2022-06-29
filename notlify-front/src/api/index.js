@@ -27,11 +27,11 @@ export default class KanbanApi {
 
 	static updateCard (cardId, newProps) {
 		let data = read();
-
+		
 		const [card, currentColumn] = (() => {
 			for (const column of data) {
 				const card = column.cards.find(card => card.id === cardId);
-	
+
 				if (card) {
 					return [card, column];
 				}
