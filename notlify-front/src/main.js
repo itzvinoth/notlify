@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+import VueFeather from 'vue-feather';
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -10,3 +11,5 @@ app.use(router);
 app.use(store);
 
 app.mount("#app");
+
+app.component(VueFeather.name, VueFeather);

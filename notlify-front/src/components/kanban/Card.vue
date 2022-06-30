@@ -2,7 +2,8 @@
 	<div class="kb__column--cards">
 		<drop-zone />
 		<div class="kb-card__container" v-for="card in cards" :key="card.id" :data-id="card.id">
-			<div class="kb__card" draggable="true" @dragstart="onDragStart($event, card.id)" @drag="onDrag" @dragenter.prevent @dragover.prevent @dblclick="onDblClick($event, card.id)">
+			<div class="kb__card" draggable="true" @dragstart="onDragStart($event, card.id)" @drag="onDrag" @dragenter.prevent @dragover.prevent @dblclick="onDblClick($event, card.id)" style="position: relative;">
+				<vue-feather type="more-horizontal" style="position: absolute; right: 5px; top: 0px;"></vue-feather>
 				<div class="kb__card--input" @blur="onBlur($event, card.id)" :contenteditable="!card.content">{{ card.title }}</div>
 			</div>
 			<drop-zone :cardId="card.id"/>

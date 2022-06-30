@@ -7,7 +7,7 @@
 }
 .kb__column {
 	// flex: 1;
-	width: 200px;
+	width: 220px;
 	background-color: #ecf0f1;
 	margin-right: 25px;
 	padding: 10px;
@@ -16,11 +16,13 @@
 .kb__card {
 	background-color: #d5dbdf;
 	color: #240202;
-	padding: 5px;
+	padding: 15px 15px 15px 10px;
+	border-radius: 3px;
 	// margin-bottom: 10px;
 	cursor: pointer;
 	user-select: none;
     // margin-bottom: 5px;
+
 }
 .kb__dropzone {
 	height: 5px;
