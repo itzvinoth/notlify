@@ -1,5 +1,5 @@
 <template>
-	<div class="kb__dropzone" @dragover="onDragOver" @dragleave="onDragLeave" @drop="onDrop" @dragenter.prevent></div>
+	<div class="kb__dropzone" @dragover="onDragOver" @dragenter="onDragEnter" @dragleave="onDragLeave" @drop="onDrop"></div>
 </template>
 
 <script>
@@ -9,18 +9,27 @@ export default {
 	props: {
 		cardId: {
 			type: Number
+		},
+		draggingElemHeight: {
+			type: Number
 		}
 	},
 	methods: {
-		onDragOver (event) {
+		onDragEnter (event) {
 			event.preventDefault()
+			event.target.style.height = `${this.draggingElemHeight}px`
 			event.target.classList.add('placeholder')
 		},
-		onDragLeave (event) {
+		onDragOver (event) {
+			// By default, data/elements cannot be dropped in other elements. To allow a drop, we must prevent the default handling of the element
 			event.preventDefault()
+		},
+		onDragLeave (event) {
+			event.target.style.height = '8px'
 			event.target.classList.remove('placeholder')
 		},
 		onDrop (event) {
+			// On drop - Prevent the browser default handling of the data
 			event.preventDefault()
 			event.target.classList.remove('placeholder')
 
