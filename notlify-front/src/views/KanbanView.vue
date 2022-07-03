@@ -18,11 +18,6 @@ export default {
 	components: {
 		'column': Column
 	},
-	// data () {
-	// 	return {
-	// 		columns: []
-	// 	}
-	// },
 	computed: {
 		...mapGetters('kanban', {
 			columns: 'columns'

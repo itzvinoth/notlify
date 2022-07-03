@@ -4,22 +4,25 @@
 
 <script>
 import KanbanApi from '../../api'
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
 	name: 'DropZone',
 	props: {
 		cardId: {
 			type: Number
-		},
-		draggingElemHeight: {
-			type: Number
 		}
+	},
+	computed: {
+		...mapGetters('kanban', {
+			draggingElemHeight: 'draggingElemHeight'
+		})
 	},
 	methods: {
 		onDragEnter (event) {
 			event.preventDefault()
 			event.target.classList.add('placeholder')
 			event.target.style.height = `${this.draggingElemHeight}px`
-			console.log('onDragEnter height', this.draggingElemHeight)
 		},
 		onDragOver (event) {
 			// By default, data/elements cannot be dropped in other elements. To allow a drop, we must prevent the default handling of the element

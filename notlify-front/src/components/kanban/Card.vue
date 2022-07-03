@@ -45,30 +45,6 @@ export default {
 		}
 	},
 	methods: {
-		onMouseDown (event) {
-			draggingEle = event.target
-			// Calculate the mouse position
-			const rect = draggingEle.getBoundingClientRect()
-			document.addEventListener('mousemove', this.mouseMoveHandler)
-			document.addEventListener('mouseup', this.mouseUpHandler)
-		},
-		mouseMoveHandler (event) {
-			const draggingRect = draggingEle.getBoundingClientRect()
-			if (!isDraggingStarted) {
-				isDraggingStarted = true
-				this.draggingElemHeight = draggingRect.height
-				console.log('draggingRect.height: ', draggingRect.height)
-			}
-		},
-		mouseUpHandler (event) {
-			draggingEle = null
-			isDraggingStarted = false
-			this.draggingElemHeight = 0
-
-			// Remove the handlers of `mousemove` and `mouseup`
-			document.removeEventListener('mousemove', this.mouseMoveHandler)
-			document.removeEventListener('mouseup', this.mouseUpHandler)
-		},
 		onDragStart (event, id) {
 			draggingEle = event.target
 			// const draggingRect = draggingEle.getBoundingClientRect()
@@ -90,10 +66,8 @@ export default {
 			event.target.style.opacity = '1'
 		},
 		onDrag (event) {
-			draggingEle = event.target
 			const draggingRect = draggingEle.getBoundingClientRect()
-			this.draggingElemHeight = draggingRect.height
-			console.log('draggingRect: ', draggingRect.height)
+			this.$store.dispatch('kanban/getDraggingElemHeight', draggingRect.height)
 			// this.draggingElemHeight = draggingRect.height
 			// draggingEle.style.position = 'absolute'
 			// draggingEle.style.width = '190px'
