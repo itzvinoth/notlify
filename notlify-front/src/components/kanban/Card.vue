@@ -1,12 +1,12 @@
 <template>
 	<div class="kb__column--cards">
-		<drop-zone :draggingElemHeight="draggingElemHeight" />
+		<drop-zone :dragging-elem-height="draggingElemHeight" />
 		<div class="kb-card__container" v-for="card in cards" :key="card.id" :data-id="card.id">
-			<div class="kb__card" @mousedown="onMouseDown" draggable="true" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent @dblclick="onDblClick($event, card.id)" style="position: relative;">
+			<div class="kb__card" draggable="true" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent @dblclick="onDblClick($event, card.id)" style="position: relative;">
 				<vue-feather type="more-horizontal" style="position: absolute; right: 5px; top: 0px;"></vue-feather>
 				<div class="kb__card--input" @blur="onBlur($event, card.id)" :contenteditable="!card.content">{{ card.title }}</div>
 			</div>
-			<drop-zone :cardId="card.id" :draggingElemHeight="draggingElemHeight" />
+			<drop-zone :cardId="card.id" :dragging-elem-height="draggingElemHeight" />
 		</div>
 		<!-- <div class="kb__card" draggable="true" v-for="card in cards" :key="card.id" :data-id="card.id" @dragstart="onDragStart($event, card.id)" @dragenter.prevent @dragover.prevent @dblclick="onDblClick($event, card.id)">
 			<div class="kb__card--input" @blur="onBlur($event, card.id)" contenteditable>{{ card.title }}</div>
@@ -35,12 +35,6 @@ export default {
 			type: Object
 		},
 		columnId: {
-			type: Number
-		},
-		editable: {
-			type: Boolean
-		},
-		newCardColumnIndex: {
 			type: Number
 		}
 	},
@@ -76,10 +70,13 @@ export default {
 			document.removeEventListener('mouseup', this.mouseUpHandler)
 		},
 		onDragStart (event, id) {
+			draggingEle = event.target
+			// const draggingRect = draggingEle.getBoundingClientRect()
+			// this.draggingElemHeight = draggingRect.height
 			event.target.style.opacity = '0.4'
 			event.dataTransfer.effectAllowed = 'move'
 			event.dataTransfer.setData('text/plain', id)
-			draggingEle = event.target
+			
 			rect = draggingEle.getBoundingClientRect()
 			x = event.pageX - rect.left
 			y = event.pageY - rect.top
@@ -93,9 +90,11 @@ export default {
 			event.target.style.opacity = '1'
 		},
 		onDrag (event) {
-			// const draggingRect = draggingEle.getBoundingClientRect()
+			draggingEle = event.target
+			const draggingRect = draggingEle.getBoundingClientRect()
+			this.draggingElemHeight = draggingRect.height
+			console.log('draggingRect: ', draggingRect.height)
 			// this.draggingElemHeight = draggingRect.height
-			console.log('this.draggingElemHeight: ')
 			// draggingEle.style.position = 'absolute'
 			// draggingEle.style.width = '190px'
 			// draggingEle.style.top = `${event.pageY - y}px`

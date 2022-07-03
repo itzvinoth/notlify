@@ -17,12 +17,14 @@ export default {
 	methods: {
 		onDragEnter (event) {
 			event.preventDefault()
-			event.target.style.height = `${this.draggingElemHeight}px`
 			event.target.classList.add('placeholder')
+			event.target.style.height = `${this.draggingElemHeight}px`
+			console.log('onDragEnter height', this.draggingElemHeight)
 		},
 		onDragOver (event) {
 			// By default, data/elements cannot be dropped in other elements. To allow a drop, we must prevent the default handling of the element
 			event.preventDefault()
+			event.target.style.height = `${this.draggingElemHeight}px`
 		},
 		onDragLeave (event) {
 			event.target.style.height = '8px'
@@ -31,6 +33,7 @@ export default {
 		onDrop (event) {
 			// On drop - Prevent the browser default handling of the data
 			event.preventDefault()
+			event.target.style.height = '8px'
 			event.target.classList.remove('placeholder')
 
 			let columnElement = event.target.closest('.kb__column')

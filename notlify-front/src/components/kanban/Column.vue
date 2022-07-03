@@ -4,7 +4,7 @@
 			<div class="kb__column--title">
 				{{ column.title }}
 			</div>
-			<card :cards="column.cards" :column-id="column.id" :editable="editable" :new-card-column-index="newCardColumnIndex" />
+			<card :cards="column.cards" :column-id="column.id" />
 			<button class="kb__add-item" type="button" @click="addCard(column.id)">Add a card</button>
 		</div>
 	</div>
@@ -18,12 +18,6 @@ export default {
 	components: {
 		'card': Card
 	},
-	data () {
-		return {
-			editable: false,
-			newCardColumnIndex: null
-		}
-	},
 	props: {
 		columns: {
 			type: Object
@@ -31,8 +25,6 @@ export default {
 	},
 	methods: {
 		addCard (id) {
-			this.editable = true
-			this.newCardColumnIndex = id
 			let newCard = KanbanApi.insertCard(id, "")
 			// this.$emit('addNewCard')
 			// vuex commit update kanban
