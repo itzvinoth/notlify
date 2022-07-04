@@ -1,6 +1,7 @@
 <template>
 	<div class="kb__columns">
 		<div class="kb__column" v-for="column in columns" :key="column.id" :data-id="column.id">
+			<vue-feather type="more-horizontal"></vue-feather>
 			<div class="kb__column--title">
 				{{ column.title }}
 			</div>

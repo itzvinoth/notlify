@@ -7,6 +7,7 @@
 }
 .kb__column {
 	// flex: 1;
+	position: relative;
 	width: 225px;
 	background-color: #efefef;
 	margin-right: 25px;
@@ -18,6 +19,7 @@
 	font-weight: 500;
 }
 .kb__card {
+	position: relative;
 	background-color: #FFF;
 	color: #240202;
 	padding: 15px 15px 15px 10px;
