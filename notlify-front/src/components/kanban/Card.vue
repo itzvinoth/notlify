@@ -2,14 +2,14 @@
 	<div class="kb__column--cards">
 		<drop-zone :dragging-elem-height="draggingElemHeight" />
 		<div class="kb-card__container" v-for="card in cards" :key="card.id" :data-id="card.id">
-			<div class="kb__card" draggable="true" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent @dblclick="onDblClick($event, card.id)">
+			<div class="kb__card" draggable="true" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent>
 				<vue-feather type="more-horizontal" @click="showCardMenu($event, card.id)"></vue-feather>
 				<div class="kb__card--input" @blur="onBlur($event, card.id)" :contenteditable="!card.content">{{ card.title }}</div>
 				<card-dropdown v-if="card.id === cardId">
 					<template #title></template>
 					<template #list>
-						<li><a href="">Edit</a></li>
-						<li><a href="">Delete</a></li>
+						<li><a href="" @click.prevent>Edit</a></li>
+						<li><a href="" @click.prevent @dblclick="onDblClick($event, card.id)">Delete</a></li>
 					</template>
 				</card-dropdown>
 			</div>
