@@ -3,8 +3,15 @@
 		<drop-zone :dragging-elem-height="draggingElemHeight" />
 		<div class="kb-card__container" v-for="card in cards" :key="card.id" :data-id="card.id">
 			<div class="kb__card" draggable="true" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent @dblclick="onDblClick($event, card.id)">
-				<vue-feather type="more-horizontal"></vue-feather>
+				<vue-feather type="more-horizontal" @click="showCardMenu($event, card.id)"></vue-feather>
 				<div class="kb__card--input" @blur="onBlur($event, card.id)" :contenteditable="!card.content">{{ card.title }}</div>
+				<card-dropdown v-if="card.id === cardId">
+					<template #title></template>
+					<template #list>
+						<li><a href="">Edit</a></li>
+						<li><a href="">Delete</a></li>
+					</template>
+				</card-dropdown>
 			</div>
 			<drop-zone :cardId="card.id" :dragging-elem-height="draggingElemHeight" />
 		</div>
@@ -18,6 +25,7 @@
 <script>
 import DropZone from "@/components/kanban/DropZone.vue";
 import KanbanApi from "../../api/index"
+import CardDropdown from "@/components/kanban/CardDropdown.vue";
 
 let draggingEle;
 let isDraggingStarted = false;
@@ -28,7 +36,8 @@ let rect;
 export default {
 	name: 'card',
 	components: {
-		'drop-zone': DropZone
+		'drop-zone': DropZone,
+		'card-dropdown': CardDropdown
 	},
 	props: {
 		cards: {
@@ -40,11 +49,19 @@ export default {
 	},
 	data() {
 		return {
+			cardId: null,
 			content: '',
 			draggingElemHeight: 0
 		}
 	},
 	methods: {
+		showCardMenu (event, id) {
+			if (this.cardId === id) {
+				this.cardId = null
+				return
+			}
+			this.cardId = id
+		},
 		onDragStart (event, id) {
 			draggingEle = event.target
 			// const draggingRect = draggingEle.getBoundingClientRect()
