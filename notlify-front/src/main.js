@@ -13,7 +13,9 @@ app.use(store);
 app.directive('click-outside', {
 	beforeMount: function (el, binding, vnode) {
 		window.event = function (event) {
+			// here I check that click was outside the el and his childrens
 			if (!(el == event.target || el.contains(event.target))) {
+				// and if it did, call method provided in attribute value
 				vnode.context[binding.expression](event)
 			}
 		}
