@@ -3,7 +3,6 @@ import VueFeather from 'vue-feather';
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import Popper from "vue3-popper";
 
 const app = createApp(App);
 
@@ -11,7 +10,44 @@ app.use(router);
 
 app.use(store);
 
-app.component("Popper", Popper);
+app.directive('click-outside', {
+	beforeMount: function (el, binding, vnode) {
+		window.event = function (event) {
+			if (!(el == event.target || el.contains(event.target))) {
+				vnode.context[binding.expression](event)
+			}
+		}
+		document.body.addEventListener('click', window.event)
+	},
+	beforeUnmount: function (el) {
+		document.body.removeEventListener('click', window.event)
+	}
+})
+
+app.directive('on-escape', {
+	beforeMount: function (el, binding, vnode) {
+		el.customEventKeydown = function (event) {
+			if (event.keyCode === 27) {
+				vnode.context[binding.expression](event)
+			}
+		}
+		document.body.addEventListener('keydown', el.customEventKeydown)
+	},
+	beforeUnmount: function (el) {
+		document.body.removeEventListener('keydown', el.customEventKeydown)
+	}
+})
+
+app.directive('resize', {
+	inserted: function(el, binding) {
+		const onResizeCallback = binding.value
+		window.addEventListener('resize', () => {
+			const width = document.documentElement.clientWidth;
+			const height = document.documentElement.clientHeight;
+			onResizeCallback({ width, height })
+		})
+	}
+})
 
 app.mount("#app");
 
