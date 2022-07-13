@@ -1,22 +1,14 @@
 <template>
-	<div id="popover">{{ width }} x {{ height }}</div>
-	<!--<popover> 
-			<popover-trigger>
-				<vue-feather type="more-horizontal" @click="showCardMenu($event, card.id)"></vue-feather>
-			</popover-trigger>
-			<popover-content>
-				<card-dropdown v-if="card.id === cardId">
-					<template #title></template>
-					<template #list>
-						<li><a href="" @click.prevent>Edit</a></li>
-						<li><a href="" @click.prevent @dblclick="onDblClick($event, card.id)">Delete</a></li>
-					</template>
-				</card-dropdown>
-			</popover-content>
-		</popover>-->
+	<div class="popover-container">
+		<div class="popover">
+			<slot name="trigger" />
+			<slot name="body" />
+		</div>
+	</div>
 </template>
 
 <script>
+// get position of the trigger element in the browser
 export default {
   name: 'Popover',
 	data () {

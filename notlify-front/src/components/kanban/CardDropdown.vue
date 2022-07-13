@@ -6,3 +6,12 @@
 		</ul>
 	</div>
 </template>
+
+<script>
+export default {
+	mounted() {
+		let dropdown = document.getElementsByClassName('menu-dropdown')[0]
+		console.log(dropdown.getBoundingClientRect())
+	},
+}
+</script>

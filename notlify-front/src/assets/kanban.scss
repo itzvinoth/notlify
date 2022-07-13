@@ -29,6 +29,22 @@
 	user-select: none;
     // margin-bottom: 5px;
 }
+.popover-container {
+	position: absolute;
+	right: 5px;
+	top: 2px;
+	.popover {
+		position: relative;
+		width: 20px;
+		height: 20px;
+	}
+}
+.vue-feather.vue-feather--more-horizontal {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	color: #9b9b9b;
+}
 .kb__card .menu-dropdown {
 	width: 150px;
 	position: absolute;
@@ -62,14 +78,6 @@
 			}
 		}
 	}
-}
-.vue-feather.vue-feather--more-horizontal {
-	position: absolute;
-	right: 5px;
-	top: 2px;
-	width: 20px;
-	height: 20px;
-	color: #9b9b9b;
 }
 .kb__dropzone {
 	height: 8px;

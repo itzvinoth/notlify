@@ -4,21 +4,23 @@
 		<div class="kb-card__container" v-for="card in cards" :key="card.id" :data-id="card.id">
 			<div class="kb__card" draggable="true" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent>
 				<div class="kb__card--input" @blur="onBlur($event, card.id)" :contenteditable="!card.content">{{ card.title }}</div>
-				<vue-feather type="more-horizontal" @click="showCardMenu($event, card.id)"></vue-feather>
-				<card-dropdown v-if="card.id === cardId">
-					<template #title></template>
-					<template #list>
-						<li><a href="" @click.prevent>Edit</a></li>
-						<li><a href="" @click.prevent @dblclick="onDblClick($event, card.id)">Delete</a></li>
+				<popover>
+					<template #trigger>
+						<vue-feather type="more-horizontal" @click="showCardMenu($event, card.id)"></vue-feather>
 					</template>
-				</card-dropdown>
+					<template #body>
+						<card-dropdown v-if="card.id === cardId">
+							<template #title></template>
+							<template #list>
+								<li><a href="" @click.prevent>Edit</a></li>
+								<li><a href="" @click.prevent @dblclick="onDblClick($event, card.id)">Delete</a></li>
+							</template>
+						</card-dropdown>
+					</template>
+				</popover>
 			</div>
 			<drop-zone :cardId="card.id" :dragging-elem-height="draggingElemHeight" />
 		</div>
-		<!-- <div class="kb__card" draggable="true" v-for="card in cards" :key="card.id" :data-id="card.id" @dragstart="onDragStart($event, card.id)" @dragenter.prevent @dragover.prevent @dblclick="onDblClick($event, card.id)">
-			<div class="kb__card--input" @blur="onBlur($event, card.id)" contenteditable>{{ card.title }}</div>
-			<drop-zone :cardId="card.id"/>
-		</div> -->
 	</div>
 </template>
 
@@ -26,18 +28,21 @@
 import DropZone from "@/components/kanban/DropZone.vue";
 import KanbanApi from "../../api/index"
 import CardDropdown from "@/components/kanban/CardDropdown.vue";
+import Popover from "@/components/Popover.vue";
 
 let draggingEle;
 let isDraggingStarted = false;
 let x = 0;
 let y = 0;
 let rect;
+let count = 0;
 
 export default {
 	name: 'card',
 	components: {
 		'drop-zone': DropZone,
-		'card-dropdown': CardDropdown
+		'card-dropdown': CardDropdown,
+		'popover': Popover
 	},
 	props: {
 		cards: {

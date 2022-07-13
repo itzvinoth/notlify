@@ -11,7 +11,7 @@ app.use(router);
 app.use(store);
 
 app.directive('click-outside', {
-	beforeMount: function (el, binding, vnode) {
+	mounted: function (el, binding, vnode) {
 		window.event = function (event) {
 			// here I check that click was outside the el and his childrens
 			if (!(el == event.target || el.contains(event.target))) {
@@ -21,7 +21,7 @@ app.directive('click-outside', {
 		}
 		document.body.addEventListener('click', window.event)
 	},
-	beforeUnmount: function (el) {
+	unmounted: function (el) {
 		document.body.removeEventListener('click', window.event)
 	}
 })
