@@ -6,10 +6,10 @@
 				<div class="kb__card--input" @blur="onBlur($event, card.id)" :contenteditable="!card.content">{{ card.title }}</div>
 				<popover>
 					<template #trigger>
-						<vue-feather type="more-horizontal" @click="showCardMenu($event, card.id)"></vue-feather>
+						<vue-feather type="more-horizontal" @click.prevent.stop="showCardMenu($event, card.id)"></vue-feather>
 					</template>
 					<template #body>
-						<card-dropdown v-if="card.id === cardId">
+						<card-dropdown v-if="card.id === cardId" v-click-outside="onClickOutside">
 							<template #title></template>
 							<template #list>
 								<li><a href="" @click.prevent>Edit</a></li>
@@ -60,7 +60,13 @@ export default {
 		}
 	},
 	methods: {
-		showCardMenu (event, id) {
+		onClickOutside () {
+			if (this.cardId !== null) {
+				this.cardId = null
+				return
+			}
+		},
+		showCardMenu (event, id, columnId) {
 			if (this.cardId === id) {
 				this.cardId = null
 				return

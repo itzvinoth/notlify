@@ -10,20 +10,29 @@
 <script>
 // get position of the trigger element in the browser
 export default {
-  name: 'Popover',
+	name: 'Popover',
 	data () {
-		return { width: window.innerWidth, height: window.innerHeight };
+		return {
+			width: window.innerWidth,
+			height: window.innerHeight
+		}
 	},
 	created() {
 		window.addEventListener('resize', this.onResize);
 	},
 	destroyed() {
+		console.log('destroyed')
 		window.removeEventListener('resize', this.onResize);
 	},
 	methods: {
 		onResize (e) {
-			this.width = window.innerWidth;
-			this.height = window.innerHeight;
+			let elem = document.getElementsByClassName('menu-dropdown')[0]
+			let rect = elem.getBoundingClientRect()
+			let parent = elem.closest('.popover')
+			let rectParent = parent.getBoundingClientRect()
+			if (rect.bottom > window.innerHeight) {
+				elem.style.top = `${window.innerHeight - rectParent.bottom - rect.height}px`
+			}
 		}
 	}
 };

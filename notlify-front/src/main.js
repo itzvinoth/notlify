@@ -10,21 +10,35 @@ app.use(router);
 
 app.use(store);
 
+// app.directive('click-outside', {
+// 	mounted: function (el, binding, vnode) {
+// 		window.event = function (event) {
+// 			// here I check that click was outside the el and his childrens
+// 			if (!(el == event.target || el.contains(event.target))) {
+// 				// and if it did, call method provided in attribute value
+// 				vnode.context[binding.expression](event)
+// 			}
+// 		}
+// 		document.body.addEventListener('click', window.event)
+// 	},
+// 	unmounted: function (el) {
+// 		document.body.removeEventListener('click', window.event)
+// 	}
+// })
+
 app.directive('click-outside', {
-	mounted: function (el, binding, vnode) {
-		window.event = function (event) {
-			// here I check that click was outside the el and his childrens
-			if (!(el == event.target || el.contains(event.target))) {
-				// and if it did, call method provided in attribute value
-				vnode.context[binding.expression](event)
+	mounted(el, binding, vnode) {
+	el.clickOutsideEvent = function(event) {
+			if (!(el === event.target || el.contains(event.target))) {
+				binding.value(event, el);
 			}
-		}
-		document.body.addEventListener('click', window.event)
+	  	};
+		document.body.addEventListener('click', el.clickOutsideEvent);
 	},
-	unmounted: function (el) {
-		document.body.removeEventListener('click', window.event)
+	unmounted(el) {
+		document.body.removeEventListener('click', el.clickOutsideEvent);
 	}
-})
+});
 
 app.directive('on-escape', {
 	beforeMount: function (el, binding, vnode) {
