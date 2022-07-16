@@ -17,20 +17,22 @@ export default {
 			height: window.innerHeight
 		}
 	},
-	created() {
+	created () {
 		window.addEventListener('resize', this.onResize);
 	},
-	destroyed() {
+	destroyed () {
 		window.removeEventListener('resize', this.onResize);
-	},
+	},	
 	methods: {
 		onResize (e) {
-			let elem = document.getElementsByClassName('menu-dropdown')[0]
-			let rect = elem.getBoundingClientRect()
-			let parent = elem.closest('.popover')
-			let rectParent = parent.getBoundingClientRect()
-			if (rect.bottom > window.innerHeight) {
-				elem.style.top = `${window.innerHeight - rectParent.bottom - rect.height}px`
+			if (document.getElementsByClassName('menu-dropdown')[0]) {
+				let elem = document.getElementsByClassName('menu-dropdown')[0]
+				let rect = elem.getBoundingClientRect()
+				let triggeringElem = elem.closest('.popover')
+				let rectTriggeringElem = triggeringElem.getBoundingClientRect()
+				if (rect.bottom > window.innerHeight) {
+					elem.style.top = `${window.innerHeight - rectTriggeringElem.bottom - rect.height}px`
+				}
 			}
 		}
 	}

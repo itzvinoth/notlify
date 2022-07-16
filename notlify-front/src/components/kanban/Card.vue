@@ -9,7 +9,7 @@
 						<vue-feather type="more-horizontal" @click.prevent.stop="showCardMenu($event, card.id)"></vue-feather>
 					</template>
 					<template #body>
-						<card-dropdown v-if="card.id === cardId" v-click-outside="onClickOutside">
+						<card-dropdown v-if="card.id === cardId" :pos="'left'" v-click-outside="onClickOutside">
 							<template #title></template>
 							<template #list>
 								<li><a href="" @click.prevent>Edit</a></li>
