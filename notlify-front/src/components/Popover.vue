@@ -21,7 +21,6 @@ export default {
 		window.addEventListener('resize', this.onResize);
 	},
 	destroyed() {
-		console.log('destroyed')
 		window.removeEventListener('resize', this.onResize);
 	},
 	methods: {

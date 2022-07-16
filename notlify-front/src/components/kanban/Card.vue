@@ -30,6 +30,8 @@ import KanbanApi from "../../api/index"
 import CardDropdown from "@/components/kanban/CardDropdown.vue";
 import Popover from "@/components/Popover.vue";
 
+import { mapGetters, mapActions } from 'vuex';
+
 let draggingEle;
 let isDraggingStarted = false;
 let x = 0;
@@ -54,24 +56,28 @@ export default {
 	},
 	data() {
 		return {
-			cardId: null,
 			content: '',
 			draggingElemHeight: 0
 		}
 	},
+	computed: {
+		...mapGetters('kanban', {
+			cardId: 'cardId'
+		})
+	},
 	methods: {
 		onClickOutside () {
 			if (this.cardId !== null) {
-				this.cardId = null
+				this.$store.dispatch('kanban/getCardId', null)
 				return
 			}
 		},
-		showCardMenu (event, id, columnId) {
+		showCardMenu (event, id) {
 			if (this.cardId === id) {
-				this.cardId = null
+				this.$store.dispatch('kanban/getCardId', null)
 				return
 			}
-			this.cardId = id
+			this.$store.dispatch('kanban/getCardId', id)
 		},
 		onDragStart (event, id) {
 			draggingEle = event.target
