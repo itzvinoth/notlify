@@ -37,6 +37,9 @@
 		position: relative;
 		width: 20px;
 		height: 20px;
+		&:hover {
+			background-color: #eee;
+		}
 	}
 }
 .vue-feather.vue-feather--more-horizontal {
