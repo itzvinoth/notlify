@@ -30,7 +30,7 @@ export default {
 				let rect = elem.getBoundingClientRect()
 				let triggeringElem = elem.closest('.popover')
 				let rectTriggeringElem = triggeringElem.getBoundingClientRect()
-				if (rect.bottom > window.innerHeight) {
+				if ((rect.bottom > window.innerHeight) || (window.innerHeight < (rectTriggeringElem.bottom + rect.height))) {
 					elem.style.top = `${window.innerHeight - rectTriggeringElem.bottom - rect.height}px`
 				}
 			}
