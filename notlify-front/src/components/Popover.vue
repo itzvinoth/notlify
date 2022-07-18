@@ -22,7 +22,7 @@ export default {
 	},
 	destroyed () {
 		window.removeEventListener('resize', this.onResize);
-	},	
+	},
 	methods: {
 		onResize (e) {
 			if (document.getElementsByClassName('menu-dropdown')[0]) {
@@ -32,6 +32,9 @@ export default {
 				let rectTriggeringElem = triggeringElem.getBoundingClientRect()
 				if ((rect.bottom > window.innerHeight) || (window.innerHeight < (rectTriggeringElem.bottom + rect.height))) {
 					elem.style.top = `${window.innerHeight - rectTriggeringElem.bottom - rect.height}px`
+				}
+				if (window.innerHeight < rect.height + 10) {
+					elem.style.top = `0px`
 				}
 			}
 		}
