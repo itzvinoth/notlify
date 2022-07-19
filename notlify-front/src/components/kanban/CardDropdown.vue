@@ -19,6 +19,12 @@ export default {
 			type: String
 		}
 	},
+	created () {
+		window.addEventListener('resize', this.onResize);
+	},
+	destroyed () {
+		window.removeEventListener('resize', this.onResize);
+	},
 	mounted () {
 		let elem = document.getElementsByClassName('menu-dropdown')[0]
 		let rect = elem.getBoundingClientRect()
@@ -58,6 +64,20 @@ export default {
 			let topPosition = 0
 			elem.style.left = `${leftPosition}px`
 			elem.style.top = `${topPosition}px`
+		},
+		onResize (e) {
+			if (document.getElementsByClassName('menu-dropdown')[0]) {
+				let elem = document.getElementsByClassName('menu-dropdown')[0]
+				let rect = elem.getBoundingClientRect()
+				let triggeringElem = elem.closest('.popover')
+				let rectTriggeringElem = triggeringElem.getBoundingClientRect()
+				if ((rect.bottom > window.innerHeight) || (window.innerHeight < (rectTriggeringElem.bottom + rect.height))) {
+					// condition to not let the popover element cross the view port
+					if (window.innerHeight > (rect.height + 40)) {
+						elem.style.top = `${window.innerHeight - rectTriggeringElem.bottom - rect.height}px`
+					}					
+				}
+			}
 		}
 	}
 }
