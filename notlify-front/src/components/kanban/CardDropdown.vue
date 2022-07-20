@@ -17,6 +17,9 @@ export default {
 	props: {
 		pos: {
 			type: String
+		},
+		onWindowResize: {
+			type: String
 		}
 	},
 	created () {
@@ -82,13 +85,21 @@ export default {
 			if ((rect.bottom > window.innerHeight) || (window.innerHeight < (rectTriggeringElem.bottom + rect.height))) {
 				// condition to not let the popover element cross the viewport vertically
 				if (window.innerHeight > (rect.height + 40)) {
-					elem.style.top = `${window.innerHeight - rectTriggeringElem.bottom - rect.height}px`
-				}					
+					if (this.onWindowResize === 'adjustable') {
+						this.setTop(elem, rect)
+					} else if (this.onWindowResize === 'movable') {
+						elem.style.top = `${window.innerHeight - rectTriggeringElem.bottom - rect.height}px`
+					}
+				}
 			}
 			if ((rect.right > window.innerWidth) || (window.innerWidth < (rectTriggeringElem.right + rect.width))) {
 				// condition to not let the popover element cross the viewport horizontally
 				if (window.innerWidth > (rect.width + 20)) {
-					elem.style.left = `${window.innerWidth - rectTriggeringElem.right - rect.width}px`
+					if (this.onWindowResize === 'adjustable') {
+						this.setLeft(elem, rect)
+					} else if (this.onWindowResize === 'movable') {
+						elem.style.left = `${window.innerWidth - rectTriggeringElem.right - rect.width}px`
+					}
 				}
 			}
 		}
