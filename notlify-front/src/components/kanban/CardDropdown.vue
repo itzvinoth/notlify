@@ -26,25 +26,29 @@ export default {
 		window.removeEventListener('resize', this.onResize);
 	},
 	mounted () {
+		let pos = this.pos
 		let elem = document.getElementsByClassName('menu-dropdown')[0]
 		let rect = elem.getBoundingClientRect()
-		if (this.pos === 'top') {
-			this.setTop(elem, rect)
-		} else if (this.pos === 'bottom') {
-			this.setBottom(elem, rect)
-		} else if (this.pos === 'right') {
-			this.setRight(elem, rect)
-		} else if (this.pos === 'left') {
-			this.setLeft(elem, rect)
-		}
+		this.setPosition(pos, elem, rect)
 		// check if the "menu-dropdown" is in viewport
 		if (!isInViewport(elem)) {
 			let triggeringElem = elem.closest('.popover')
 			let rectTriggeringElem = triggeringElem.getBoundingClientRect()
-			this.setElementPosition (elem, rect, rectTriggeringElem)
+			this.setPopoverPosition (elem, rect, rectTriggeringElem)
 		}
 	},
 	methods: {
+		setPosition (pos, elem, rect) {
+			if (pos === 'top') {
+				this.setTop(elem, rect)
+			} else if (pos === 'bottom') {
+				this.setBottom(elem, rect)
+			} else if (pos === 'right') {
+				this.setRight(elem, rect)
+			} else if (pos === 'left') {
+				this.setLeft(elem, rect)
+			}
+		},
 		setTop (elem, rect) {
 			let topPosition = (rect.height + 10) * -1
 			elem.style.top = `${topPosition}px`
@@ -71,17 +75,18 @@ export default {
 				let rect = elem.getBoundingClientRect()
 				let triggeringElem = elem.closest('.popover')
 				let rectTriggeringElem = triggeringElem.getBoundingClientRect()
-				this.setElementPosition (elem, rect, rectTriggeringElem)
+				this.setPopoverPosition (elem, rect, rectTriggeringElem)
 			}
 		},
-		setElementPosition (elem, rect, rectTriggeringElem) {
+		setPopoverPosition (elem, rect, rectTriggeringElem) {
 			if ((rect.bottom > window.innerHeight) || (window.innerHeight < (rectTriggeringElem.bottom + rect.height))) {
-				// condition to not let the popover element cross the view port
+				// condition to not let the popover element cross the viewport vertically
 				if (window.innerHeight > (rect.height + 40)) {
 					elem.style.top = `${window.innerHeight - rectTriggeringElem.bottom - rect.height}px`
 				}					
 			}
 			if ((rect.right > window.innerWidth) || (window.innerWidth < (rectTriggeringElem.right + rect.width))) {
+				// condition to not let the popover element cross the viewport horizontally
 				if (window.innerWidth > (rect.width + 20)) {
 					elem.style.left = `${window.innerWidth - rectTriggeringElem.right - rect.width}px`
 				}
