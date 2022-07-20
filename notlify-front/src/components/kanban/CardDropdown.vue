@@ -41,17 +41,7 @@ export default {
 		if (!isInViewport(elem)) {
 			let triggeringElem = elem.closest('.popover')
 			let rectTriggeringElem = triggeringElem.getBoundingClientRect()
-			if ((rect.bottom > window.innerHeight) || (window.innerHeight < (rectTriggeringElem.bottom + rect.height))) {
-				// condition to not let the popover element cross the view port
-				if (window.innerHeight > (rect.height + 40)) {
-					elem.style.top = `${window.innerHeight - rectTriggeringElem.bottom - rect.height}px`
-				}					
-			}
-			if ((rect.right > window.innerWidth) || (window.innerWidth < (rectTriggeringElem.right + rect.width))) {
-				if (window.innerWidth > (rect.width + 20)) {
-					elem.style.left = `${window.innerWidth - rectTriggeringElem.right - rect.width}px`
-				}
-			}
+			this.setElementPosition (elem, rect, rectTriggeringElem)
 		}
 	},
 	methods: {
@@ -81,16 +71,19 @@ export default {
 				let rect = elem.getBoundingClientRect()
 				let triggeringElem = elem.closest('.popover')
 				let rectTriggeringElem = triggeringElem.getBoundingClientRect()
-				if ((rect.bottom > window.innerHeight) || (window.innerHeight < (rectTriggeringElem.bottom + rect.height))) {
-					// condition to not let the popover element cross the view port
-					if (window.innerHeight > (rect.height + 40)) {
-						elem.style.top = `${window.innerHeight - rectTriggeringElem.bottom - rect.height}px`
-					}					
-				}
-				if ((rect.right > window.innerWidth) || (window.innerWidth < (rectTriggeringElem.right + rect.width))) {
-					if (window.innerWidth > (rect.width + 20)) {
-						elem.style.left = `${window.innerWidth - rectTriggeringElem.right - rect.width}px`
-					}
+				this.setElementPosition (elem, rect, rectTriggeringElem)
+			}
+		},
+		setElementPosition (elem, rect, rectTriggeringElem) {
+			if ((rect.bottom > window.innerHeight) || (window.innerHeight < (rectTriggeringElem.bottom + rect.height))) {
+				// condition to not let the popover element cross the view port
+				if (window.innerHeight > (rect.height + 40)) {
+					elem.style.top = `${window.innerHeight - rectTriggeringElem.bottom - rect.height}px`
+				}					
+			}
+			if ((rect.right > window.innerWidth) || (window.innerWidth < (rectTriggeringElem.right + rect.width))) {
+				if (window.innerWidth > (rect.width + 20)) {
+					elem.style.left = `${window.innerWidth - rectTriggeringElem.right - rect.width}px`
 				}
 			}
 		}
