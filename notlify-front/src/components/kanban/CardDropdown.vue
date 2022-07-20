@@ -47,6 +47,11 @@ export default {
 					elem.style.top = `${window.innerHeight - rectTriggeringElem.bottom - rect.height}px`
 				}					
 			}
+			if ((rect.right > window.innerWidth) || (window.innerWidth < (rectTriggeringElem.right + rect.width))) {
+				if (window.innerWidth > (rect.width + 20)) {
+					elem.style.left = `${window.innerWidth - rectTriggeringElem.right - rect.width}px`
+				}
+			}
 		}
 	},
 	methods: {
@@ -81,6 +86,11 @@ export default {
 					if (window.innerHeight > (rect.height + 40)) {
 						elem.style.top = `${window.innerHeight - rectTriggeringElem.bottom - rect.height}px`
 					}					
+				}
+				if ((rect.right > window.innerWidth) || (window.innerWidth < (rectTriggeringElem.right + rect.width))) {
+					if (window.innerWidth > (rect.width + 20)) {
+						elem.style.left = `${window.innerWidth - rectTriggeringElem.right - rect.width}px`
+					}
 				}
 			}
 		}
