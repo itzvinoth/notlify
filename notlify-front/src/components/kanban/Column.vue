@@ -10,7 +10,7 @@
 			<div class="card-composer">
 				<span v-if="column.id !== columnId" @click="cardComposer('add', column.id)" class="add-card">Add a card</span>
 				<div v-if="isComposingNewCard && column.id === columnId">
-					<input type="textarea" class="card-composer__textarea" v-model="newCardTitle" :ref="`cardtitle-${column.id}`"  @keypress.enter="cardComposer('save', column.id)" placeholder="Enter a card title"/>
+					<textarea class="card-composer__textarea" v-model="newCardTitle" :ref="`cardtitle-${column.id}`"  @keypress.enter="cardComposer('save', column.id)" placeholder="Enter a card title" />
 					<button @click="cardComposer('save', column.id)" class="save-card">Save</button>
 				</div>
 			</div>

@@ -57,7 +57,7 @@ export default {
 	data() {
 		return {
 			content: '',
-			draggingElemHeight: 0			
+			draggingElemHeight: 0
 		}
 	},
 	computed: {
