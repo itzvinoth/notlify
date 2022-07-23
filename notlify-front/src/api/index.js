@@ -7,12 +7,12 @@ export default class KanbanApi {
 		return column.cards;
 	}
 
-	static insertCard(columnId, content) {
+	static insertCard(columnId, cardId) {
 		let data = read();
 		let column = data.find(column => column.id === columnId);
 		let card = {
-			id: Math.floor(Math.random() * 100000),
-			content
+			id: cardId,
+			content: ''
 		};
 
 		if (!column) {

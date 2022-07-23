@@ -3,7 +3,7 @@
 		<drop-zone :dragging-elem-height="draggingElemHeight" />
 		<div class="kb-card__container" v-for="card in cards" :key="card.id" :data-id="card.id">
 			<div class="kb__card" draggable="true" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent>
-				<div class="kb__card--input" @blur="onBlur($event, card.id)" :contenteditable="!card.content">{{ card.title }}</div>
+				<div class="kb__card--input" @blur="onBlur($event, card.id)">{{ card.title }}</div>
 				<popover>
 					<template #trigger>
 						<vue-feather type="more-horizontal" @click.prevent.stop="showCardMenu($event, card.id)"></vue-feather>
@@ -20,7 +20,7 @@
 				</popover>
 			</div>
 			<drop-zone :cardId="card.id" :dragging-elem-height="draggingElemHeight" />
-		</div>
+		</div>		
 	</div>
 </template>
 
@@ -57,7 +57,7 @@ export default {
 	data() {
 		return {
 			content: '',
-			draggingElemHeight: 0
+			draggingElemHeight: 0			
 		}
 	},
 	computed: {
@@ -131,6 +131,14 @@ export default {
 			// vuex commit update kanban
 			this.$store.dispatch('kanban/getColumns')
 		}
+		// addCard (id) {
+		// 	let newCard = {
+		// 		id: this.lists[key].length,
+		// 		title: this.lists[key]['newCard']
+		// 	}
+		// 	this.lists[key]['cards'].push(newCard)
+		// 	this.resetting(key)
+		// }
 	},
 }
 </script>

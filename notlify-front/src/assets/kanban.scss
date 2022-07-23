@@ -30,6 +30,35 @@
 	user-select: none;
     // margin-bottom: 5px;
 }
+.card-composer {
+	.add-card {
+		width: 100%;
+		box-sizing: border-box;
+		border: 1px solid transparent;
+		padding: 5px;
+		display: inline-block;
+		background-color: #3498db;
+		color: #fff;
+		cursor: pointer;
+		border-radius: 3px;
+		-webkit-transition: background .2s;
+		transition: background .2s;
+		&:hover {
+			opacity: 0.9;
+		}
+	}
+	.card-composer__textarea {
+		overflow: hidden;
+		overflow-wrap: break-word;
+		resize: none;
+		height: 54px;
+		max-height: 162px;
+		min-height: 54px;
+		background: none;
+		border: none;
+		box-shadow: none;
+	}
+}
 .popover-container {
 	position: absolute;
 	right: 5px;
