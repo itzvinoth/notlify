@@ -2,7 +2,7 @@
 	<div class="kb__column--cards">
 		<drop-zone :dragging-elem-height="draggingElemHeight" />
 		<div class="kb-card__container" v-for="card in cards" :key="card.id" :data-id="card.id">
-			<div class="kb__card" draggable="true" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent>
+			<div class="kb__card" draggable="true" @click="showModal = true" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent>
 				<div class="kb__card--input" @blur="onBlur($event, card.id)">{{ card.title }}</div>
 				<popover>
 					<template #trigger>
@@ -20,7 +20,15 @@
 				</popover>
 			</div>
 			<drop-zone :cardId="card.id" :dragging-elem-height="draggingElemHeight" />
-		</div>		
+		</div>
+		<Teleport to="body">
+			<!-- use the modal component, pass in the prop -->
+			<modal :show="showModal" @close="closeModal">
+				<template #header>
+					<h3>custom header</h3>
+				</template>
+			</modal>
+		</Teleport>
 	</div>
 </template>
 
@@ -29,6 +37,7 @@ import DropZone from "@/components/kanban/DropZone.vue";
 import KanbanApi from "../../api/index"
 import CardDropdown from "@/components/kanban/CardDropdown.vue";
 import Popover from "@/components/Popover.vue";
+import Modal from "@/components/Modal.vue";
 
 import { mapGetters, mapActions } from 'vuex';
 
@@ -44,7 +53,8 @@ export default {
 	components: {
 		'drop-zone': DropZone,
 		'card-dropdown': CardDropdown,
-		'popover': Popover
+		'popover': Popover,
+		Modal
 	},
 	props: {
 		cards: {
@@ -57,7 +67,8 @@ export default {
 	data() {
 		return {
 			content: '',
-			draggingElemHeight: 0
+			draggingElemHeight: 0,
+			showModal: false
 		}
 	},
 	computed: {
@@ -130,6 +141,10 @@ export default {
 			KanbanApi.deleteCard(id)
 			// vuex commit update kanban
 			this.$store.dispatch('kanban/getColumns')
+		},
+		closeModal () {
+			console.log('close modal')
+			this.showModal = false
 		}
 		// addCard (id) {
 		// 	let newCard = {

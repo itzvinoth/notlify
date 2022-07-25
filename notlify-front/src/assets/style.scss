@@ -4,6 +4,7 @@
 	font-weight: normal;
 	font-family: 'Roboto', sans-serif;
 	color: #222;
+	height: 100vh;
 }
 
 header {
@@ -66,3 +67,4 @@ nav a:first-of-type {
 @import "./kanban";
 @import "./workspace";
 @import "./transition";
+@import "./components/modal";
