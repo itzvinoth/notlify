@@ -21,14 +21,7 @@
 			</div>
 			<drop-zone :cardId="card.id" :dragging-elem-height="draggingElemHeight" />
 		</div>
-		<Teleport to="body">
-			<!-- use the modal component, pass in the prop -->
-			<modal :show="showModal" @close="closeModal">
-				<template #header>
-					<h3>custom header</h3>
-				</template>
-			</modal>
-		</Teleport>
+		<card-modal :show="showModal" @update="onUpdate"/>
 	</div>
 </template>
 
@@ -38,6 +31,7 @@ import KanbanApi from "../../api/index"
 import CardDropdown from "@/components/kanban/CardDropdown.vue";
 import Popover from "@/components/Popover.vue";
 import Modal from "@/components/Modal.vue";
+import CardModal from "@/components/kanban/CardModal.vue";
 
 import { mapGetters, mapActions } from 'vuex';
 
@@ -54,6 +48,7 @@ export default {
 		'drop-zone': DropZone,
 		'card-dropdown': CardDropdown,
 		'popover': Popover,
+		'card-modal': CardModal,
 		Modal
 	},
 	props: {
@@ -77,6 +72,9 @@ export default {
 		})
 	},
 	methods: {
+		onUpdate () {
+			this.showModal = false
+		},
 		onClickingOutside () {
 			if (this.cardId !== null) {
 				this.$store.dispatch('kanban/getCardId', null)
