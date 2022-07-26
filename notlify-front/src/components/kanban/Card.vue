@@ -2,7 +2,7 @@
 	<div class="kb__column--cards">
 		<drop-zone :dragging-elem-height="draggingElemHeight" />
 		<div class="kb-card__container" v-for="card in cards" :key="card.id" :data-id="card.id">
-			<div class="kb__card" draggable="true" @click="showModal = true" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent>
+			<div class="kb__card" draggable="true" @click.self="showModal = true" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent>
 				<div class="kb__card--input" @blur="onBlur($event, card.id)">{{ card.title }}</div>
 				<popover>
 					<template #trigger>
@@ -143,7 +143,6 @@ export default {
 			this.$store.dispatch('kanban/getColumns')
 		},
 		closeModal () {
-			console.log('close modal')
 			this.showModal = false
 		}
 		// addCard (id) {
