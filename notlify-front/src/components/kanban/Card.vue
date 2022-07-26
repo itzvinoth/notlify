@@ -3,7 +3,7 @@
 		<drop-zone :dragging-elem-height="draggingElemHeight" />
 		<div class="kb-card__container" v-for="card in cards" :key="card.id" :data-id="card.id">
 			<div class="kb__card" draggable="true" @click.self="showModal = true" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent>
-				<div class="kb__card--input" @blur="onBlur($event, card.id)">{{ card.title }}</div>
+				{{ card.title }}
 				<popover>
 					<template #trigger>
 						<vue-feather type="more-horizontal" @click.prevent.stop="showCardMenu($event, card.id)"></vue-feather>
