@@ -1,0 +1,30 @@
+.card-detail__modal {
+    .side-panel {
+        float: left;
+        display: block;
+    }
+    .main-panel {
+        float: right;
+        display: block;
+    }
+    .side-panel .button-action {
+        background-color: #f5f5f5;
+        color: #222;
+        border: none;
+        border-radius: 3px;
+        box-shadow: none;
+        box-sizing: border-box;
+        cursor: pointer;
+        display: block;
+        height: 32px;
+        margin-top: 8px;
+        max-width: 300px;
+        // overflow: hidden;
+        padding: 6px 12px;
+        // position: relative;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        user-select: none;
+        // white-space: nowrap;
+    }
+}

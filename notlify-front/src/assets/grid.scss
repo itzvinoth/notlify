@@ -1,0 +1,59 @@
+.col,
+.cols {
+    width: 100%;
+    float: left;
+    box-sizing: border-box;
+}
+.col,
+.cols {
+    margin-left: 2%;
+}
+.col:first-child,
+.cols:first-child {
+    margin-left: 0;
+}
+.half.cols {
+    width: 2.25%;
+}
+.one.col,
+.one.cols {
+    width: 6.5%;
+}
+.one-and-half.cols {
+    width: 10.75%;
+}
+.two.cols {
+    width: 15%;
+}
+.three.cols {
+    width: 23.5%;
+}
+.four.cols {
+    width: 32%;
+}
+.five.cols {
+    width: 40.5%;
+}
+.six.cols {
+    width: 49%;
+}
+
+.seven.cols {
+    width: 57.5%;
+}
+.eight.cols {
+    width: 66%;
+}
+.nine.cols {
+    width: 74.5%;
+}
+.ten.cols {
+    width: 83%;
+}
+.eleven.cols {
+    width: 91.5%;
+}
+.twelve.cols {
+    width: 100%;
+    margin-left: 0;
+}
