@@ -2,9 +2,9 @@
     <div>
         <Teleport to="body">
 			<!-- use the modal component, pass in the prop -->
-			<modal :show="show" @close="closeModal">
+			<modal :show="show" @close="onCloseModal">
 				<template #header>
-					<h3>custom header</h3>
+					<h3>{{ cardDetail.title }}</h3>
 				</template>
 			</modal>
 		</Teleport>
@@ -21,10 +21,13 @@ export default {
     props: {
         show: {
             type: Boolean
+        },
+        cardDetail: {
+            type: Object
         }
     },
     methods: {
-        closeModal () {
+        onCloseModal () {
 			this.$emit('update')
 		}
     }

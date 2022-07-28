@@ -2,7 +2,7 @@
 	<div class="kb__column--cards">
 		<drop-zone :dragging-elem-height="draggingElemHeight" />
 		<div class="kb-card__container" v-for="card in cards" :key="card.id" :data-id="card.id">
-			<div class="kb__card" draggable="true" @click.self="showModal = true" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent>
+			<div class="kb__card" draggable="true" @click.self="onCardClick(card)" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent>
 				{{ card.title }}
 				<popover>
 					<template #trigger>
@@ -21,7 +21,7 @@
 			</div>
 			<drop-zone :cardId="card.id" :dragging-elem-height="draggingElemHeight" />
 		</div>
-		<card-modal :show="showModal" @update="onUpdate"/>
+		<card-modal :show="showModal" :card-detail="cardDetail" @update="onUpdate" />
 	</div>
 </template>
 
@@ -63,7 +63,8 @@ export default {
 		return {
 			content: '',
 			draggingElemHeight: 0,
-			showModal: false
+			showModal: false,
+			cardDetail: null
 		}
 	},
 	computed: {
@@ -132,16 +133,17 @@ export default {
 		onDblClick (event, id) {
 			let check = confirm('Are you sure you want to delete this card')
 			if (check) {
-				this.deleteCard(id)
+				this.onDeleteCard(id)
 			}
 		},
-		deleteCard (id) {
+		onDeleteCard (id) {
 			KanbanApi.deleteCard(id)
 			// vuex commit update kanban
 			this.$store.dispatch('kanban/getColumns')
 		},
-		closeModal () {
-			this.showModal = false
+		onCardClick (card) {
+			this.showModal = true
+			this.cardDetail = card
 		}
 		// addCard (id) {
 		// 	let newCard = {
