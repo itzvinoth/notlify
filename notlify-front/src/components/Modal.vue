@@ -13,11 +13,10 @@
 
 					<div class="modal-footer">
 						<slot name="footer">
-							default footer
-							<button
+							<!-- <button
 								class="modal-default-button"
 								@click="$emit('close')"
-							>OK</button>
+							>Close</button> -->
 						</slot>
 					</div>
 				</div>
