@@ -1,10 +1,11 @@
 @import "./grid";
+@import "./colors";
 #app {
 	margin: 0 auto;
 	padding: 2px;
 	font-weight: normal;
 	font-family: 'Roboto', sans-serif;
-	color: #222;
+	color: $eerie-black;
 	height: 100vh;
 }
 
@@ -14,7 +15,7 @@ header {
 }
 
 a:hover {
-	color: blue;
+	color: $blue;
 }
 
 nav {

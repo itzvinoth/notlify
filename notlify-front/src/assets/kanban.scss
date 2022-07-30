@@ -15,14 +15,17 @@
 	padding: 10px;
 	min-height: 10px;
 	border-radius: 3px;
+	& > .vue-feather.vue-feather--more-horizontal {
+		right: 10px;
+	}
 }
 .kb__column--title {
 	font-weight: 500;
 }
 .kb__card {
 	position: relative;
-	background-color: #FFF;
-	color: #240202;
+	background-color: $white;
+	color: $eerie-black;
 	padding: 15px 15px 15px 10px;
 	border-radius: 3px;
 	// margin-bottom: 10px;
@@ -38,7 +41,7 @@
 		padding: 5px;
 		display: inline-block;
 		background-color: #3498db;
-		color: #fff;
+		color: $white;
 		cursor: pointer;
 		border-radius: 3px;
 		-webkit-transition: background .2s;
@@ -59,7 +62,7 @@
 		box-shadow: none;
 		width: 100%;
 		padding: 0;
-		background-color: #FFF;
+		background-color: $white;
 		box-sizing: border-box;
 		padding: 5px 8px;
 	}
@@ -89,7 +92,7 @@
 	// right: -145px;
 	// top: 25px;
 	z-index: 10;
-	background-color: #FFF;
+	background-color: $white;
 	padding: 10px;
 	border-radius: 3px;
 	box-shadow: 0 8px 16px -4px #eaecef, 0 0 0 1px #eaecef;
@@ -105,7 +108,7 @@
 			text-decoration: none;
 			font-size: 14px;
 			line-height: 21px;
-			color: #222;
+			color: $eerie-black;
 			padding: 5px;
 			display: inline-block;
 			width: -moz-available;
@@ -125,7 +128,7 @@
 .kb__dropzone.placeholder {
 	transition: background 0.15s, height 0.15s;
 	height: 28px;
-	background: #FFF;
+	background: $white;
 	margin-bottom: 10px;
 }
 // .kb__card--input.placeholder {

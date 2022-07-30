@@ -11,7 +11,7 @@
 		padding: 5px;
 		display: inline-block;
 		background-color: #3498db;
-		color: #fff;
+		color: $white;
 		cursor: pointer;
 		border-radius: 3px;
 		-webkit-transition: background .2s;
@@ -26,7 +26,7 @@
 		padding: 5px;
 		cursor: pointer;
 		background-color: #3498db;
-		color: #fff;
+		color: $white;
 		display: inline-block;
 		&:hover {
 			opacity: 0.8;
