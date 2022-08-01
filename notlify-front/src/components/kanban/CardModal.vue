@@ -18,11 +18,17 @@
                             <div class="add-checklist" v-if="creatingNewChecklist">
                                 <div>
                                     <label>Title</label>
-                                    <input type="text" />
+                                    <input type="text" v-model="checklistTitle"/>
                                 </div>
                                 <div>
                                     <button @click="addChecklistItem">Add</button>
                                     <button @click="cancelChecklistItem">Cancel</button>
+                                </div>
+                            </div>
+                            <div class="checklist-list" v-if="checklistItems.length > 0">
+                                <div class="checklist-list__item" v-for="item in checklistItems" :key="item.id">
+                                    <div>{{ item.title }}</div>
+                                    <button @click="addItem">Add an item</button>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +68,9 @@ export default {
     data () {
         return {
             isChecklistExist: false,
-            creatingNewChecklist: false
+            creatingNewChecklist: false,
+            checklistTitle: '',
+            checklistItems: []
         }
     },
     methods: {
@@ -73,10 +81,20 @@ export default {
             this.creatingNewChecklist = true
             console.log('add checklist')
         },
-        addChecklistItem () {},
+        addChecklistItem () {
+            let detail = {}
+            detail.title = this.checklistTitle
+            detail.id = Math.floor(Math.random() * 100000)
+            this.checklistItems.push(detail)
+            this.reset()
+        },
         cancelChecklistItem () {
             this.creatingNewChecklist = false
         },
+        reset () {
+            this.checklistTitle = ''
+            this.creatingNewChecklist = false
+        }
     }
 }
 </script>
