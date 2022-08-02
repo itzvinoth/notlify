@@ -34,7 +34,7 @@
                                         </div>
                                     </div>
                                     <div class="new-checklist-edit__container" v-if="item.showEdit">
-                                        <div><input type="text" v-model="itemInput" placeholder="Add an item" /></div>
+                                        <div><input type="text" v-model="item.input" placeholder="Add an item" /></div>
                                         <button type="button" @click="addItem(checklistIndex)">Add</button>
                                     </div>
                                     <button v-if="!item.showEdit" @click="showItemAdd(checklistIndex)">Add an item</button>
@@ -79,8 +79,7 @@ export default {
             isChecklistExist: false,
             creatingNewChecklist: false,
             checklistTitle: '',
-            checklistItems: [],
-            itemInput: ''
+            checklistItems: []
         }
     },
     methods: {
@@ -97,6 +96,7 @@ export default {
             detail.id = Math.floor(Math.random() * 100000000)
             detail.rows = []
             detail.showEdit = false
+            detail.input = ''
             this.checklistItems.push(detail)
             this.reset()
         },
@@ -114,8 +114,11 @@ export default {
         addItem (checklistIndex) {
             let checklistItems = this.checklistItems[checklistIndex]
             let rows = checklistItems['rows']
-            rows.push(this.itemInput)
-            this.itemInput = ''
+            let input = checklistItems['input']
+            rows.push(input)
+            this.$nextTick(() => {
+                this.checklistItems[checklistIndex]['input'] = ''
+            })
         }
     }
 }
