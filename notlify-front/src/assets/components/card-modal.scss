@@ -30,9 +30,11 @@
 
     .addto-card__container .checklist__container {
         .checklist-list {
-            border: 1px solid rgba(60, 60, 60, 0.12);
-            padding: 10px;
-            border-radius: 3px;
+            .checklist-list__item {
+                border: 1px solid rgba(60, 60, 60, 0.12);
+                padding: 10px;
+                border-radius: 3px;
+            }
         }
     }
 }

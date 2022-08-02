@@ -26,9 +26,18 @@
                                 </div>
                             </div>
                             <div class="checklist-list" v-if="checklistItems.length > 0">
-                                <div class="checklist-list__item" v-for="item in checklistItems" :key="item.id">
+                                <div class="checklist-list__item" v-for="(item, checklistIndex) in checklistItems" :key="item.id">
                                     <div>{{ item.title }}</div>
-                                    <button @click="addItem">Add an item</button>
+                                    <div class="checklist-row__container">
+                                        <div class="checklist-row__item" v-for="(row, rowIndex) in item.rows" :key="rowIndex">
+                                            <div><input type="checkbox" /> {{ row }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="new-checklist-edit__container" v-if="item.showEdit">
+                                        <div><input type="text" v-model="itemInput" placeholder="Add an item" /></div>
+                                        <button type="button" @click="addItem(checklistIndex)">Add</button>
+                                    </div>
+                                    <button v-if="!item.showEdit" @click="showItemAdd(checklistIndex)">Add an item</button>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +79,8 @@ export default {
             isChecklistExist: false,
             creatingNewChecklist: false,
             checklistTitle: '',
-            checklistItems: []
+            checklistItems: [],
+            itemInput: ''
         }
     },
     methods: {
@@ -84,7 +94,9 @@ export default {
         addChecklistItem () {
             let detail = {}
             detail.title = this.checklistTitle
-            detail.id = Math.floor(Math.random() * 100000)
+            detail.id = Math.floor(Math.random() * 100000000)
+            detail.rows = []
+            detail.showEdit = false
             this.checklistItems.push(detail)
             this.reset()
         },
@@ -94,6 +106,16 @@ export default {
         reset () {
             this.checklistTitle = ''
             this.creatingNewChecklist = false
+        },
+        showItemAdd (checklistIndex) {
+            let checklistItems = this.checklistItems[checklistIndex]
+            checklistItems['showEdit'] = true
+        },
+        addItem (checklistIndex) {
+            let checklistItems = this.checklistItems[checklistIndex]
+            let rows = checklistItems['rows']
+            rows.push(this.itemInput)
+            this.itemInput = ''
         }
     }
 }
