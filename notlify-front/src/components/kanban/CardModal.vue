@@ -88,7 +88,6 @@ export default {
 		},
         addNewSection () {
             this.creatingNewSection = true
-            console.log('add checklist')
         },
         addChecklistItem () {
             let detail = {}
