@@ -10,12 +10,12 @@
                 <template #body>
                     <div class="row addto-card__container">
                         <div class="checklist__container">
-                            <div class="empty-checklist" v-if="!creatingNewChecklist && !isChecklistExist">
+                            <div class="empty-checklist" v-if="!creatingNewSection && !isChecklistExist">
                                 <button
-                                    @click="addNewChecklist"
-                                >Add checklist</button>
+                                    @click="addNewSection"
+                                >Add section</button>
                             </div>
-                            <div class="add-checklist" v-if="creatingNewChecklist">
+                            <div class="add-checklist" v-if="creatingNewSection">
                                 <div>
                                     <label>Title</label>
                                     <input type="text" v-model="checklistTitle"/>
@@ -77,7 +77,7 @@ export default {
     data () {
         return {
             isChecklistExist: false,
-            creatingNewChecklist: false,
+            creatingNewSection: false,
             checklistTitle: '',
             checklistItems: []
         }
@@ -86,8 +86,8 @@ export default {
         onCloseModal () {
 			this.$emit('update')
 		},
-        addNewChecklist () {
-            this.creatingNewChecklist = true
+        addNewSection () {
+            this.creatingNewSection = true
             console.log('add checklist')
         },
         addChecklistItem () {
@@ -101,11 +101,11 @@ export default {
             this.reset()
         },
         cancelChecklistItem () {
-            this.creatingNewChecklist = false
+            this.creatingNewSection = false
         },
         reset () {
             this.checklistTitle = ''
-            this.creatingNewChecklist = false
+            this.creatingNewSection = false
         },
         showItemAdd (checklistIndex) {
             let checklistItems = this.checklistItems[checklistIndex]
