@@ -21,7 +21,7 @@
 			</div>
 			<drop-zone :cardId="card.id" :dragging-elem-height="draggingElemHeight" />
 		</div>
-		<card-modal :show="showModal" :card-detail="cardDetail" @update="onUpdate" />
+		<card-modal :show="showModal" :card-detail="cardDetail" :column-title="columnTitle" @update="onUpdate" />
 	</div>
 </template>
 
@@ -57,6 +57,9 @@ export default {
 		},
 		columnId: {
 			type: Number
+		},
+		columnTitle: {
+			type: String
 		}
 	},
 	data() {

@@ -5,7 +5,7 @@
 			<div class="kb__column--title">
 				{{ column.title }}
 			</div>
-			<card :cards="column.cards" :column-id="column.id" />
+			<card :cards="column.cards" :column-id="column.id" :column-title="column.title" />
 			<!-- <button class="kb__add-item" type="button" @click="addCard(column.id)">Add a card</button> -->
 			<div class="card-composer">
 				<span v-if="column.id !== columnId" @click="cardComposer('add', column.id)" class="add-card">Add a card</span>

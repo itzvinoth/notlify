@@ -4,7 +4,7 @@
 			<!-- use the modal component, pass in the prop -->
 			<modal :show="show" @close="onCloseModal" class="card-detail__modal">
 				<template #header>
-                    <label>Netlify / More to try</label>
+                    <label>Netlify / {{ columnTitle }}</label>
 					<h2>{{ cardDetail.title }}</h2>
 				</template>
                 <template #body>
@@ -72,7 +72,10 @@ export default {
         },
         cardDetail: {
             type: Object
-        }
+        },
+		columnTitle: {
+			type: String
+		}
     },
     data () {
         return {
