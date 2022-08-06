@@ -15,6 +15,7 @@ var tinytabs = function(container, newOpts) {
         titleClass: "title",
         selClass: "sel"
     };
+    var defaultTab = null;
 
     var tabs = [], sections = {};
         opts = Object.assign(opts, newOpts);
@@ -30,69 +31,73 @@ var tinytabs = function(container, newOpts) {
 
         // Create individual tabs from sections.
         var all = container.querySelectorAll(" ." + opts.sectionClass);
-        Array.from(all).map(section => {
-        var id = section.getAttribute("id"),
-            title = section.querySelector("." + opts.titleClass);
+        Array.from(all).forEach((section, i) => {
+            var id = section.getAttribute("id"),
+                title = section.querySelector("." + opts.titleClass),
+                isDefault = section.hasAttribute("default");
 
-        // Tab section has to have an ID.
-        if (!id) return true;
+            // Tab section has to have an ID.
+            if (!id) return true;
 
-        sections[id] = section;
-        opts.hideTitle ? hide(title) : null;
+            // Select a default tab
+            if (i === 0 || isDefault) defaultTab = id;
 
-        // Create close element inside tab.
-        var span = document.createElement("span");
-        span.classList.add("close");
-        span.setAttribute("data-id", "close-" + id);
-        span.innerHTML = "×";
+            sections[id] = section;
+            opts.hideTitle ? hide(title) : null;
 
-        // Create the tab handle.
-        var a = document.createElement("a");
-        a.classList.add(opts.tabClass, "tab-" + id);
-        a.setAttribute("href", "#tab-" + id);
-        a.setAttribute("data-id", id);
-        a.innerHTML = title.innerHTML;
-        if (opts.closable) {
-            a.appendChild(span);
-        }
+            // Create close element inside tab.
+            var span = document.createElement("span");
+            span.classList.add("close");
+            span.setAttribute("data-id", "close-" + id);
+            span.innerHTML = "×";
 
-        span.onclick = function(event) {
-
-            // get selected tab
-            var getDataId = this.getAttribute("data-id").split("-")[1],
-                currentTab = document.querySelector(".tab-"+getDataId),
-                nextTab = currentTab.nextElementSibling,
-                prevTab = currentTab.previousElementSibling,
-                section = document.querySelector("#"+getDataId);
-
-            // remove current tab and section container
-            currentTab.parentNode.removeChild(currentTab);
-            section.parentNode.removeChild(section);
-
-            // callback on close
-            opts.onClose && opts.onClose(id);
-
-            // choose next tab on closing current tab if not choose prev tab
-            if (nextTab) {
-                activate(nextTab.getAttribute("data-id"));
-            } else if (prevTab) {
-                activate(prevTab.getAttribute("data-id"));
+            // Create the tab handle.
+            var a = document.createElement("a");
+            a.classList.add(opts.tabClass, "tab-" + id);
+            a.setAttribute("href", "#tab-" + id);
+            a.setAttribute("data-id", id);
+            a.innerHTML = title.innerHTML;
+            if (opts.closable) {
+                a.appendChild(span);
             }
 
-            // prevent parent's onclick event from firing when close elem is clicked
-            // technically preventing event bubbling
-            event.stopPropagation();
-            // tells the browser to stop following events
-            return false;
-        };
+            span.onclick = function(event) {
 
-        a.onclick = function() {
-            activate(this.getAttribute("data-id"));
-            return opts.anchor;
-        };
+                // get selected tab
+                var getDataId = this.getAttribute("data-id").split("-")[1],
+                    currentTab = document.querySelector(".tab-"+getDataId),
+                    nextTab = currentTab.nextElementSibling,
+                    prevTab = currentTab.previousElementSibling,
+                    section = document.querySelector("#"+getDataId);
 
-        // Add the tab to the tabs list.
-        tabs.appendChild(a);
+                // remove current tab and section container
+                currentTab.parentNode.removeChild(currentTab);
+                section.parentNode.removeChild(section);
+
+                // callback on close
+                opts.onClose && opts.onClose(id);
+
+                // choose next tab on closing current tab if not choose prev tab
+                if (nextTab) {
+                    activate(nextTab.getAttribute("data-id"));
+                } else if (prevTab) {
+                    activate(prevTab.getAttribute("data-id"));
+                }
+
+                // prevent parent's onclick event from firing when close elem is clicked
+                // technically preventing event bubbling
+                event.stopPropagation();
+                // tells the browser to stop following events
+                return false;
+            };
+
+            a.onclick = function() {
+                activate(this.getAttribute("data-id"));
+                return opts.anchor;
+            };
+
+            // Add the tab to the tabs list.
+            tabs.appendChild(a);
         });
 
         // Is anchoring enabled?
@@ -100,10 +105,7 @@ var tinytabs = function(container, newOpts) {
         if (opts.anchor && href) {
             activate(href);
         } else {
-            for (var id in sections) {
-                activate(id);
-                break;
-            }
+            activate(defaultTab);
         }
     }
 
