@@ -30,7 +30,40 @@
 			{
 				"id": 25798,
 				"title": "Set of cards is a list",
-				"checklists": []
+				"checklists": [
+					{
+						"id": 2579856,
+						"sectionTitle": "Section 1",
+						"items": [
+							{
+								"id": 257985611,
+								"name": "Todo 12",
+								"status": "checked"
+							},
+							{
+								"id": 257985612,
+								"name": "Todo 13",
+								"status": "unchecked"
+							}
+						]
+					},
+					{
+						"id": 2579857,
+						"sectionTitle": "Section 1",
+						"items": [
+							{
+								"id": 257985711,
+								"name": "Todo 14",
+								"status": "checked"
+							},
+							{
+								"id": 257985712,
+								"name": "Todo 15",
+								"status": "checked"
+							}
+						]
+					}
+				]
 			},
 			{
 				"id": 15798,
