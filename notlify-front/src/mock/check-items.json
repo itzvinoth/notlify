@@ -1,0 +1,84 @@
+[
+	{
+		"id": 1,
+		"title": "User manual",
+		"cards": [
+			{
+				"id": 45798,
+				"title": "Set of lists is a board",
+				"description": {},
+				"checklist": [
+					{
+						"id": 4579856,
+						"sectionTitle": "Section 1",
+						"items": [
+							{
+								"id": 457985611,
+								"name": "Todo 1",
+								"status": "checked"
+							},
+							{
+								"id": 457985612,
+								"name": "Todo 2",
+								"status": "unchecked"
+							}
+						]
+					}
+				],
+				"notes": []
+			},
+			{
+				"id": 25798,
+				"title": "Set of cards is a list",
+				"checklists": []
+			},
+			{
+				"id": 15798,
+				"title": "All data is saved",
+				"checklists": []
+			}
+		]
+	},
+	{
+		"id": 2,
+		"title": "Things to try",
+		"cards": [
+			{
+				"id": 72714,
+				"title": "Click on a card to edit",
+				"checklists": []
+			},
+			{
+				"id": 12714,
+				"title": "Click save after editing",
+				"checklists": []
+			},
+			{
+				"id": 22714,
+				"title": "To discard chages press esc",
+				"checklists": []
+			}
+		]
+	},
+	{
+		"id": 3,
+		"title": "More to try",
+		"cards": [
+			{
+				"id": 23044,
+				"title": "Drag notes around to rearrange.",
+				"checklists": []
+			},
+			{
+				"id": 13044,
+				"title": "Works between the lists too.",
+				"checklists": []
+			},
+			{
+				"id": 33044,
+				"title": "Try adding a new list.",
+				"checklists": []
+			}
+		]
+	}
+]
