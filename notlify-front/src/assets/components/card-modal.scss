@@ -34,6 +34,13 @@
                 border: 1px solid rgba(60, 60, 60, 0.12);
                 padding: 10px;
                 border-radius: 3px;
+                margin-bottom: 10px;
+                &:first-child {
+                    margin-top: 5px;
+                }
+                h4 {
+                    margin: 5px 0;
+                }
             }
         }
     }

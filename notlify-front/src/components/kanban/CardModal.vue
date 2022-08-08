@@ -34,7 +34,7 @@
                                     </div>
                                     <div class="checklist-list" v-if="checklistItems.length > 0">
                                         <div class="checklist-list__item" v-for="(item, checklistIndex) in checklistItems" :key="item.id">
-                                            <div>{{ item.title }}</div>
+                                            <h4>{{ item.title }}</h4>
                                             <div class="checklist-row__container">
                                                 <div class="checklist-row__item" v-for="(row, rowIndex) in item.rows" :key="rowIndex">
                                                     <div><input type="checkbox" /> {{ row }}</div>

@@ -12,20 +12,20 @@
 	display: block;
 	padding: 6px 15px;
 	text-decoration: none;
-	color: #666;
+	color: $eerie-black;
 	font-weight: bold;
 	border-radius: 3px 3px 0 0;
     font-size: 1rem;
 }
 .tinytabs .section {
-	background: #f1f1f1;
+	border: 1px solid #f1f1f1;
 	overflow: hidden;
 	padding: 15px;
 	clear: both;
 	border-radius: 3px;
 }
 .tinytabs .tab.sel {
-	background: #f1f1f1;
-	color: #333;
+	background: $white-smoke;
+	color: $eerie-black;
 	text-shadow: none;
 }
