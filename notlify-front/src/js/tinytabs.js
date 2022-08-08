@@ -6,159 +6,159 @@
 */
 
 var tinytabs = function(container, newOpts) {
-    var opts = {
-        anchor: true,
-        hideTitle: true,
-        sectionClass: "section",
-        tabsClass: "tabs",
-        tabClass: "tab",
-        titleClass: "title",
-        selClass: "sel"
-    };
-    var defaultTab = null;
+	var opts = {
+		anchor: true,
+		hideTitle: true,
+		sectionClass: "section",
+		tabsClass: "tabs",
+		tabClass: "tab",
+		titleClass: "title",
+		selClass: "sel"
+	};
+	var defaultTab = null;
 
-    var tabs = [], sections = {};
-        opts = Object.assign(opts, newOpts);
+	var tabs = [], sections = {};
+		opts = Object.assign(opts, newOpts);
 
-    create();
+	create();
 
-    // Initialize.
-    function create() {
-        tabs = document.createElement("nav");
-        tabs.classList.add(opts.tabsClass);
-        container.classList.add("tinytabs");
-        container.prepend(tabs);
+	// Initialize.
+	function create() {
+		tabs = document.createElement("nav");
+		tabs.classList.add(opts.tabsClass);
+		container.classList.add("tinytabs");
+		container.prepend(tabs);
 
-        // Create individual tabs from sections.
-        var all = container.querySelectorAll(" ." + opts.sectionClass);
-        Array.from(all).forEach((section, i) => {
-            var id = section.getAttribute("id"),
-                title = section.querySelector("." + opts.titleClass),
-                isDefault = section.hasAttribute("default");
+		// Create individual tabs from sections.
+		var all = container.querySelectorAll(" ." + opts.sectionClass);
+		Array.from(all).forEach((section, i) => {
+			var id = section.getAttribute("id"),
+				title = section.querySelector("." + opts.titleClass),
+				isDefault = section.hasAttribute("default");
 
-            // Tab section has to have an ID.
-            if (!id) return true;
+			// Tab section has to have an ID.
+			if (!id) return true;
 
-            // Select a default tab
-            if (i === 0 || isDefault) defaultTab = id;
+			// Select a default tab
+			if (i === 0 || isDefault) defaultTab = id;
 
-            sections[id] = section;
-            opts.hideTitle ? hide(title) : null;
+			sections[id] = section;
+			opts.hideTitle ? hide(title) : null;
 
-            // Create close element inside tab.
-            var span = document.createElement("span");
-            span.classList.add("close");
-            span.setAttribute("data-id", "close-" + id);
-            span.innerHTML = "×";
+			// Create close element inside tab.
+			var span = document.createElement("span");
+			span.classList.add("close");
+			span.setAttribute("data-id", "close-" + id);
+			span.innerHTML = "×";
 
-            // Create the tab handle.
-            var a = document.createElement("a");
-            a.classList.add(opts.tabClass, "tab-" + id);
-            a.setAttribute("href", "#tab-" + id);
-            a.setAttribute("data-id", id);
-            a.innerHTML = title.innerHTML;
-            if (opts.closable) {
-                a.appendChild(span);
-            }
+			// Create the tab handle.
+			var a = document.createElement("a");
+			a.classList.add(opts.tabClass, "tab-" + id);
+			a.setAttribute("href", "#tab-" + id);
+			a.setAttribute("data-id", id);
+			a.innerHTML = title.innerHTML;
+			if (opts.closable) {
+				a.appendChild(span);
+			}
 
-            span.onclick = function(event) {
+			span.onclick = function(event) {
 
-                // get selected tab
-                var getDataId = this.getAttribute("data-id").split("-")[1],
-                    currentTab = document.querySelector(".tab-"+getDataId),
-                    nextTab = currentTab.nextElementSibling,
-                    prevTab = currentTab.previousElementSibling,
-                    section = document.querySelector("#"+getDataId);
+				// get selected tab
+				var getDataId = this.getAttribute("data-id").split("-")[1],
+					currentTab = document.querySelector(".tab-"+getDataId),
+					nextTab = currentTab.nextElementSibling,
+					prevTab = currentTab.previousElementSibling,
+					section = document.querySelector("#"+getDataId);
 
-                // remove current tab and section container
-                currentTab.parentNode.removeChild(currentTab);
-                section.parentNode.removeChild(section);
+				// remove current tab and section container
+				currentTab.parentNode.removeChild(currentTab);
+				section.parentNode.removeChild(section);
 
-                // callback on close
-                opts.onClose && opts.onClose(id);
+				// callback on close
+				opts.onClose && opts.onClose(id);
 
-                // choose next tab on closing current tab if not choose prev tab
-                if (nextTab) {
-                    activate(nextTab.getAttribute("data-id"));
-                } else if (prevTab) {
-                    activate(prevTab.getAttribute("data-id"));
-                }
+				// choose next tab on closing current tab if not choose prev tab
+				if (nextTab) {
+					activate(nextTab.getAttribute("data-id"));
+				} else if (prevTab) {
+					activate(prevTab.getAttribute("data-id"));
+				}
 
-                // prevent parent's onclick event from firing when close elem is clicked
-                // technically preventing event bubbling
-                event.stopPropagation();
-                // tells the browser to stop following events
-                return false;
-            };
+				// prevent parent's onclick event from firing when close elem is clicked
+				// technically preventing event bubbling
+				event.stopPropagation();
+				// tells the browser to stop following events
+				return false;
+			};
 
-            a.onclick = function() {
-                activate(this.getAttribute("data-id"));
-                return opts.anchor;
-            };
+			a.onclick = function() {
+				activate(this.getAttribute("data-id"));
+				return opts.anchor;
+			};
 
-            // Add the tab to the tabs list.
-            tabs.appendChild(a);
-        });
+			// Add the tab to the tabs list.
+			tabs.appendChild(a);
+		});
 
-        // Is anchoring enabled?
-        var href = document.location.hash.replace("#tab-", "");
-        if (opts.anchor && href) {
-            activate(href);
-        } else {
-            activate(defaultTab);
-        }
-    }
+		// Is anchoring enabled?
+		var href = document.location.hash.replace("#tab-", "");
+		if (opts.anchor && href) {
+			activate(href);
+		} else {
+			activate(defaultTab);
+		}
+	}
 
-    function hide(e) {
-        e.style.display = "none";
-    }
+	function hide(e) {
+		e.style.display = "none";
+	}
 
-    function show(e) {
-        e.style.display = "block";
-    }
+	function show(e) {
+		e.style.display = "block";
+	}
 
-    // activate a tab
-    function activate(id) {
-        var section = null;
-        if (sections[id]) {
-        section = sections[id];
-        } else {
-        return false;
-        }
-        reset();
+	// activate a tab
+	function activate(id) {
+		var section = null;
+		if (sections[id]) {
+		section = sections[id];
+		} else {
+		return false;
+		}
+		reset();
 
-        var newTab = tabs.querySelector(".tab-" + id);
-        if (newTab) {
-        newTab.classList.add(opts.selClass);
-        }
+		var newTab = tabs.querySelector(".tab-" + id);
+		if (newTab) {
+		newTab.classList.add(opts.selClass);
+		}
 
-        // before and after callbacks
-        opts.onBefore && opts.onBefore(id, newTab);
-        show(sections[id]);
-        opts.onAfter && opts.onAfter(id, newTab);
-        if (opts.anchor) {
-        document.location.href = "#tab-" + id;
-        }
-        return true;
-    }
+		// before and after callbacks
+		opts.onBefore && opts.onBefore(id, newTab);
+		show(sections[id]);
+		opts.onAfter && opts.onAfter(id, newTab);
+		if (opts.anchor) {
+		document.location.href = "#tab-" + id;
+		}
+		return true;
+	}
 
-    // Reset all tabs.
-    function reset() {
-        Array.from(tabs.querySelectorAll("." + opts.tabClass)).map(e => e.classList.remove(opts.selClass));
-        Object.values(sections).map(e => hide(e));
-    }
+	// Reset all tabs.
+	function reset() {
+		Array.from(tabs.querySelectorAll("." + opts.tabClass)).map(e => e.classList.remove(opts.selClass));
+		Object.values(sections).map(e => hide(e));
+	}
 
-    return this;
+	return this;
 };
 
 export default tinytabs;
 if (typeof define === "function" && define.amd) {
-    define(tinytabs);
+	define(tinytabs);
 } else {
-    if (typeof window === "undefined") {
-        global.window = {}
-        global.window.tinytabs = tinytabs;
-    } else {
-        window.tinytabs = tinytabs;
-    }
+	if (typeof window === "undefined") {
+		global.window = {}
+		global.window.tinytabs = tinytabs;
+	} else {
+		window.tinytabs = tinytabs;
+	}
 }

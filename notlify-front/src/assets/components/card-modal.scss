@@ -1,47 +1,47 @@
 .card-detail__modal {
-    .side-panel {
-        float: left;
-        display: block;
-    }
-    .main-panel {
-        float: right;
-        display: block;
-    }
-    .side-panel .button-action {
-        background-color: $white-smoke;
-        color: $eerie-black;
-        border: none;
-        border-radius: 3px;
-        box-shadow: none;
-        box-sizing: border-box;
-        cursor: pointer;
-        display: block;
-        height: 32px;
-        margin-top: 8px;
-        max-width: 300px;
-        // overflow: hidden;
-        padding: 6px 12px;
-        // position: relative;
-        text-decoration: none;
-        text-overflow: ellipsis;
-        user-select: none;
-        // white-space: nowrap;
-    }
+	.side-panel {
+		float: left;
+		display: block;
+	}
+	.main-panel {
+		float: right;
+		display: block;
+	}
+	.side-panel .button-action {
+		background-color: $white-smoke;
+		color: $eerie-black;
+		border: none;
+		border-radius: 3px;
+		box-shadow: none;
+		box-sizing: border-box;
+		cursor: pointer;
+		display: block;
+		height: 32px;
+		margin-top: 8px;
+		max-width: 300px;
+		// overflow: hidden;
+		padding: 6px 12px;
+		// position: relative;
+		text-decoration: none;
+		text-overflow: ellipsis;
+		user-select: none;
+		// white-space: nowrap;
+	}
 
-    .addto-card__container .checklist__container {
-        .checklist-list {
-            .checklist-list__item {
-                border: 1px solid rgba(60, 60, 60, 0.12);
-                padding: 10px;
-                border-radius: 3px;
-                margin-bottom: 10px;
-                &:first-child {
-                    margin-top: 5px;
-                }
-                h4 {
-                    margin: 5px 0;
-                }
-            }
-        }
-    }
+	.addto-card__container .checklist__container {
+		.checklist-list {
+			.checklist-list__item {
+				border: 1px solid rgba(60, 60, 60, 0.12);
+				padding: 10px;
+				border-radius: 3px;
+				margin-bottom: 10px;
+				&:first-child {
+					margin-top: 5px;
+				}
+				h4 {
+					margin: 5px 0;
+				}
+			}
+		}
+	}
 }
