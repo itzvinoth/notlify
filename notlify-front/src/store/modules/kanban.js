@@ -60,7 +60,9 @@ const mutations = {
 				}
 			}
 		})();
-		console.log('card:: ', card)
+		let c = card.checklist || []
+		c.push(detail.item)
+		card.checklist = c
 	}
 }
 
