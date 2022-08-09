@@ -1,3 +1,23 @@
+function replaceCardChecklist (columns, cardId, item) {
+	let cols = []
+	for (var i = 0; i < columns.length; i++) {
+		// let card = column.cards.find(card => card.id === cardId)
+		let cards = []
+		for (var j = 0; j < columns[i].cards.length; j++) {
+			let card = columns[i].cards[j]
+			if (card.id === cardId) {
+				let c = card.checklist || []
+				c.push(item)
+				card.checklist = c
+			}
+			cards.push(card)
+		}
+		cols.push(cards)
+	}
+	console.log('cols: ', cols)
+	return cols
+}
+
 // initial state
 const state = () => ({
 	columns: [],
@@ -40,6 +60,7 @@ const actions = {
 // mutations
 const mutations = {
 	setColumns (state, columns) {
+		console.log('set columns: ', columns)
 		state.columns = columns
 	},
 	setCardId (state, cardId) {
@@ -49,20 +70,12 @@ const mutations = {
 		state.draggingElemHeight = height
 	},
 	setCardChecklist (state, payload) {
-		let columns = payload.columns
 		let detail = payload.detail
-		const [card, currentColumn] = (() => {
-			for (const column of columns) {
-				const card = column.cards.find(card => card.id === detail.cardId);
-
-				if (card) {
-					return [card, column];
-				}
-			}
-		})();
-		let c = card.checklist || []
-		c.push(detail.item)
-		card.checklist = c
+		let cardId = detail.cardId
+		let item = detail.item
+		let columns = replaceCardChecklist(payload.columns, cardId, item)
+		state.columns = columns
+		// card.checklist = c
 	}
 }
 
