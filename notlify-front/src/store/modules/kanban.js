@@ -23,6 +23,17 @@ const actions = {
 	},
 	async getDraggingElemHeight ({ commit }, height) {
 		commit('setDraggingElemHeight', height)
+	},
+	async updateCardChecklist ({ commit }, detail) {
+		const columns = await localStorage.getItem('kanban-data')
+		let d = {
+			'detail': detail
+		}
+		let c = {
+			'columns': JSON.parse(columns)
+		}
+		let payload = {...d, ...c}
+		commit('setCardChecklist', payload)
 	}
 }
 
@@ -36,6 +47,20 @@ const mutations = {
 	},
 	setDraggingElemHeight (state, height) {
 		state.draggingElemHeight = height
+	},
+	setCardChecklist (state, payload) {
+		let columns = payload.columns
+		let detail = payload.detail
+		const [card, currentColumn] = (() => {
+			for (const column of columns) {
+				const card = column.cards.find(card => card.id === detail.cardId);
+
+				if (card) {
+					return [card, column];
+				}
+			}
+		})();
+		console.log('card:: ', card)
 	}
 }
 

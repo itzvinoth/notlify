@@ -6,7 +6,7 @@
 				<template #header>
 					<label>Netlify / {{ columnTitle }}</label>
 					<h2>{{ cardDetail.title }}</h2>
-					<!-- {{ cardDetail }} -->
+					{{ cardDetail }}
 				</template>
 				<template #body>
 					<tiny-tabs id="mytabs" :anchor="false" :closable="false" :hideTitle="false" @on-close="onClose" @on-before="onBefore" @on-after="onAfter">
@@ -33,8 +33,8 @@
 											<button @click="cancelChecklistItem">Cancel</button>
 										</div>
 									</div>
-									<div class="checklist-list" v-if="checklistItems.length > 0">
-										<div class="checklist-list__item" v-for="(item, checklistIndex) in checklistItems" :key="item.id">
+									<div class="checklist-list" v-if="cardDetail.checklist && cardDetail.checklist.length > 0">
+										<div class="checklist-list__item" v-for="(item, checklistIndex) in cardDetail.checklist" :key="item.id">
 											<h4>{{ item.sectionTitle }}</h4>
 											<div class="checklist-row__container">
 												<div class="checklist-row__item" v-for="(row, rowIndex) in item.rows" :key="rowIndex">
@@ -108,19 +108,29 @@ export default {
 			this.creatingNewSection = true
 		},
 		addChecklistItem () {
-			let detail = {}
-			detail.sectionTitle = this.sectionTitle
-			detail.id = Math.floor(Math.random() * 100000000)
-			detail.rows = []
-			detail.showEdit = false
-			detail.input = ''
-			this.checklistItems.push(detail)
-			this.reset()
-			console.log(this.checklistItems)
-			// let id = this.cardDetail.id
+			let newChecklistItem = {}
+			newChecklistItem['id'] = Math.floor(Math.random() * 100000000)
+			newChecklistItem['sectionTitle'] = this.sectionTitle
+			newChecklistItem['rows'] = []
+			newChecklistItem['showEdit'] = false
+			newChecklistItem['input'] = ''
+			// this.checklistItems.push({...detail})
+			let cardId = this.cardDetail.id
+			let title = this.cardDetail.title
+			let newChecklistDetail = {
+				'cardId': cardId,
+				'item': newChecklistItem
+			}
+			this.$store.dispatch('kanban/updateCardChecklist', newChecklistDetail)
+			// let checklist = this.cardDetail.checklist || []
+			// checklist.push({...detail})
 			// KanbanApi.updateCard(id, {
-			// 	'checklist': this.checklistItems
+			// 	'title': title,
+			// 	'checklist': checklist
 			// })
+			// vuex commit update kanban
+			// this.$store.dispatch('kanban/getColumns')
+			this.reset()
 		},
 		cancelChecklistItem () {
 			this.creatingNewSection = false

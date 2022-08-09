@@ -27,6 +27,7 @@ export default class KanbanApi {
 
 	static updateCard (cardId, newProps) {
 		let data = read();
+		console.log('data: ', data)
 		
 		const [card, currentColumn] = (() => {
 			for (const column of data) {
@@ -41,8 +42,9 @@ export default class KanbanApi {
 		if (!card) {
 			throw new Error('Card not exists');
 		}
-
+		
 		card.title = newProps.title === undefined ? card.title : newProps.title;
+		card.checklist = newProps.checklist.length < 1 ? card.checklist : newProps.checklist;
 
 		// update column and position
 		if (newProps.columnId !== undefined && newProps.position !== undefined) {

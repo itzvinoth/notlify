@@ -123,16 +123,16 @@ export default {
 			// draggingEle.parentNode.querySelector('.kb__dropzone').classList.add('placeholder')
 			// draggingEle.parentNode.querySelector('.kb__dropzone').style.height = `${rect.height}px`
 		},
-		onBlur (event, id) {
-			let newContent = event.target.textContent.trim()
+		// onBlur (event, id) {
+		// 	let newContent = event.target.textContent.trim()
 
-			if (newContent === this.content) {
-				return
-			}
-			KanbanApi.updateCard(id, {
-				'title': newContent
-			})
-		},
+		// 	if (newContent === this.content) {
+		// 		return
+		// 	}
+		// 	KanbanApi.updateeeeeeCard(id, {
+		// 		'title': newContent
+		// 	})
+		// },
 		onDblClick (event, id) {
 			let check = confirm('Are you sure you want to delete this card')
 			if (check) {

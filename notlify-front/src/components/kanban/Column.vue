@@ -62,7 +62,8 @@ export default {
 				let id = this.newCardId
 				KanbanApi.insertCard(columnId, id)
 				KanbanApi.updateCard(id, {
-					'title': this.newCardTitle
+					'title': this.newCardTitle,
+					'checklist': []
 				})
 				// vuex commit update kanban
 				this.$store.dispatch('kanban/getColumns')
