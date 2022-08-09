@@ -1,20 +1,17 @@
 function replaceCardChecklist (columns, cardId, item) {
 	let cols = []
 	for (var i = 0; i < columns.length; i++) {
-		// let card = column.cards.find(card => card.id === cardId)
-		let cards = []
-		for (var j = 0; j < columns[i].cards.length; j++) {
-			let card = columns[i].cards[j]
+		let column = columns[i]
+		for (var j = 0; j < column.cards.length; j++) {
+			let card = column.cards[j]
 			if (card.id === cardId) {
 				let c = card.checklist || []
 				c.push(item)
 				card.checklist = c
 			}
-			cards.push(card)
 		}
-		cols.push(cards)
+		cols.push(column)
 	}
-	console.log('cols: ', cols)
 	return cols
 }
 
