@@ -131,7 +131,7 @@ export default {
 			}
 			KanbanApi.updateCard(id, {
 				'title': newContent
-			});
+			})
 		},
 		onDblClick (event, id) {
 			let check = confirm('Are you sure you want to delete this card')

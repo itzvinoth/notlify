@@ -6,12 +6,13 @@
 				<template #header>
 					<label>Netlify / {{ columnTitle }}</label>
 					<h2>{{ cardDetail.title }}</h2>
+					<!-- {{ cardDetail }} -->
 				</template>
 				<template #body>
 					<tiny-tabs id="mytabs" :anchor="false" :closable="false" :hideTitle="false" @on-close="onClose" @on-before="onBefore" @on-after="onAfter">
 						<div class="section" id="description">
 							<h3 class="title">Description</h3>
-							<h3>Javascript</h3>
+							<h3>Tinymce</h3>
 						</div>
 						<div class="section" id="checklist" default>
 							<h3 class="title">Checklist</h3>
@@ -25,7 +26,7 @@
 									<div class="add-checklist" v-if="creatingNewSection">
 										<div>
 											<label>Title</label>
-											<input type="text" v-model="checklistTitle"/>
+											<input type="text" v-model="sectionTitle"/>
 										</div>
 										<div>
 											<button @click="addChecklistItem">Add</button>
@@ -34,13 +35,13 @@
 									</div>
 									<div class="checklist-list" v-if="checklistItems.length > 0">
 										<div class="checklist-list__item" v-for="(item, checklistIndex) in checklistItems" :key="item.id">
-											<h4>{{ item.title }}</h4>
+											<h4>{{ item.sectionTitle }}</h4>
 											<div class="checklist-row__container">
 												<div class="checklist-row__item" v-for="(row, rowIndex) in item.rows" :key="rowIndex">
 													<div><input type="checkbox" /> {{ row }}</div>
 												</div>
 											</div>
-											<div class="new-checklist-edit__container" v-if="item.showEdit">
+											<div v-if="item.showEdit" class="new-checklist-edit__container">
 												<div><input type="text" v-model="item.input" placeholder="Add an item" /></div>
 												<button type="button" @click="addItem(checklistIndex)">Add</button>
 											</div>
@@ -52,7 +53,7 @@
 						</div>
 						<div class="section" id="notes">
 							<h3 class="title">Notes</h3>
-							<h3>Options</h3>
+							<h3>Notes UI should add</h3>
 						</div>
 					</tiny-tabs>                    
 				</template>
@@ -62,6 +63,7 @@
 </template>
 
 <script>
+import KanbanApi from "../../api/index"
 import Modal from "@/components/Modal.vue";
 import TinyTabs from "@/components/TinyTabs.vue";
 
@@ -85,7 +87,7 @@ export default {
 		return {
 			isChecklistExist: false,
 			creatingNewSection: false,
-			checklistTitle: '',
+			sectionTitle: '',
 			checklistItems: []
 		}
 	},
@@ -107,19 +109,24 @@ export default {
 		},
 		addChecklistItem () {
 			let detail = {}
-			detail.title = this.checklistTitle
+			detail.sectionTitle = this.sectionTitle
 			detail.id = Math.floor(Math.random() * 100000000)
 			detail.rows = []
 			detail.showEdit = false
 			detail.input = ''
 			this.checklistItems.push(detail)
 			this.reset()
+			console.log(this.checklistItems)
+			// let id = this.cardDetail.id
+			// KanbanApi.updateCard(id, {
+			// 	'checklist': this.checklistItems
+			// })
 		},
 		cancelChecklistItem () {
 			this.creatingNewSection = false
 		},
 		reset () {
-			this.checklistTitle = ''
+			this.sectionTitle = ''
 			this.creatingNewSection = false
 		},
 		showItemAdd (checklistIndex) {
