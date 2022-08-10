@@ -28,11 +28,6 @@ export default {
 	components: {
 		'card': Card
 	},
-	props: {
-		columns: {
-			type: Object
-		}
-	},
 	data () {
 		return {
 			isComposingNewCard: false,
@@ -43,7 +38,8 @@ export default {
 	},
 	computed: {
 		...mapGetters('kanban', {
-			cardId: 'cardId'
+			cardId: 'cardId',
+			columns: 'columns'
 		})
 	},
 	methods: {

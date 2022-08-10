@@ -26,6 +26,5 @@ export default {
 	created () {
 		this.$store.dispatch('kanban/getColumns')
 	}
-	
 }
 </script>

@@ -74,7 +74,7 @@ const mutations = {
 		let cardId = detail.cardId
 		let item = detail.item
 		let columns = replaceCardChecklist(payload.columns, cardId, item)
-		save(columns)		
+		save(columns)
 		state.columns = columns
 	}
 }
