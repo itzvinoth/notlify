@@ -15,6 +15,10 @@ function replaceCardChecklist (columns, cardId, item) {
 	return cols
 }
 
+function save(data) {
+	localStorage.setItem('kanban-data', JSON.stringify(data));
+}
+
 // initial state
 const state = () => ({
 	columns: [],
@@ -57,7 +61,6 @@ const actions = {
 // mutations
 const mutations = {
 	setColumns (state, columns) {
-		console.log('set columns: ', columns)
 		state.columns = columns
 	},
 	setCardId (state, cardId) {
@@ -72,7 +75,7 @@ const mutations = {
 		let item = detail.item
 		let columns = replaceCardChecklist(payload.columns, cardId, item)
 		state.columns = columns
-		// card.checklist = c
+		save(columns)
 	}
 }
 
