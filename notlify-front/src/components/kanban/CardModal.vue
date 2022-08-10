@@ -6,7 +6,6 @@
 				<template #header>
 					<label>Netlify / {{ columnTitle }}</label>
 					<h2>{{ cardDetail.title }}</h2>
-					{{ cardDetail }}
 				</template>
 				<template #body>
 					<tiny-tabs id="mytabs" :anchor="false" :closable="false" :hideTitle="false" @on-close="onClose" @on-before="onBefore" @on-after="onAfter">
@@ -67,6 +66,8 @@ import KanbanApi from "../../api/index"
 import Modal from "@/components/Modal.vue";
 import TinyTabs from "@/components/TinyTabs.vue";
 
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
 	components: {
 		Modal,
@@ -76,11 +77,11 @@ export default {
 		show: {
 			type: Boolean
 		},
-		cardDetail: {
-			type: Object
-		},
 		columnTitle: {
 			type: String
+		},
+		cardId: {
+			type: Number
 		}
 	},
 	data () {
@@ -89,6 +90,23 @@ export default {
 			creatingNewSection: false,
 			sectionTitle: '',
 			checklistItems: []
+		}
+	},
+	computed: {
+		...mapGetters('kanban', {
+			columns: 'columns'
+		}),
+		cardDetail () {
+			const [card, currentColumn] = (() => {
+				for (const column of this.columns) {
+					const card = column.cards.find(card => card.id === this.cardId)
+
+					if (card) {
+						return [card, column]
+					}
+				}
+			})()
+			return card
 		}
 	},
 	methods: {

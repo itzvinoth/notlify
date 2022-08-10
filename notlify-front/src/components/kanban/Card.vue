@@ -21,7 +21,7 @@
 			</div>
 			<drop-zone :cardId="card.id" :dragging-elem-height="draggingElemHeight" />
 		</div>
-		<card-modal :show="showModal" :card-detail="cardDetail" :column-title="columnTitle" @update="onUpdate" />
+		<card-modal :show="showModal" :cardId="expandedCardId" :column-title="columnTitle" @update="onUpdate" />
 	</div>
 </template>
 
@@ -67,7 +67,8 @@ export default {
 			content: '',
 			draggingElemHeight: 0,
 			showModal: false,
-			cardDetail: null
+			cardDetail: null,
+			expandedCardId: null
 		}
 	},
 	computed: {
@@ -147,6 +148,7 @@ export default {
 		onCardClick (card) {
 			this.showModal = true
 			this.cardDetail = card
+			this.expandedCardId = card.id
 		}
 		// addCard (id) {
 		// 	let newCard = {
