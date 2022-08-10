@@ -12,7 +12,8 @@ export default class KanbanApi {
 		let column = data.find(column => column.id === columnId);
 		let card = {
 			id: cardId,
-			content: ''
+			content: '',
+			checklist: []
 		};
 
 		if (!column) {
@@ -41,7 +42,7 @@ export default class KanbanApi {
 		if (!card) {
 			throw new Error('Card not exists');
 		}
-		
+
 		card.title = newProps.title === undefined ? card.title : newProps.title;
 		card.checklist = newProps.checklist.length < 1 ? card.checklist : newProps.checklist;
 

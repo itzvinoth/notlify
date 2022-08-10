@@ -122,14 +122,6 @@ export default {
 				'item': newChecklistItem
 			}
 			this.$store.dispatch('kanban/updateCardChecklist', newChecklistDetail)
-			// let checklist = this.cardDetail.checklist || []
-			// checklist.push({...detail})
-			// KanbanApi.updateCard(id, {
-			// 	'title': title,
-			// 	'checklist': checklist
-			// })
-			// vuex commit update kanban
-			// this.$store.dispatch('kanban/getColumns')
 			this.reset()
 		},
 		cancelChecklistItem () {
