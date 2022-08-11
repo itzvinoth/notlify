@@ -37,14 +37,14 @@
 											<h4>{{ item.sectionTitle }}</h4>
 											<div class="checklist-row__container">
 												<div class="checklist-row__item" v-for="(row, rowIndex) in item.rows" :key="rowIndex">
-													<div><input type="checkbox" /> {{ row }}</div>
+													<div><input type="checkbox" /> {{ row.name }}</div>
 												</div>
 											</div>
-											<div v-if="sectionEditItemId === item.id" class="new-checklist-edit__container">
+											<div v-if="sectionItemId === item.id" class="new-checklist-edit__container">
 												<div><input type="text" v-model="inputItem" placeholder="Add an item" /></div>
 												<button type="button" @click="addItem(checklistIndex)">Add</button>
 											</div>
-											<button v-if="sectionEditItemId !== item.id" @click="showItemAdd(checklistIndex, item.id)">Add an item</button>
+											<button v-if="sectionItemId !== item.id" @click="showItemAdd(checklistIndex, item.id)">Add an item</button>
 										</div>
 									</div>
 								</div>
@@ -89,7 +89,7 @@ export default {
 			isChecklistExist: false,
 			creatingNewSection: false,
 			sectionTitle: '',
-			sectionEditItemId: null,
+			sectionItemId: null,
 			inputItem: ''
 		}
 	},
@@ -146,13 +146,19 @@ export default {
 			this.creatingNewSection = false
 		},
 		showItemAdd (checklistIndex, itemId) {
-			this.sectionEditItemId = itemId
+			this.sectionItemId = itemId
 		},
 		addItem (checklistIndex) {
 			let row = {}
 			row['id'] = Math.floor(Math.random() * 10000000000)
 			row['name'] = this.inputItem
-			this.$store.dispatch('kanban/updateSectionChecklist', row)
+			let detail = {
+				'cardId': this.cardId,
+				'sectionItemId': this.sectionItemId,
+				'row': row
+			}
+			this.$store.dispatch('kanban/updateSectionChecklist', detail)
+			this.inputItem = ''
 		}
 	}
 }
