@@ -4,7 +4,7 @@
 			<!-- use the modal component, pass in the prop -->
 			<modal :show="show" @close="onCloseModal" class="card-detail__modal">
 				<template #header>
-					<label>Netlify / {{ columnTitle }}</label>
+					<label>Notlify / {{ columnTitle }}</label>
 					<h2>{{ cardDetail.title }}</h2>
 				</template>
 				<template #body>
@@ -40,11 +40,11 @@
 													<div><input type="checkbox" /> {{ row }}</div>
 												</div>
 											</div>
-											<div v-if="item.showEdit" class="new-checklist-edit__container">
-												<div><input type="text" v-model="item.input" placeholder="Add an item" /></div>
+											<div v-if="sectionEditItemId === item.id" class="new-checklist-edit__container">
+												<div><input type="text" v-model="inputItem" placeholder="Add an item" /></div>
 												<button type="button" @click="addItem(checklistIndex)">Add</button>
 											</div>
-											<button v-if="!item.showEdit" @click="showItemAdd(checklistIndex)">Add an item</button>
+											<button v-if="sectionEditItemId !== item.id" @click="showItemAdd(checklistIndex, item.id)">Add an item</button>
 										</div>
 									</div>
 								</div>
@@ -89,7 +89,9 @@ export default {
 			isChecklistExist: false,
 			creatingNewSection: false,
 			sectionTitle: '',
-			checklistItems: []
+			checklistItems: [],
+			sectionEditItemId: null,
+			inputItem: ''
 		}
 	},
 	computed: {
@@ -130,8 +132,6 @@ export default {
 			newChecklistItem['id'] = Math.floor(Math.random() * 100000000)
 			newChecklistItem['sectionTitle'] = this.sectionTitle
 			newChecklistItem['rows'] = []
-			newChecklistItem['showEdit'] = false
-			newChecklistItem['input'] = ''
 			// this.checklistItems.push({...detail})
 			let cardId = this.cardDetail.id
 			let title = this.cardDetail.title
@@ -149,17 +149,24 @@ export default {
 			this.sectionTitle = ''
 			this.creatingNewSection = false
 		},
-		showItemAdd (checklistIndex) {
+		showItemAdd (checklistIndex, itemId) {
 			let checklistItems = this.checklistItems[checklistIndex]
-			checklistItems['showEdit'] = true
+			this.sectionEditItemId = itemId
 		},
 		addItem (checklistIndex) {
-			let checklistItems = this.checklistItems[checklistIndex]
-			let rows = checklistItems['rows']
-			let input = checklistItems['input']
-			rows.push(input)
+			let checklistItem = this.checklistItems[checklistIndex]
+			console.log('checklistItem: ', checklistItem)
+			let rows = checklistItem['rows'] || []
+			rows.push(this.inputItem)
+			checklistItem['rows'] = rows
+			let cardId = this.cardDetail.id
+			let newChecklistDetail = {
+				'cardId': cardId,
+				'item': checklistItem
+			}
+			this.$store.dispatch('kanban/updateCardChecklist', newChecklistDetail)
 			this.$nextTick(() => {
-				this.checklistItems[checklistIndex]['input'] = ''
+				this.inputItem = ''
 			})
 		}
 	}
