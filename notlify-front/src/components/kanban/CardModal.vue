@@ -89,7 +89,6 @@ export default {
 			isChecklistExist: false,
 			creatingNewSection: false,
 			sectionTitle: '',
-			checklistItems: [],
 			sectionEditItemId: null,
 			inputItem: ''
 		}
@@ -131,21 +130,9 @@ export default {
 			let newChecklistSection = {}
 			newChecklistSection['id'] = Math.floor(Math.random() * 100000000)
 			newChecklistSection['sectionTitle'] = this.sectionTitle
-			newChecklistSection['rows'] = []
-			// this.checklistItems.push({...detail})
-			const cardDetail = (() => {
-				for (const column of this.columns) {
-					const card = column.cards.find(card => card.id === this.cardId)
-
-					if (card) {
-						return card
-					}
-				}
-			})()
-			let cardId = cardDetail.id
-			let title = cardDetail.title
+			newChecklistSection['rows'] = []			
 			let newChecklistSectionDetail = {
-				'cardId': cardId,
+				'cardId': this.cardId,
 				'item': newChecklistSection
 			}
 			this.$store.dispatch('kanban/updateCardSection', newChecklistSectionDetail)
@@ -159,7 +146,6 @@ export default {
 			this.creatingNewSection = false
 		},
 		showItemAdd (checklistIndex, itemId) {
-			let checklistItems = this.checklistItems[checklistIndex]
 			this.sectionEditItemId = itemId
 		},
 		addItem (checklistIndex) {
@@ -167,13 +153,6 @@ export default {
 			row['id'] = Math.floor(Math.random() * 10000000000)
 			row['name'] = this.inputItem
 			this.$store.dispatch('kanban/updateSectionChecklist', row)
-			// let checklistItem = this.checklistItems[checklistIndex]
-			// let rows = checklistItem['rows'] || {}
-			// rows.push(this.inputItem)
-			// checklistItem['rows'] = rows
-			// this.$nextTick(() => {
-			// 	this.inputItem = ''
-			// })
 		}
 	}
 }
