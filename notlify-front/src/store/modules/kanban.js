@@ -1,4 +1,4 @@
-function replaceCardChecklist (columns, cardId, item) {
+function replaceCardSection(columns, cardId, item) {
 	let cols = []
 	for (var i = 0; i < columns.length; i++) {
 		let column = columns[i]
@@ -45,7 +45,7 @@ const actions = {
 	async getDraggingElemHeight ({ commit }, height) {
 		commit('setDraggingElemHeight', height)
 	},
-	async updateCardChecklist ({ commit }, detail) {
+	async updateCardSection ({ commit }, detail) {
 		const columns = await localStorage.getItem('kanban-data')
 		let d = {
 			'detail': detail
@@ -54,7 +54,7 @@ const actions = {
 			'columns': JSON.parse(columns)
 		}
 		let payload = {...d, ...c}
-		commit('setCardChecklist', payload)
+		commit('setCardSection', payload)
 	}
 }
 
@@ -69,11 +69,11 @@ const mutations = {
 	setDraggingElemHeight (state, height) {
 		state.draggingElemHeight = height
 	},
-	setCardChecklist (state, payload) {
+	setCardSection (state, payload) {
 		let detail = payload.detail
 		let cardId = detail.cardId
 		let item = detail.item
-		let columns = replaceCardChecklist(payload.columns, cardId, item)
+		let columns = replaceCardSection(payload.columns, cardId, item)
 		save(columns)
 		state.columns = columns
 	}

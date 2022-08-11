@@ -128,18 +128,27 @@ export default {
 			this.creatingNewSection = true
 		},
 		addChecklistItem () {
-			let newChecklistItem = {}
-			newChecklistItem['id'] = Math.floor(Math.random() * 100000000)
-			newChecklistItem['sectionTitle'] = this.sectionTitle
-			newChecklistItem['rows'] = []
+			let newChecklistSection = {}
+			newChecklistSection['id'] = Math.floor(Math.random() * 100000000)
+			newChecklistSection['sectionTitle'] = this.sectionTitle
+			newChecklistSection['rows'] = []
 			// this.checklistItems.push({...detail})
-			let cardId = this.cardDetail.id
-			let title = this.cardDetail.title
-			let newChecklistDetail = {
+			const cardDetail = (() => {
+				for (const column of this.columns) {
+					const card = column.cards.find(card => card.id === this.cardId)
+
+					if (card) {
+						return card
+					}
+				}
+			})()
+			let cardId = cardDetail.id
+			let title = cardDetail.title
+			let newChecklistSectionDetail = {
 				'cardId': cardId,
-				'item': newChecklistItem
+				'item': newChecklistSection
 			}
-			this.$store.dispatch('kanban/updateCardChecklist', newChecklistDetail)
+			this.$store.dispatch('kanban/updateCardSection', newChecklistSectionDetail)
 			this.reset()
 		},
 		cancelChecklistItem () {
@@ -154,20 +163,17 @@ export default {
 			this.sectionEditItemId = itemId
 		},
 		addItem (checklistIndex) {
-			let checklistItem = this.checklistItems[checklistIndex]
-			console.log('checklistItem: ', checklistItem)
-			let rows = checklistItem['rows'] || []
-			rows.push(this.inputItem)
-			checklistItem['rows'] = rows
-			let cardId = this.cardDetail.id
-			let newChecklistDetail = {
-				'cardId': cardId,
-				'item': checklistItem
-			}
-			this.$store.dispatch('kanban/updateCardChecklist', newChecklistDetail)
-			this.$nextTick(() => {
-				this.inputItem = ''
-			})
+			let row = {}
+			row['id'] = Math.floor(Math.random() * 10000000000)
+			row['name'] = this.inputItem
+			this.$store.dispatch('kanban/updateSectionChecklist', row)
+			// let checklistItem = this.checklistItems[checklistIndex]
+			// let rows = checklistItem['rows'] || {}
+			// rows.push(this.inputItem)
+			// checklistItem['rows'] = rows
+			// this.$nextTick(() => {
+			// 	this.inputItem = ''
+			// })
 		}
 	}
 }
