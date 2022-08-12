@@ -43,6 +43,7 @@
 											<div v-if="sectionItemId === item.id" class="new-checklist-edit__container">
 												<div><input type="text" v-model="inputItem" placeholder="Add an item" /></div>
 												<button type="button" @click="addItem(checklistIndex)">Add</button>
+												<button type="button" @click="cancelItem(checklistIndex)">Cancel</button>
 											</div>
 											<button v-if="sectionItemId !== item.id" @click="showItemAdd(checklistIndex, item.id)">Add an item</button>
 										</div>
@@ -159,6 +160,9 @@ export default {
 				'row': row
 			}
 			this.$store.dispatch('kanban/updateSectionChecklist', detail)
+			this.resetSectionChecklist()
+		},
+		cancelItem () {
 			this.resetSectionChecklist()
 		},
 		resetSectionChecklist () {
