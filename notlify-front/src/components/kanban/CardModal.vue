@@ -11,7 +11,7 @@
 					<tiny-tabs id="mytabs" :anchor="false" :closable="false" :hideTitle="false" @on-close="onClose" @on-before="onBefore" @on-after="onAfter">
 						<div class="section" id="description">
 							<h3 class="title">Description</h3>
-							<h3>Tinymce</h3>
+							<QuillEditor theme="snow" />
 						</div>
 						<div class="section" id="checklist" default>
 							<h3 class="title">Checklist</h3>
@@ -69,10 +69,14 @@ import TinyTabs from "@/components/TinyTabs.vue";
 
 import { mapGetters, mapActions } from 'vuex';
 
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+
 export default {
 	components: {
 		Modal,
-		'tiny-tabs': TinyTabs
+		'tiny-tabs': TinyTabs,
+		QuillEditor
 	},
 	props: {
 		show: {
