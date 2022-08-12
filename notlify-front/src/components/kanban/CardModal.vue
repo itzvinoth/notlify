@@ -122,6 +122,7 @@ export default {
 		},
 		onCloseModal () {
 			this.$emit('update')
+			this.resetSectionChecklist()
 		},
 		addNewSection () {
 			this.creatingNewSection = true
@@ -158,7 +159,11 @@ export default {
 				'row': row
 			}
 			this.$store.dispatch('kanban/updateSectionChecklist', detail)
+			this.resetSectionChecklist()
+		},
+		resetSectionChecklist () {
 			this.inputItem = ''
+			this.sectionItemId = null
 		}
 	}
 }
