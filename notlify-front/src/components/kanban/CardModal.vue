@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import KanbanApi from "../../api/index"
+import KanbanApi from "../../api/kanban/index"
 import Modal from "@/components/Modal.vue";
 import TinyTabs from "@/components/TinyTabs.vue";
 

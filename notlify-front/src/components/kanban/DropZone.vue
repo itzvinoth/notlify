@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import KanbanApi from '../../api'
+import KanbanApi from '../../api/kanban/index'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
