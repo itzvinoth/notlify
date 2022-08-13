@@ -4,8 +4,10 @@ import WorkSpace from "@/components/WorkSpace.vue";
 
 <template>
 	<main>
-		<div class="display: block;"><a href="/new" target="_blank">New</a></div>
-		<div class="display: block;"><a href="/pop" target="_blank">Pop</a></div>
+		<div class="flex" style="padding: 10px;">
+			<a href="/new">New</a> | 
+			<a href="/notes">Notes</a>
+		</div>
 		<WorkSpace />
 	</main>
 </template>

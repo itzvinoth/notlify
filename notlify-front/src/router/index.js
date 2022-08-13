@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import KanbanView from "../views/KanbanView.vue"
-import Popover from "../components/Popover.vue"
+import NotesView from "../components/kanban/Notes.vue"
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,9 +17,9 @@ const router = createRouter({
 	    component: KanbanView,
 	  },
 	  {
-	    path: "/pop",
-	    name: "Popover",
-	    component: Popover,
+	    path: "/notes",
+	    name: "notes",
+	    component: NotesView,
 	  },
 	  {
 	    path: "/about",
