@@ -8,6 +8,8 @@
     overflow-y: auto;
     width: 25vw;
     height: 98vh;
+    padding: 12px;
+    box-sizing: border-box;
 }
 
 .note-add--btn {
@@ -56,14 +58,13 @@
 }
 
 .notes-editor__title {
-    border: none;
-    outline: none;
-    width: 100%;
-}
-
-.notes-editor__title {
-    font-size: 24px;
-    font-weight: bold;
+    input {
+        border: none;
+        outline: none;
+        width: 100%;
+        font-size: 24px;
+        font-weight: bold;
+    }
 }
 
 .notes-editor__body {

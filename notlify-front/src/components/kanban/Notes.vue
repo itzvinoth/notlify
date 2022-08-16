@@ -11,9 +11,11 @@
 			</div>
 		</div>
 		<div class="notes-editor">
-			<div class="notes-editor__title">Title</div>
+			<div class="notes-editor__title">
+				<input type="text" placeholder="Enter a title" v-model="title" @blur="onEditNote" />
+			</div>
 			<div class="notes-editor__body">
-				<textarea>Body of the contents</textarea>				
+				<textarea @blur="onEditNote">Body of the content</textarea>
 			</div>
 		</div>
 	</div>
@@ -24,18 +26,28 @@ import NotesApi from "../../api/notes/index"
 
 export default {
 	name: 'Notes',
+	data () {
+		return {
+			title: 'Title'
+		}
+	},
 	mounted () {
 		this.fetchNotes()
 	},
 	methods: {
 		fetchNotes () {
-			KanbanApi.getNotes()
+			// NotesApi.getNotes()
+			console.log('fetch notes')
 		},
 		onAddNote () {
 			let newNote = {}
 			newNote.title = 'New note'
 			newNote.body = 'Body of the content'
-			KanbanApi.addNote(newNote)
+			NotesApi.addNote(newNote)
+			console.log('on new note add')
+		},
+		onEditNote () {
+			console.log('on edit note')
 		}
 	}
 }

@@ -67,7 +67,7 @@
 								<div class="notes-editor">
 									<div class="notes-editor__title">Title</div>
 									<div class="notes-editor__body">
-										Body of the contents
+										Body of the content
 									</div>
 								</div>
 							</div> -->
