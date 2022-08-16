@@ -5,7 +5,7 @@
 			<div class="notes-list">
 				<div class="notes-list__item">
 					<div class="notes-title">Title</div>
-					<div class="notes-body">Body on the contents</div>
+					<div class="notes-body">Body on the content</div>
 					<div class="notes-updated">5th Aug, 2022</div>
 				</div>
 			</div>
@@ -20,11 +20,22 @@
 </template>
 
 <script>
+import NotesApi from "../../api/notes/index"
+
 export default {
 	name: 'Notes',
+	mounted () {
+		this.fetchNotes()
+	},
 	methods: {
+		fetchNotes () {
+			KanbanApi.getNotes()
+		},
 		onAddNote () {
-			console.log('Create a new note each time')
+			let newNote = {}
+			newNote.title = 'New note'
+			newNote.body = 'Body of the content'
+			KanbanApi.addNote(newNote)
 		}
 	}
 }
