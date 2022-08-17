@@ -28,7 +28,7 @@
 <script>
 import { ref } from 'vue'
 // https://vueuse.org/core/onclickoutside/#onclickoutside
-import { onClickOutside } from "@vueuse/core";
+import { onClickOutside } from '@vueuse/core';
 
 const modal = ref(null)
 

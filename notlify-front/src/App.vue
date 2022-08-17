@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
+import { RouterLink, RouterView } from 'vue-router';
 // import WorkSpace from "@/components/WorkSpace.vue";
 </script>
 

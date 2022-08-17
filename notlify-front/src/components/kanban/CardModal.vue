@@ -80,9 +80,9 @@
 </template>
 
 <script>
-import KanbanApi from "../../api/kanban/index"
-import Modal from "@/components/Modal.vue";
-import TinyTabs from "@/components/TinyTabs.vue";
+import KanbanApi from '../../api/kanban/index'
+import Modal from '@/components/Modal.vue';
+import TinyTabs from '@/components/TinyTabs.vue';
 
 import { mapGetters, mapActions } from 'vuex';
 

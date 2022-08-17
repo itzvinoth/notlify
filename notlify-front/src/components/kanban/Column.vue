@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import Card from "@/components/kanban/Card.vue";
-import KanbanApi from "../../api/kanban/index";
+import Card from '@/components/kanban/Card.vue';
+import KanbanApi from '../../api/kanban/index';
 
 import { mapGetters, mapActions } from 'vuex';
 

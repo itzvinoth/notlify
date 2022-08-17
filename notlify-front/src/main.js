@@ -1,8 +1,8 @@
-import { createApp } from "vue";
+import { createApp } from 'vue';
 import VueFeather from 'vue-feather';
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
+import App from './App.vue';
+import router from './router';
+import store from './store';
 
 const app = createApp(App);
 

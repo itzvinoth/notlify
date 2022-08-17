@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import Column from "@/components/kanban/Column.vue";
-import KanbanApi from "../api/kanban/index"
+import Column from '@/components/kanban/Column.vue';
+import KanbanApi from '../api/kanban/index';
 
 import { mapGetters, mapActions } from 'vuex'
 

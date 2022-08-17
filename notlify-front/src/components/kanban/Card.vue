@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import DropZone from "@/components/kanban/DropZone.vue";
-import KanbanApi from "../../api/kanban/index"
-import CardDropdown from "@/components/kanban/CardDropdown.vue";
-import Popover from "@/components/Popover.vue";
-import Modal from "@/components/Modal.vue";
-import CardModal from "@/components/kanban/CardModal.vue";
+import DropZone from '@/components/kanban/DropZone.vue';
+import KanbanApi from '../../api/kanban/index'
+import CardDropdown from '@/components/kanban/CardDropdown.vue';
+import Popover from '@/components/Popover.vue';
+import Modal from '@/components/Modal.vue';
+import CardModal from '@/components/kanban/CardModal.vue';
 
 import { mapGetters, mapActions } from 'vuex';
 

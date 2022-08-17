@@ -22,7 +22,8 @@
 </template>
 
 <script>
-import NotesApi from "../../api/notes/index"
+import NotesApi from '../../api/notes/index';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
 	name: 'Notes',
@@ -31,14 +32,7 @@ export default {
 			title: 'Title'
 		}
 	},
-	mounted () {
-		this.fetchNotes()
-	},
 	methods: {
-		fetchNotes () {
-			// NotesApi.getNotes()
-			console.log('fetch notes')
-		},
 		onAddNote () {
 			let newNote = {}
 			newNote.title = 'New note'
