@@ -58,6 +58,9 @@
 }
 
 .notes-editor__title {
+    padding: 10px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ddd;
     input {
         border: none;
         outline: none;
@@ -76,5 +79,6 @@
         resize: none;
         width: 100%;
         height: 80vh;
+        overflow-y: auto;
     }
 }
