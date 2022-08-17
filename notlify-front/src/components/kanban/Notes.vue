@@ -3,10 +3,10 @@
 		<div class="notes-sidebar">
 			<button class="note-add--btn" @click="onAddNote">+ Add a note</button>
 			<div class="notes-list">
-				<div class="notes-list__item">
-					<div class="notes-title">Title</div>
-					<div class="notes-body">Body on the content</div>
-					<div class="notes-updated">5th Aug, 2022</div>
+				<div class="notes-list__item" v-for="note in notes" :key="note.id">
+					<div class="notes-title">{{ note.title }}</div>
+					<div class="notes-body">{{ note.body }}</div>
+					<div class="notes-updated">{{ new Date(note.updated).toLocaleString() }}</div>
 				</div>
 			</div>
 		</div>
@@ -32,13 +32,21 @@ export default {
 			title: 'Title'
 		}
 	},
+	computed: {
+		...mapGetters('notes', {
+			notes: 'notes'
+		})
+	},
+	created () {
+		this.$store.dispatch('notes/getNotes')
+	},
 	methods: {
 		onAddNote () {
 			let newNote = {}
 			newNote.title = 'New note'
 			newNote.body = 'Body of the content'
 			NotesApi.addNote(newNote)
-			console.log('on new note add')
+			this.$store.dispatch('notes/getNotes')
 		},
 		onEditNote () {
 			console.log('on edit note')

@@ -1,11 +1,16 @@
 export default class NotesApi {
     static getNotes () {
-        const notes = NotesApi.getNotes();
-        localStorage.setItem('notes-data', JSON.stringify(notes));
+        const json = localStorage.getItem('notes-data');
+        if (!json) {
+            return []
+        }
+        return JSON.parse(json);
     }
 
     static addNote (note) {
         const notes = NotesApi.getNotes();
+        note.id = Math.floor(Math.random() * 10000000);
+        note.updated = new Date().toISOString()
 
         notes.push(note);
         localStorage.setItem('notes-data', JSON.stringify(notes));
