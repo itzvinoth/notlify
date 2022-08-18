@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
-import KanbanView from '../views/KanbanView.vue';
+import HomeView from '../views/Home.vue';
+import BoardsView from '../views/Boards.vue';
+import KanbanView from '../views/Kanban.vue';
 import NotesView from '../components/kanban/Notes.vue';
 
 const router = createRouter({
@@ -10,6 +11,11 @@ const router = createRouter({
 	    path: '/',
 	    name: 'home',
 	    component: HomeView,
+	  },
+	  {
+	    path: '/boards',
+	    name: 'Boards',
+	    component: BoardsView,
 	  },
 	  {
 	    path: '/new',
@@ -27,7 +33,7 @@ const router = createRouter({
 	    // route level code-splitting
 	    // this generates a separate chunk (About.[hash].js) for this route
 	    // which is lazy-loaded when the route is visited.
-	    component: () => import('../views/AboutView.vue'),
+	    component: () => import('../views/About.vue'),
 	  },
 	],
 });

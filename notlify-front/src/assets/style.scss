@@ -47,6 +47,10 @@ nav a:first-of-type {
 	border: 0;
 }
 
+ul li {
+	list-style: none;
+}
+
 // @media (min-width: 1024px) {
 
 // 	header {
@@ -70,6 +74,7 @@ nav a:first-of-type {
 // 		margin-top: 1rem;
 // 	}
 // }
+@import "./boards";
 @import "./kanban";
 @import "./notes";
 @import "./workspace";
