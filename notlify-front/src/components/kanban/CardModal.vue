@@ -6,7 +6,7 @@
 				<template #header>
 					<label>Notlify / {{ columnTitle }}</label>
 					<h2 @click="onCardTitleClick" v-if="!titleSelected">{{ cardDetail.title }}</h2>
-					<textarea @blur="onTextareaBlur" v-if="titleSelected" ref="cardtitle">{{ cardDetail.title }}</textarea>
+					<textarea @blur="onTextareaBlur" v-if="titleSelected" ref="cardtitle" :value="cardDetail.title" @input="onChangeCardTitle($event)">{{ cardDetail.title }}</textarea>
 				</template>
 				<template #body>
 					<tiny-tabs id="mytabs" :anchor="false" :closable="false" :hideTitle="false" @on-close="onClose" @on-before="onBefore" @on-after="onAfter">
@@ -114,7 +114,8 @@ export default {
 			sectionTitle: '',
 			sectionItemId: null,
 			inputItem: '',
-			titleSelected: false
+			titleSelected: false,
+			cardTitle: ''
 		}
 	},
 	computed: {
@@ -199,8 +200,21 @@ export default {
 				this.$refs.cardtitle.focus()
 			})
 		},
+		onChangeCardTitle (event) {
+			this.cardTitle = event.target.value
+		},
 		onTextareaBlur () {
 			this.titleSelected = false
+			this.$nextTick(() => {
+				this.cardTitleUpdate()
+			})
+		},
+		cardTitleUpdate () {
+			KanbanApi.updateCard(this.cardId, {
+				'title': this.cardTitle,
+				'checklist': this.cardDetail.checklist
+			})
+			this.$store.dispatch('kanban/getColumns')
 		}
 	}
 }

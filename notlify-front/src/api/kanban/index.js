@@ -38,6 +38,7 @@ export default class KanbanApi {
 				}
 			}
 		})();
+		console.log('newProps: ', newProps)
 
 		if (!card) {
 			throw new Error('Card not exists');
