@@ -5,7 +5,8 @@
 			<modal :show="show" @close="onCloseModal" class="card-detail__modal">
 				<template #header>
 					<label>Notlify / {{ columnTitle }}</label>
-					<h2>{{ cardDetail.title }}</h2>
+					<h2 @click="onCardTitleClick" v-if="!titleSelected">{{ cardDetail.title }}</h2>
+					<textarea @blur="onTextareaBlur" v-if="titleSelected" ref="cardtitle">{{ cardDetail.title }}</textarea>
 				</template>
 				<template #body>
 					<tiny-tabs id="mytabs" :anchor="false" :closable="false" :hideTitle="false" @on-close="onClose" @on-before="onBefore" @on-after="onAfter">
@@ -112,7 +113,8 @@ export default {
 			creatingNewSection: false,
 			sectionTitle: '',
 			sectionItemId: null,
-			inputItem: ''
+			inputItem: '',
+			titleSelected: false
 		}
 	},
 	computed: {
@@ -145,6 +147,7 @@ export default {
 		onCloseModal () {
 			this.$emit('update')
 			this.resetSectionChecklist()
+			this.titleSelected = false
 		},
 		addNewSection () {
 			this.creatingNewSection = true
@@ -189,6 +192,15 @@ export default {
 		resetSectionChecklist () {
 			this.inputItem = ''
 			this.sectionItemId = null
+		},
+		onCardTitleClick () {
+			this.titleSelected = true
+			this.$nextTick(() => {
+				this.$refs.cardtitle.focus()
+			})
+		},
+		onTextareaBlur () {
+			this.titleSelected = false
 		}
 	}
 }

@@ -1,4 +1,12 @@
 .card-detail__modal {
+	.modal-header {
+		textarea {
+			width: 100%;
+			box-sizing: border-box;
+			border: 0;
+			font-size: 1.2em;
+		}
+	}
 	.side-panel {
 		float: left;
 		display: block;
