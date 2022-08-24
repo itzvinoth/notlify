@@ -198,7 +198,9 @@ export default {
 			this.titleSelected = true
 			this.cardTitle = this.cardDetail.title
 			this.$nextTick(() => {
+				let len = this.cardTitle.length
 				this.$refs.cardtitle.focus()
+				this.$refs.cardtitle.setSelectionRange(len, len)
 			})
 		},
 		onChangeCardTitle (event) {
