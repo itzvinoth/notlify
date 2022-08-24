@@ -196,6 +196,7 @@ export default {
 		},
 		onCardTitleClick () {
 			this.titleSelected = true
+			this.cardTitle = this.cardDetail.title
 			this.$nextTick(() => {
 				this.$refs.cardtitle.focus()
 			})
