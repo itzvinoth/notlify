@@ -1,4 +1,21 @@
 export default class KanbanApi {
+	static insertColumn () {
+		let data = read()
+		let columns = data;
+		if (!columns) {
+			return []
+		}
+		let obj = {
+			'id': columns.length,
+			'title': `Column no: ${columns.length}`,
+			'cards': []
+		}
+		columns.push(obj);
+		save(data);
+
+		return columns;
+	}
+
 	static getCards (columnId) {
 		let column = read().find(column => column.id === columnId);
 		if (!column) {
@@ -7,7 +24,7 @@ export default class KanbanApi {
 		return column.cards;
 	}
 
-	static insertCard(columnId, cardId) {
+	static insertCard (columnId, cardId) {
 		let data = read();
 		let column = data.find(column => column.id === columnId);
 		let card = {
@@ -38,7 +55,6 @@ export default class KanbanApi {
 				}
 			}
 		})();
-		console.log('newProps: ', newProps)
 
 		if (!card) {
 			throw new Error('Card not exists');

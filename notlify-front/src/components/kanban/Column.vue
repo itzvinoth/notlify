@@ -15,6 +15,9 @@
 				</div>
 			</div>
 		</div>
+		<div class="kb__column" style="cursor: pointer;" @click="addColumn">
+			<div>Add another column</div>
+		</div>
 	</div>
 </template>
 
@@ -70,6 +73,10 @@ export default {
 			this.newCardTitle = ''
 			this.newCardId = null
 			this.columnId = null
+		},
+		addColumn () {
+			KanbanApi.insertColumn()
+			this.$store.dispatch('kanban/getColumns')
 		}
 	},
 }
