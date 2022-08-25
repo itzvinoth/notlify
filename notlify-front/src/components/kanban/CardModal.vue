@@ -38,7 +38,10 @@
 											<h4>{{ item.sectionTitle }}</h4>
 											<div class="checklist-row__container">
 												<div class="checklist-row__item" v-for="(row, rowIndex) in item.rows" :key="rowIndex">
-													<div><input type="checkbox" /> {{ row.name }}</div>
+													<div>
+														<input type="checkbox" :value="row.completed" @input="onChecklistChange($event)" />
+														<span>{{ row.name }}</span>
+													</div>
 												</div>
 											</div>
 											<div v-if="sectionItemId === item.id" class="new-checklist-edit__container">
@@ -157,7 +160,7 @@ export default {
 			let newChecklistSection = {}
 			newChecklistSection['id'] = Math.floor(Math.random() * 100000000)
 			newChecklistSection['sectionTitle'] = this.sectionTitle
-			newChecklistSection['rows'] = []			
+			newChecklistSection['rows'] = []
 			let newChecklistSectionDetail = {
 				'cardId': this.cardId,
 				'item': newChecklistSection
@@ -179,6 +182,7 @@ export default {
 			let row = {}
 			row['id'] = Math.floor(Math.random() * 10000000000)
 			row['name'] = this.inputItem
+			row['completed'] = false
 			let detail = {
 				'cardId': this.cardId,
 				'sectionItemId': this.sectionItemId,
@@ -199,8 +203,8 @@ export default {
 			this.cardTitle = this.cardDetail.title
 			this.$nextTick(() => {
 				let len = this.cardTitle.length
-				this.$refs.cardtitle.focus()
 				this.$refs.cardtitle.setSelectionRange(len, len)
+				this.$refs.cardtitle.focus()
 			})
 		},
 		onChangeCardTitle (event) {
@@ -218,6 +222,9 @@ export default {
 				'checklist': this.cardDetail.checklist
 			})
 			this.$store.dispatch('kanban/getColumns')
+		},
+		onChecklistChange (event) {
+			console.log(event.target.checked)
 		}
 	}
 }
