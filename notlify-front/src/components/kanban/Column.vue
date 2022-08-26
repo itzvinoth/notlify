@@ -21,8 +21,8 @@
 			<card :cards="column.cards" :column-id="column.id" :column-title="column.title" />
 			<!-- <button class="kb__add-item" type="button" @click="addCard(column.id)">Add a card</button> -->
 			<div class="card-composer">
-				<div v-if="column.id !== columnId" @click="cardComposer('add', column.id)" class="add-card">Add a card</div>
-				<div v-if="isComposingNewCard && column.id === columnId">
+				<div v-if="column.id !== selectedColumnId" @click="cardComposer('add', column.id)" class="add-card">Add a card</div>
+				<div v-if="isComposingNewCard && column.id === selectedColumnId">
 					<textarea class="card-composer__textarea" v-model="newCardTitle" :ref="`cardtitle-${column.id}`"  @keypress.enter="cardComposer('save', column.id)" placeholder="Enter a card title" />
 					<button @click="cardComposer('save', column.id)" class="save-card">Save</button>
 				</div>
@@ -52,7 +52,8 @@ export default {
 		return {
 			isComposingNewCard: false,
 			newCardTitle: '',
-			newCardId: null
+			newCardId: null,
+			selectedColumnId: null
 		}
 	},
 	computed: {
@@ -70,10 +71,10 @@ export default {
 		// },
 		cardComposer (type, columnId) {
 			if (type === 'add') {
+				this.selectedColumnId = columnId
 				this.isComposingNewCard = true
 				let newCardId = Math.floor(Math.random() * 100000)
 				this.newCardId = newCardId
-				this.$store.dispatch('kanban/getColumnId', columnId)
 			} else if (type === 'save') {
 				let id = this.newCardId
 				KanbanApi.insertCard(columnId, id)
@@ -89,7 +90,7 @@ export default {
 		reset () {
 			this.newCardTitle = ''
 			this.newCardId = null
-			this.$store.dispatch('kanban/getColumnId', null)
+			this.selectedColumnId = null
 		},
 		addColumn () {
 			KanbanApi.insertColumn()
