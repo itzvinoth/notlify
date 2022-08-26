@@ -9,7 +9,7 @@
 						<vue-feather type="more-horizontal" @click.prevent.stop="showCardMenu($event, card.id)"></vue-feather>
 					</template>
 					<template #body>
-						<card-dropdown v-if="card.id === cardId" :pos="'right'" v-click-outside="onClickingOutside" :on-window-resize="'adjustable'">
+						<card-dropdown v-if="card.id === cardId" :pos="'right'" v-click-outside="onClickingOutsideCardMenu" :on-window-resize="'adjustable'">
 							<template #title></template>
 							<template #list>
 								<li><a href="" @click.prevent>Edit</a></li>
@@ -80,7 +80,7 @@ export default {
 		onUpdate () {
 			this.showModal = false
 		},
-		onClickingOutside () {
+		onClickingOutsideCardMenu () {
 			if (this.cardId !== null) {
 				this.$store.dispatch('kanban/getCardId', null)
 				return

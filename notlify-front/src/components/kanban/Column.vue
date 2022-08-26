@@ -1,13 +1,12 @@
 <template>
 	<div class="kb__columns">
 		<div class="kb__column" v-for="column in columns" :key="column.id" :data-id="column.id">
-			<!-- <vue-feather type="more-horizontal"></vue-feather> -->
 			<popover>
 				<template #trigger>
 					<vue-feather type="more-horizontal" @click.prevent.stop="showColumnMenu($event, column.id)"></vue-feather>
 				</template>
 				<template #body>
-					<card-dropdown v-if="column.id === columnId" :pos="'right'" :on-window-resize="'adjustable'">
+					<card-dropdown v-if="column.id === columnId" :pos="'right'" v-click-outside="onClickingOutsideColumnMenu" :on-window-resize="'adjustable'">
 						<template #title></template>
 						<template #list>
 							<li><a href="" @click.prevent>Edit</a></li>
@@ -113,7 +112,13 @@ export default {
 			KanbanApi.deleteColumn(id)
 			// vuex commit update kanban
 			this.$store.dispatch('kanban/getColumns')
-		}
+		},
+		onClickingOutsideColumnMenu () {
+			if (this.columnId !== null) {
+				this.$store.dispatch('kanban/getColumnId', null)
+				return
+			}
+		},
 	},
 }
 </script>
