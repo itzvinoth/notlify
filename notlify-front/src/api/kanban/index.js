@@ -1,22 +1,39 @@
 export default class KanbanApi {
 	static insertColumn () {
-		let data = read();
-		let columns = data;
+		const data = read();
+		const columns = data;
+		
 		if (!columns) {
 			return []
 		}
-		columns.push({
+
+		const column = {
 			'id': columns.length + 1,
 			'title': `Column no: ${columns.length + 1}`,
 			'cards': []
-		});
+		}
+
+		columns.push(column);
 		save(data);
 
 		return columns;
 	}
 
+	static deleteColumn (columnId) {
+		const data = read();
+		const columns = data;
+
+		const column = columns.find(column => column.id == columnId);
+
+		if (column) {
+			columns.splice(columns.indexOf(column), 1);
+		}
+
+		save(data);
+	}
+
 	static getCards (columnId) {
-		let column = read().find(column => column.id === columnId);
+		const column = read().find(column => column.id === columnId);
 		if (!column) {
 			return [];
 		}
@@ -24,9 +41,9 @@ export default class KanbanApi {
 	}
 
 	static insertCard (columnId, cardId) {
-		let data = read();
-		let column = data.find(column => column.id === columnId);
-		let card = {
+		const data = read();
+		const column = data.find(column => column.id === columnId);
+		const card = {
 			id: cardId,
 			content: '',
 			checklist: []
@@ -43,7 +60,7 @@ export default class KanbanApi {
 	}
 
 	static updateCard (cardId, newProps) {
-		let data = read();
+		const data = read();
 		
 		const [card, currentColumn] = (() => {
 			for (const column of data) {
@@ -96,7 +113,7 @@ export default class KanbanApi {
 }
 
 function read () {
-	let json = localStorage.getItem('kanban-data')
+	const json = localStorage.getItem('kanban-data')
 	if (!json) {
 		return [{
 			id: 1,

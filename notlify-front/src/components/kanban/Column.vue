@@ -11,7 +11,7 @@
 						<template #title></template>
 						<template #list>
 							<li><a href="" @click.prevent>Edit</a></li>
-							<li><a href="" @click.prevent>Delete</a></li>
+							<li><a href="" @click.prevent @dblclick="onDblClickColumnMenu($event, column.id)">Delete</a></li>
 						</template>
 					</card-dropdown>
 				</template>
@@ -102,6 +102,17 @@ export default {
 				return
 			}
 			this.$store.dispatch('kanban/getColumnId', id)
+		},
+		onDblClickColumnMenu (event, id) {
+			let check = confirm('Are you sure you want to delete this column')
+			if (check) {
+				this.onDeleteColumn(id)
+			}
+		},
+		onDeleteColumn (id) {
+			KanbanApi.deleteColumn(id)
+			// vuex commit update kanban
+			this.$store.dispatch('kanban/getColumns')
 		}
 	},
 }
