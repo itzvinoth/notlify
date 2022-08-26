@@ -1,16 +1,15 @@
 export default class KanbanApi {
 	static insertColumn () {
-		let data = read()
+		let data = read();
 		let columns = data;
 		if (!columns) {
 			return []
 		}
-		let obj = {
-			'id': columns.length,
-			'title': `Column no: ${columns.length}`,
+		columns.push({
+			'id': columns.length + 1,
+			'title': `Column no: ${columns.length + 1}`,
 			'cards': []
-		}
-		columns.push(obj);
+		});
 		save(data);
 
 		return columns;

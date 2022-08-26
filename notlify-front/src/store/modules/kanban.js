@@ -41,6 +41,7 @@ function save(data) {
 
 // initial state
 const state = () => ({
+	columnId: null,
 	columns: [],
 	cardId: null,
 	draggingElemHeight: 0
@@ -48,6 +49,7 @@ const state = () => ({
 
 // getters
 const getters = {
+	columnId: state => state.columnId,
 	columns: state => state.columns,
 	cardId: state => state.cardId,
 	draggingElemHeight: state => state.draggingElemHeight
@@ -58,6 +60,9 @@ const actions = {
 	async getColumns ({ commit }) {
 		const columns = await localStorage.getItem('kanban-data')
 		commit('setColumns', JSON.parse(columns))
+	},
+	async getColumnId ({ commit }, columnId) {
+		commit('setColumnId', columnId)
 	},
 	async getCardId ({ commit }, cardId) {
 		commit('setCardId', cardId)
@@ -93,6 +98,9 @@ const actions = {
 const mutations = {
 	setColumns (state, columns) {
 		state.columns = columns
+	},
+	setColumnId (state, columnId) {
+		state.columnId = columnId
 	},
 	setCardId (state, cardId) {
 		state.cardId = cardId

@@ -1,7 +1,21 @@
 <template>
 	<div class="kb__columns">
 		<div class="kb__column" v-for="column in columns" :key="column.id" :data-id="column.id">
-			<vue-feather type="more-horizontal"></vue-feather>
+			<!-- <vue-feather type="more-horizontal"></vue-feather> -->
+			<popover>
+				<template #trigger>
+					<vue-feather type="more-horizontal" @click.prevent.stop="showColumnMenu($event, column.id)"></vue-feather>
+				</template>
+				<template #body>
+					<card-dropdown v-if="column.id === columnId" :pos="'right'" :on-window-resize="'adjustable'">
+						<template #title></template>
+						<template #list>
+							<li><a href="" @click.prevent>Edit</a></li>
+							<li><a href="" @click.prevent>Delete</a></li>
+						</template>
+					</card-dropdown>
+				</template>
+			</popover>
 			<div class="kb__column--title">
 				{{ column.title }}
 			</div>
@@ -24,23 +38,27 @@
 <script>
 import Card from '@/components/kanban/Card.vue';
 import KanbanApi from '../../api/kanban/index';
+import CardDropdown from '@/components/kanban/CardDropdown.vue';
+import Popover from '@/components/Popover.vue';
 
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
 	components: {
-		'card': Card
+		'card': Card,
+		'card-dropdown': CardDropdown,
+		'popover': Popover,
 	},
 	data () {
 		return {
 			isComposingNewCard: false,
 			newCardTitle: '',
-			newCardId: null,
-			columnId: null
+			newCardId: null
 		}
 	},
 	computed: {
 		...mapGetters('kanban', {
+			columnId: 'columnId',
 			cardId: 'cardId',
 			columns: 'columns'
 		})
@@ -53,7 +71,7 @@ export default {
 		// },
 		cardComposer (type, columnId) {
 			if (type === 'add') {
-				this.columnId = columnId
+				this.$store.dispatch('kanban/getColumnId', columnId)
 				this.isComposingNewCard = true
 				let newCardId = Math.floor(Math.random() * 100000)
 				this.newCardId = newCardId
@@ -72,11 +90,18 @@ export default {
 		reset () {
 			this.newCardTitle = ''
 			this.newCardId = null
-			this.columnId = null
+			this.$store.dispatch('kanban/getColumnId', null)
 		},
 		addColumn () {
 			KanbanApi.insertColumn()
 			this.$store.dispatch('kanban/getColumns')
+		},
+		showColumnMenu (event, id) {
+			if (this.columnId === id) {
+				this.$store.dispatch('kanban/getColumnId', null)
+				return
+			}
+			this.$store.dispatch('kanban/getColumnId', id)
 		}
 	},
 }
