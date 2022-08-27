@@ -77,7 +77,7 @@ export default class KanbanApi {
 		}
 
 		card.title = newProps.title === undefined ? card.title : newProps.title;
-		card.checklist = newProps.checklist.length < 1 ? card.checklist : newProps.checklist;
+		card.checklist = (newProps.checklist && newProps.checklist.length < 1) ? card.checklist : newProps.checklist;
 
 		// update column and position
 		if (newProps.columnId !== undefined && newProps.position !== undefined) {
