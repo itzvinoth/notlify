@@ -23,22 +23,21 @@
 			<div class="card-composer">
 				<div v-if="column.id !== selectedColumnId" @click="cardComposer('add', column.id)" class="add-card">Add a card</div>
 				<div v-if="isComposingNewCard && column.id === selectedColumnId">
-					<textarea class="card-composer__textarea" v-model="newCardTitle" :ref="`cardtitle-${column.id}`"  @keypress.enter="cardComposer('save', column.id)" placeholder="Enter a card title" />
+					<textarea class="textarea-kanban card-composer__textarea" v-model="newCardTitle" :ref="`cardtitle-${column.id}`"  @keypress.enter="cardComposer('save', column.id)" placeholder="Enter a card title" />
 					<button @click="cardComposer('save', column.id)" class="save-card">Save</button>
+					<button @click="cardComposer('cancel')" class="cancel-card">Cancel</button>
 				</div>
 			</div>
 		</div>
-		<!-- <div class="kb__column" style="cursor: pointer;" @click="addColumn">
-			<div>Add another column</div>
-		</div> -->
 		<div class="kb__column" style="cursor: pointer;">
 			<div class="column-composer">
 				<div v-if="!isComposingNewColumn" @click="columnComposer('add')" class="add-column">
 					Add another column
 				</div>
 				<div v-if="isComposingNewColumn">
-					<textarea class="column-composer__textarea" v-model="newColumnTitle" @keypress.enter="columnComposer('save')" placeholder="Enter a column title" />
+					<textarea class="textarea-kanban column-composer__textarea" v-model="newColumnTitle" @keypress.enter="columnComposer('save')" placeholder="Enter a column title" />
 					<button @click="columnComposer('save')" class="save-column">Save</button>
+					<button @click="columnComposer('cancel')" class="cancel-column">Cancel</button>
 				</div>
 			</div>
 		</div>		
@@ -77,30 +76,34 @@ export default {
 		})
 	},
 	methods: {
-		// addCard (id) {
-		// 	let newCard = KanbanApi.insertCard(id, '')
-		// 	// vuex commit update kanban
-		// 	this.$store.dispatch('kanban/getColumns')
-		// },
 		cardComposer (type, columnId) {
-			if (type === 'add') {
-				this.selectedColumnId = columnId
-				this.isComposingNewCard = true
-				let newCardId = Math.floor(Math.random() * 100000)
-				this.newCardId = newCardId
-			} else if (type === 'save') {
-				let id = this.newCardId
-				KanbanApi.insertCard(columnId, id)
-				KanbanApi.updateCard(id, {
-					'title': this.newCardTitle,
-					'checklist': []
-				})
-				// vuex commit update kanban
-				this.$store.dispatch('kanban/getColumns')
-				this.reset()
+			switch (type) {
+				case 'add':
+					this.selectedColumnId = columnId
+					this.isComposingNewCard = true
+					let newCardId = Math.floor(Math.random() * 100000)
+					this.newCardId = newCardId
+					break;
+				case 'save':
+					this.addCard(columnId)
+					this.resetCardComposer()
+					break;
+				case 'cancel':
+					this.resetCardComposer()
+					break;
 			}
 		},
-		reset () {
+		addCard (columnId) {
+			let id = this.newCardId
+			KanbanApi.insertCard(columnId, id)
+			KanbanApi.updateCard(id, {
+				'title': this.newCardTitle,
+				'checklist': []
+			})
+			// vuex commit update kanban
+			this.$store.dispatch('kanban/getColumns')
+		},
+		resetCardComposer () {
 			this.newCardTitle = ''
 			this.newCardId = null
 			this.selectedColumnId = null
@@ -129,6 +132,20 @@ export default {
 				return
 			}
 		},
+		columnComposer (type) {
+			switch (type) {
+				case 'add':
+					this.isComposingNewColumn = true
+					break;
+				case 'save':
+					this.addColumn()
+					this.resetColumnComposer()
+					break;
+				case 'cancel':
+					this.resetColumnComposer()
+					break;
+			}
+		},
 		addColumn () {
 			const column = {
 				'id': this.columns.length + 1,
@@ -138,13 +155,9 @@ export default {
 			KanbanApi.insertColumn(column)
 			this.$store.dispatch('kanban/getColumns')
 		},
-		columnComposer (type) {
-			if (type === 'add') {
-				this.isComposingNewColumn = true
-			} else if (type === 'save') {
-				this.addColumn()
-				this.isComposingNewColumn = false
-			}
+		resetColumnComposer () {
+			this.isComposingNewColumn = false
+			this.newColumnTitle = ''
 		}
 	},
 }
