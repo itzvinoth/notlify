@@ -10,7 +10,7 @@
 						<template #title></template>
 						<template #list>
 							<li><a href="" @click.prevent>Edit</a></li>
-							<li><a href="" @click.prevent @dblclick="onDblClickColumnMenu($event, column.id)">Delete</a></li>
+							<li><a href="" @click.prevent @dblclick="onDblClickColumnDeleteMenu($event, column.id)">Delete</a></li>
 						</template>
 					</card-dropdown>
 				</template>
@@ -28,9 +28,20 @@
 				</div>
 			</div>
 		</div>
-		<div class="kb__column" style="cursor: pointer;" @click="addColumn">
+		<!-- <div class="kb__column" style="cursor: pointer;" @click="addColumn">
 			<div>Add another column</div>
-		</div>
+		</div> -->
+		<div class="kb__column" style="cursor: pointer;">
+			<div class="column-composer">
+				<div v-if="!isComposingNewColumn" @click="columnComposer('add')" class="add-column">
+					Add another column
+				</div>
+				<div v-if="isComposingNewColumn">
+					<textarea class="column-composer__textarea" v-model="newColumnTitle" @keypress.enter="columnComposer('save')" placeholder="Enter a column title" />
+					<button @click="columnComposer('save')" class="save-column">Save</button>
+				</div>
+			</div>
+		</div>		
 	</div>
 </template>
 
@@ -50,6 +61,8 @@ export default {
 	},
 	data () {
 		return {
+			newColumnTitle: '',
+			isComposingNewColumn: false,
 			isComposingNewCard: false,
 			newCardTitle: '',
 			newCardId: null,
@@ -92,10 +105,6 @@ export default {
 			this.newCardId = null
 			this.selectedColumnId = null
 		},
-		addColumn () {
-			KanbanApi.insertColumn()
-			this.$store.dispatch('kanban/getColumns')
-		},
 		showColumnMenu (event, id) {
 			if (this.columnId === id) {
 				this.$store.dispatch('kanban/getColumnId', null)
@@ -103,7 +112,7 @@ export default {
 			}
 			this.$store.dispatch('kanban/getColumnId', id)
 		},
-		onDblClickColumnMenu (event, id) {
+		onDblClickColumnDeleteMenu (event, id) {
 			let check = confirm('Are you sure you want to delete this column')
 			if (check) {
 				this.onDeleteColumn(id)
@@ -120,6 +129,23 @@ export default {
 				return
 			}
 		},
+		addColumn () {
+			const column = {
+				'id': this.columns.length + 1,
+				'title': this.newColumnTitle,
+				'cards': []
+			}
+			KanbanApi.insertColumn(column)
+			this.$store.dispatch('kanban/getColumns')
+		},
+		columnComposer (type) {
+			if (type === 'add') {
+				this.isComposingNewColumn = true
+			} else if (type === 'save') {
+				this.addColumn()
+				this.isComposingNewColumn = false
+			}
+		}
 	},
 }
 </script>
