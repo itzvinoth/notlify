@@ -1,8 +1,8 @@
 function addCardSection(columns, cardId, item) {
 	let cols = []
-	for (var i = 0; i < columns.length; i++) {
+	for (let i = 0; i < columns.length; i++) {
 		let column = columns[i]
-		for (var j = 0; j < column.cards.length; j++) {
+		for (let j = 0; j < column.cards.length; j++) {
 			let card = column.cards[j]
 			if (card.id === cardId) {
 				let c = card.checklist || []
@@ -17,16 +17,40 @@ function addCardSection(columns, cardId, item) {
 
 function addSectionChecklist(columns, cardId, sectionItemId, row) {
 	let cols = []
-	for (var i = 0; i < columns.length; i++) {
+	for (let i = 0; i < columns.length; i++) {
 		let column = columns[i]
-		for (var j = 0; j < columns[i].cards.length; j++) {
+		for (let j = 0; j < columns[i].cards.length; j++) {
 			let card = columns[i].cards[j]
-			for (var k = 0; k < card.checklist.length; k++) {
+			for (let k = 0; k < card.checklist.length; k++) {
 				let section = columns[i].cards[j].checklist[k]
 				if (section.id === sectionItemId) {
 					let s = section.rows || []
 					s.push(row)
 					section.rows = s					
+				}
+			}
+		}
+		cols.push(column)
+	}
+	return cols
+}
+
+function updateSectionChecklist (columns, cardId, sectionItemId, rowId) {
+	let cols = []
+	for (let i = 0; i < columns.length; i++) {
+		let column = columns[i]
+		for (let j = 0; j < columns[i].cards.length; j++) {
+			let card = columns[i].cards[j]
+			for (let k = 0; k < card.checklist.length; k++) {
+				let section = columns[i].cards[j].checklist[k]
+				if (section.id === sectionItemId) {
+					let rows = section.rows || []
+					for (let l = 0; l < rows.length; l++) {
+						if (rows[l].id === rowId) {
+							rows[l].completed = !rows[l].completed
+						}
+					}
+					section.rows = rows
 				}
 			}
 		}
@@ -79,7 +103,7 @@ const actions = {
 			'columns': JSON.parse(columns)
 		}
 		let payload = {...d, ...c}
-		commit('setCardSection', payload)
+		commit('createNewCardSection', payload)
 	},
 	async addSectionChecklist ({ commit }, detail) {
 		const columns = await localStorage.getItem('kanban-data')
@@ -90,7 +114,18 @@ const actions = {
 			'columns': JSON.parse(columns)
 		}
 		let payload = {...d, ...c}
-		commit('setSectionChecklist', payload)
+		commit('createNewSectionChecklist', payload)
+	},
+	async updateSectionChecklist ({ commit }, detail) {
+		const columns = await localStorage.getItem('kanban-data')
+		let d = {
+			'detail': detail
+		}
+		let c = {
+			'columns': JSON.parse(columns)
+		}
+		let payload = {...d, ...c}
+		commit('updateExistingSectionChecklist', payload)
 	}
 }
 
@@ -108,7 +143,7 @@ const mutations = {
 	setDraggingElemHeight (state, height) {
 		state.draggingElemHeight = height
 	},
-	setCardSection (state, payload) {
+	createNewCardSection (state, payload) {
 		let detail = payload.detail
 		let cardId = detail.cardId
 		let item = detail.item
@@ -116,12 +151,21 @@ const mutations = {
 		save(columns)
 		state.columns = columns
 	},
-	setSectionChecklist (state, payload) {
+	createNewSectionChecklist (state, payload) {
 		let detail = payload.detail
 		let cardId = detail.cardId
 		let sectionItemId = detail.sectionItemId
 		let row = detail.row
 		let columns = addSectionChecklist(payload.columns, cardId, sectionItemId, row)
+		save(columns)
+		state.columns = columns
+	},
+	updateExistingSectionChecklist (state, payload) {
+		let detail = payload.detail
+		let cardId = detail.cardId
+		let sectionItemId = detail.sectionItemId
+		let rowId = detail.rowId
+		let columns = updateSectionChecklist(payload.columns, cardId, sectionItemId, rowId)
 		save(columns)
 		state.columns = columns
 	}

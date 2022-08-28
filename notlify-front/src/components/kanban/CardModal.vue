@@ -39,8 +39,8 @@
 											<div class="checklist-row__container">
 												<div class="checklist-row__item" v-for="(row, rowIndex) in item.rows" :key="rowIndex">
 													<div>
-														<input type="checkbox" :value="row.completed" @input="onChecklistChange($event)" />
-														<span>{{ row.name }}</span>
+														<input type="checkbox" :value="row.completed" :checked="row.completed" @input="onChecklistChange($event, item.id, row)" />
+														<span :style="{'text-decoration': (row.completed ? 'line-through' : 'none')}">{{ row.name }}</span>
 													</div>
 												</div>
 											</div>
@@ -57,24 +57,6 @@
 						</div>
 						<div class="section" id="notes">
 							<h3 class="title">Notes</h3>
-							<!-- <div class="notes">
-								<div class="notes-sidebar">
-									<button class="note-add--btn">+ Add a note</button>
-									<div class="notes-list">
-										<div class="notes-list__item">
-											<div class="notes-title">Title</div>
-											<div class="notes-body">Body on the contents</div>
-											<div class="notes-updated">5th Aug, 2022</div>
-										</div>
-									</div>
-								</div>
-								<div class="notes-editor">
-									<div class="notes-editor__title">Title</div>
-									<div class="notes-editor__body">
-										Body of the content
-									</div>
-								</div>
-							</div> -->
 						</div>
 					</tiny-tabs>                    
 				</template>
@@ -223,8 +205,13 @@ export default {
 			})
 			this.$store.dispatch('kanban/getColumns')
 		},
-		onChecklistChange (event) {
-			console.log(event.target.checked)
+		onChecklistChange (event, itemId, row) {
+			let detail = {
+				'cardId': this.cardId,
+				'sectionItemId': itemId,
+				'rowId': row.id
+			}
+			this.$store.dispatch('kanban/updateSectionChecklist', detail)
 		}
 	}
 }
