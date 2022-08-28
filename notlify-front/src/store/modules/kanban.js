@@ -70,7 +70,7 @@ const actions = {
 	async getDraggingElemHeight ({ commit }, height) {
 		commit('setDraggingElemHeight', height)
 	},
-	async updateCardSection ({ commit }, detail) {
+	async addCardSection ({ commit }, detail) {
 		const columns = await localStorage.getItem('kanban-data')
 		let d = {
 			'detail': detail
@@ -81,7 +81,7 @@ const actions = {
 		let payload = {...d, ...c}
 		commit('setCardSection', payload)
 	},
-	async updateSectionChecklist ({ commit }, detail) {
+	async addSectionChecklist ({ commit }, detail) {
 		const columns = await localStorage.getItem('kanban-data')
 		let d = {
 			'detail': detail

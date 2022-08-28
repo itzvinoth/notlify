@@ -165,7 +165,7 @@ export default {
 				'cardId': this.cardId,
 				'item': newChecklistSection
 			}
-			this.$store.dispatch('kanban/updateCardSection', newChecklistSectionDetail)
+			this.$store.dispatch('kanban/addCardSection', newChecklistSectionDetail)
 			this.reset()
 		},
 		cancelChecklistItem () {
@@ -188,7 +188,7 @@ export default {
 				'sectionItemId': this.sectionItemId,
 				'row': row
 			}
-			this.$store.dispatch('kanban/updateSectionChecklist', detail)
+			this.$store.dispatch('kanban/addSectionChecklist', detail)
 			this.resetSectionChecklist()
 		},
 		cancelItem () {
