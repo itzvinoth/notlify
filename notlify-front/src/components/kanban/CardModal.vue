@@ -5,8 +5,8 @@
 			<modal :show="show" @close="onCloseModal" class="card-detail__modal">
 				<template #header>
 					<label>Notlify / {{ columnTitle }}</label>
-					<h2 @click="onCardTitleClick" v-if="!titleSelected">{{ cardDetail.title }}</h2>
-					<textarea @blur="onTextareaBlur" @keypress.enter="onTextareaBlur" v-if="titleSelected" ref="cardtitle" :value="cardDetail.title" @input="onChangeCardTitle($event)">{{ cardDetail.title }}</textarea>
+					<h2 @click="onCardTitleClick" v-if="!isCardTitleSelected">{{ cardDetail.title }}</h2>
+					<textarea @blur="onTextareaBlur" @keypress.enter="onTextareaBlur" v-if="isCardTitleSelected" ref="cardtitle" :value="cardDetail.title" @input="onChangeCardTitle($event)">{{ cardDetail.title }}</textarea>
 				</template>
 				<template #body>
 					<tiny-tabs id="mytabs" :anchor="false" :closable="false" :hideTitle="false" @on-close="onClose" @on-before="onBefore" @on-after="onAfter">
@@ -40,8 +40,12 @@
 												<div class="checklist-row__item" v-for="(row, rowIndex) in item.rows" :key="rowIndex">
 													<div>
 														<input type="checkbox" :value="row.completed" :checked="row.completed" @input="onChecklistChange($event, item.id, row)" />
-														<span @click="onChecklistClick($event, item.id, row)" :style="{'text-decoration': (row.completed ? 'line-through' : 'none')}">{{ row.name }}</span>
-														<!-- <textarea @blur="onChecklistBlur"></textarea>														 -->
+														<span v-if="selectedChecklistId !== row.id" class="checklist-row__item--text" :class="row.completed ? 'strike' : 'normal'" @click="onChecklistClick($event, item.id, row)">{{ row.name }}</span>
+														<textarea v-if="selectedChecklistId === row.id" @blur="onChecklistBlur" class="checklist-row__item--textarea"></textarea>
+													</div>
+													<div>
+														<!-- <vue-feather type="more-horizontal" @click.prevent.stop="showCardMenu($event, card.id)"></vue-feather> -->
+														<vue-feather type="chevron-down"></vue-feather>
 													</div>
 												</div>
 											</div>
@@ -97,14 +101,18 @@ export default {
 	},
 	data () {
 		return {
-			isChecklistExist: false,
+			cardTitle: '',
+			isCardTitleChanged: false,
+			isCardTitleSelected: false,
+
 			creatingNewSection: false,
 			sectionTitle: '',
 			sectionItemId: null,
+
+			isChecklistExist: false,
+
 			inputItem: '',
-			titleSelected: false,
-			cardTitle: '',
-			isCardTitleChanged: false
+			selectedChecklistId: null
 		}
 	},
 	computed: {
@@ -142,7 +150,7 @@ export default {
 		onCloseModal () {
 			this.$emit('update')
 			this.resetSectionChecklist()
-			this.titleSelected = false
+			this.isCardTitleSelected = false
 		},
 		addNewSection () {
 			this.creatingNewSection = true
@@ -190,7 +198,7 @@ export default {
 			this.sectionItemId = null
 		},
 		onCardTitleClick () {
-			this.titleSelected = true
+			this.isCardTitleSelected = true
 			this.cardTitle = this.cardDetail.title
 			FINAL_UPDATED_CARD_TITLE = this.cardDetail.title
 			this.$nextTick(() => {
@@ -203,7 +211,7 @@ export default {
 			this.cardTitle = event.target.value
 		},
 		onTextareaBlur () {
-			this.titleSelected = false
+			this.isCardTitleSelected = false
 			if (this.isCardTitleChanged) {
 				this.$nextTick(() => {
 					this.cardTitleUpdate()
@@ -227,6 +235,7 @@ export default {
 			this.$store.dispatch('kanban/updateSectionChecklist', detail)
 		},
 		onChecklistClick (event, itemId, row) {
+			this.selectedChecklistId = row.id
 			console.log(event, itemId, row)
 		}
 	}
