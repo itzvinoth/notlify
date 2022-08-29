@@ -67,6 +67,8 @@
 </template>
 
 <script>
+let CARD_TITLE = ''
+
 import KanbanApi from '../../api/kanban/index'
 import Modal from '@/components/Modal.vue';
 import TinyTabs from '@/components/TinyTabs.vue';
@@ -101,7 +103,8 @@ export default {
 			sectionItemId: null,
 			inputItem: '',
 			titleSelected: false,
-			cardTitle: ''
+			cardTitle: '',
+			isCardTitleChanged: false
 		}
 	},
 	computed: {
@@ -121,14 +124,15 @@ export default {
 			return card
 		}
 	},
-	// watch: {
-	// 	cardTitle (newTitle, oldTitle) {
-	// 		console.log(newTitle, oldTitle)
-	// 		if (newTitle !== oldTitle) {
-	// 			this.newCardTitle = newTitle
-	// 		}
-	// 	}
-	// },
+	watch: {
+		cardTitle (newTitle, oldTitle) {
+			if (newTitle !== CARD_TITLE) {
+				this.isCardTitleChanged = true
+			} else {
+				this.isCardTitleChanged = false
+			}
+		}
+	},
 	methods: {
 		onClose (id) {
 			console.log('Callback function that gets evaluated while closing the tab', id)
@@ -192,26 +196,30 @@ export default {
 		onCardTitleClick () {
 			this.titleSelected = true
 			this.cardTitle = this.cardDetail.title
+			CARD_TITLE = this.cardDetail.title
 			this.$nextTick(() => {
 				let len = this.cardTitle.length
 				this.$refs.cardtitle.setSelectionRange(len, len)
 				this.$refs.cardtitle.focus()
-			})
+			})			
 		},
 		onChangeCardTitle (event) {
 			this.cardTitle = event.target.value
 		},
 		onTextareaBlur () {
 			this.titleSelected = false
-			this.$nextTick(() => {
-				this.cardTitleUpdate()
-			})
+			if (this.isCardTitleChanged) {
+				this.$nextTick(() => {
+					this.cardTitleUpdate()
+				})
+			}
 		},
 		cardTitleUpdate () {
 			KanbanApi.updateCard(this.cardId, {
 				'title': this.cardTitle,
 				'checklist': this.cardDetail.checklist
 			})
+			CARD_TITLE = this.cardTitle
 			this.$store.dispatch('kanban/getColumns')
 		},
 		onChecklistChange (event, itemId, row) {
