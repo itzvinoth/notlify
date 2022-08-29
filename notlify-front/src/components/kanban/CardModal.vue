@@ -40,7 +40,8 @@
 												<div class="checklist-row__item" v-for="(row, rowIndex) in item.rows" :key="rowIndex">
 													<div>
 														<input type="checkbox" :value="row.completed" :checked="row.completed" @input="onChecklistChange($event, item.id, row)" />
-														<span :style="{'text-decoration': (row.completed ? 'line-through' : 'none')}">{{ row.name }}</span>
+														<span @click="onChecklistClick($event, item.id, row)" :style="{'text-decoration': (row.completed ? 'line-through' : 'none')}">{{ row.name }}</span>
+														<!-- <textarea @blur="onChecklistBlur"></textarea>														 -->
 													</div>
 												</div>
 											</div>
@@ -212,6 +213,9 @@ export default {
 				'rowId': row.id
 			}
 			this.$store.dispatch('kanban/updateSectionChecklist', detail)
+		},
+		onChecklistClick (event, itemId, row) {
+			console.log(event, itemId, row)
 		}
 	}
 }
