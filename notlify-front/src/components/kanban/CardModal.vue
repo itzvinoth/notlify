@@ -6,7 +6,7 @@
 				<template #header>
 					<label>Notlify / {{ columnTitle }}</label>
 					<h2 @click="onCardTitleClick" v-if="!titleSelected">{{ cardDetail.title }}</h2>
-					<textarea @blur="onTextareaBlur" v-if="titleSelected" ref="cardtitle" :value="cardDetail.title" @input="onChangeCardTitle($event)">{{ cardDetail.title }}</textarea>
+					<textarea @blur="onTextareaBlur" @keypress.enter="onTextareaBlur" v-if="titleSelected" ref="cardtitle" :value="cardDetail.title" @input="onChangeCardTitle($event)">{{ cardDetail.title }}</textarea>
 				</template>
 				<template #body>
 					<tiny-tabs id="mytabs" :anchor="false" :closable="false" :hideTitle="false" @on-close="onClose" @on-before="onBefore" @on-after="onAfter">
@@ -121,6 +121,14 @@ export default {
 			return card
 		}
 	},
+	// watch: {
+	// 	cardTitle (newTitle, oldTitle) {
+	// 		console.log(newTitle, oldTitle)
+	// 		if (newTitle !== oldTitle) {
+	// 			this.newCardTitle = newTitle
+	// 		}
+	// 	}
+	// },
 	methods: {
 		onClose (id) {
 			console.log('Callback function that gets evaluated while closing the tab', id)
