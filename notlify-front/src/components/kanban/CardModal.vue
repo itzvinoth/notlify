@@ -39,13 +39,33 @@
 											<div class="checklist-row__container">
 												<div class="checklist-row__item" v-for="(row, rowIndex) in item.rows" :key="rowIndex">
 													<div>
-														<input type="checkbox" :value="row.completed" :checked="row.completed" @input="onChecklistChange($event, item.id, row)" />
-														<span v-if="selectedChecklistId !== row.id" class="checklist-row__item--text" :class="row.completed ? 'strike' : 'normal'" @click="onChecklistClick($event, item.id, row)">{{ row.name }}</span>
-														<textarea v-if="selectedChecklistId === row.id" @blur="onChecklistBlur" class="checklist-row__item--textarea"></textarea>
+														<div class="flex">
+															<input type="checkbox" :value="row.completed" :checked="row.completed" @input="onChecklistChange($event, item.id, row)" />
+															<div>
+																<span v-if="selectedChecklistId !== row.id" @click="onChecklistClick($event, item.id, row)" class="checklist-row__item--text" :class="row.completed ? 'strike' : 'normal'">{{ row.name }}</span>
+																<textarea v-if="selectedChecklistId === row.id" @blur="onChecklistBlur" class="checklist-row__item--textarea"></textarea>
+															</div>
+														</div>
+														<div v-if="selectedChecklistDropdownMenuId === row.id">
+															<!-- Expanded -->
+															<div class="flex">
+																<div>
+																	<label>Reminder</label>
+																	<div>Set date</div>
+																</div>
+																<div>
+																	<label>Priority</label>
+																	<div>High</div>
+																</div>
+																<div>
+																	<label>Delete</label>
+																</div>
+															</div>
+														</div>
 													</div>
 													<div>
 														<!-- <vue-feather type="more-horizontal" @click.prevent.stop="showCardMenu($event, card.id)"></vue-feather> -->
-														<vue-feather type="chevron-down"></vue-feather>
+														<vue-feather type="chevron-down" @click="showChecklistDropdownMenu($event, row)"></vue-feather>
 													</div>
 												</div>
 											</div>
@@ -112,7 +132,8 @@ export default {
 			isChecklistExist: false,
 
 			inputItem: '',
-			selectedChecklistId: null
+			selectedChecklistId: null,
+			selectedChecklistDropdownMenuId: null
 		}
 	},
 	computed: {
@@ -237,6 +258,14 @@ export default {
 		onChecklistClick (event, itemId, row) {
 			this.selectedChecklistId = row.id
 			console.log(event, itemId, row)
+		},
+		showChecklistDropdownMenu(event, row) {
+			if (this.selectedChecklistDropdownMenuId === row.id) {
+				this.selectedChecklistDropdownMenuId = null
+				return
+			}
+			this.selectedChecklistDropdownMenuId = row.id
+			console.log(event, row)
 		}
 	}
 }
