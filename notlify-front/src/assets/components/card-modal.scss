@@ -68,6 +68,17 @@
 									text-decoration: none;
 								}
 							}
+							.checklist-row__item--textarea {
+								height: 20px;
+								width: 100%;
+								box-sizing: border-box;
+								overflow: hidden;
+								overflow-wrap: break-word;
+								resize: none;
+								background: none;
+								border: none;
+								box-shadow: none;
+							}
 							.checklist-dropdown__container {
 								display: flex;
 								align-items: end;
@@ -78,6 +89,12 @@
 									padding-left: 5px;
 									display: flex;
 									justify-content: space-between;
+									label {
+										margin-bottom: 4px;
+									}
+								}
+								.checklist-dropdown .checklist-dropdown__value {
+									margin-top: 4px;
 								}
 							}
 						}

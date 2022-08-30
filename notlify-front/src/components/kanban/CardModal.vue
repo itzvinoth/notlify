@@ -41,7 +41,7 @@
 													<div class="checklist-row__item--container">
 														<div class="flex">
 															<input type="checkbox" :value="row.completed" :checked="row.completed" @input="onChecklistChange($event, item.id, row)" />
-															<div>
+															<div style="width: 100%;">
 																<span v-if="selectedChecklistId !== row.id" @click="onChecklistClick($event, item.id, row)" class="checklist-row__item--text" :class="row.completed ? 'strike' : 'normal'">{{ row.name }}</span>
 																<textarea v-if="selectedChecklistId === row.id" @blur="onChecklistBlur" class="checklist-row__item--textarea"></textarea>
 															</div>
@@ -51,11 +51,18 @@
 															<div class="checklist-dropdown">
 																<div>
 																	<label>Reminder</label>
-																	<div>Set date</div>
+																	<div class="checklist-dropdown__value">Set date</div>
 																</div>
 																<div>
 																	<label>Priority</label>
-																	<div>High</div>
+																	<div class="checklist-dropdown__value">
+																		<select>
+																			<option>None</option>
+																			<option>Low</option>
+																			<option>Medium</option>
+																			<option>High</option>
+																		</select>
+																	</div>
 																</div>
 															</div>
 															<div>
