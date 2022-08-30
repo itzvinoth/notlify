@@ -43,7 +43,7 @@
 															<input type="checkbox" :value="row.completed" :checked="row.completed" @input="onChecklistChange($event, item.id, row)" />
 															<div style="width: 100%;">
 																<span v-if="selectedChecklistId !== row.id" @click="onChecklistClick($event, item.id, row)" class="checklist-row__item--text" :class="row.completed ? 'strike' : 'normal'">{{ row.name }}</span>
-																<textarea v-if="selectedChecklistId === row.id" @blur="onChecklistBlur" class="checklist-row__item--textarea"></textarea>
+																<textarea v-if="selectedChecklistId === row.id" @blur="onChecklistBlur" @keypress.enter="onChecklistBlur" :value="row.name" @input="onChecklistChange($event, item.id, row)" class="checklist-row__item--textarea"></textarea>
 															</div>
 														</div>
 														<div v-if="selectedChecklistDropdownMenuId === row.id" class="checklist-dropdown__container">
@@ -166,6 +166,13 @@ export default {
 		}
 	},
 	methods: {
+		// modal
+		onCloseModal () {
+			this.$emit('update')
+			this.resetSectionChecklist()
+			this.isCardTitleSelected = false
+		},
+		// tabs
 		onClose (id) {
 			console.log('Callback function that gets evaluated while closing the tab', id)
 		},
@@ -175,56 +182,7 @@ export default {
 		onAfter (id, tab) {
 			console.log('Callback function that gets evaluated after a tab is activated', id, tab)
 		},
-		onCloseModal () {
-			this.$emit('update')
-			this.resetSectionChecklist()
-			this.isCardTitleSelected = false
-		},
-		addNewSection () {
-			this.creatingNewSection = true
-		},
-		addChecklistItem () {
-			let newChecklistSection = {}
-			newChecklistSection['id'] = Math.floor(Math.random() * 100000000)
-			newChecklistSection['sectionTitle'] = this.sectionTitle
-			newChecklistSection['rows'] = []
-			let newChecklistSectionDetail = {
-				'cardId': this.cardId,
-				'item': newChecklistSection
-			}
-			this.$store.dispatch('kanban/addCardSection', newChecklistSectionDetail)
-			this.reset()
-		},
-		cancelChecklistItem () {
-			this.creatingNewSection = false
-		},
-		reset () {
-			this.sectionTitle = ''
-			this.creatingNewSection = false
-		},
-		showItemAdd (checklistIndex, itemId) {
-			this.sectionItemId = itemId
-		},
-		addItem (checklistIndex) {
-			let row = {}
-			row['id'] = Math.floor(Math.random() * 10000000000)
-			row['name'] = this.inputItem
-			row['completed'] = false
-			let detail = {
-				'cardId': this.cardId,
-				'sectionItemId': this.sectionItemId,
-				'row': row
-			}
-			this.$store.dispatch('kanban/addSectionChecklist', detail)
-			this.resetSectionChecklist()
-		},
-		cancelItem () {
-			this.resetSectionChecklist()
-		},
-		resetSectionChecklist () {
-			this.inputItem = ''
-			this.sectionItemId = null
-		},
+		// card
 		onCardTitleClick () {
 			this.isCardTitleSelected = true
 			this.cardTitle = this.cardDetail.title
@@ -254,6 +212,53 @@ export default {
 			FINAL_UPDATED_CARD_TITLE = this.cardTitle
 			this.$store.dispatch('kanban/getColumns')
 		},
+		// section
+		addChecklistItem () {
+			let newChecklistSection = {}
+			newChecklistSection['id'] = Math.floor(Math.random() * 100000000)
+			newChecklistSection['sectionTitle'] = this.sectionTitle
+			newChecklistSection['rows'] = []
+			let newChecklistSectionDetail = {
+				'cardId': this.cardId,
+				'item': newChecklistSection
+			}
+			this.$store.dispatch('kanban/addCardSection', newChecklistSectionDetail)
+			this.reset()
+		},
+		cancelChecklistItem () {
+			this.creatingNewSection = false
+		},
+		addNewSection () {
+			this.creatingNewSection = true
+		},
+		reset () {
+			this.sectionTitle = ''
+			this.creatingNewSection = false
+		},
+		showItemAdd (checklistIndex, itemId) {
+			this.sectionItemId = itemId
+		},
+		resetSectionChecklist () {
+			this.inputItem = ''
+			this.sectionItemId = null
+		},
+		// Checklist
+		addItem (checklistIndex) {
+			let row = {}
+			row['id'] = Math.floor(Math.random() * 10000000000)
+			row['name'] = this.inputItem
+			row['completed'] = false
+			let detail = {
+				'cardId': this.cardId,
+				'sectionItemId': this.sectionItemId,
+				'row': row
+			}
+			this.$store.dispatch('kanban/addSectionChecklist', detail)
+			this.resetSectionChecklist()
+		},
+		cancelItem () {
+			this.resetSectionChecklist()
+		},
 		onChecklistChange (event, itemId, row) {
 			let detail = {
 				'cardId': this.cardId,
@@ -264,7 +269,6 @@ export default {
 		},
 		onChecklistClick (event, itemId, row) {
 			this.selectedChecklistId = row.id
-			console.log(event, itemId, row)
 		},
 		showChecklistDropdownMenu(event, row) {
 			if (this.selectedChecklistDropdownMenuId === row.id) {
@@ -273,6 +277,9 @@ export default {
 			}
 			this.selectedChecklistDropdownMenuId = row.id
 			console.log(event, row)
+		},
+		onChecklistBlur () {
+			this.selectedChecklistId = null
 		}
 	}
 }
