@@ -38,7 +38,7 @@
 											<h4>{{ item.sectionTitle }}</h4>
 											<div class="checklist-row__container">
 												<div class="checklist-row__item" v-for="(row, rowIndex) in item.rows" :key="rowIndex">
-													<div>
+													<div class="checklist-row__item--container">
 														<div class="flex">
 															<input type="checkbox" :value="row.completed" :checked="row.completed" @input="onChecklistChange($event, item.id, row)" />
 															<div>
@@ -46,9 +46,9 @@
 																<textarea v-if="selectedChecklistId === row.id" @blur="onChecklistBlur" class="checklist-row__item--textarea"></textarea>
 															</div>
 														</div>
-														<div v-if="selectedChecklistDropdownMenuId === row.id">
+														<div v-if="selectedChecklistDropdownMenuId === row.id" class="checklist-dropdown__container">
 															<!-- Expanded -->
-															<div class="flex">
+															<div class="checklist-dropdown">
 																<div>
 																	<label>Reminder</label>
 																	<div>Set date</div>
@@ -57,15 +57,15 @@
 																	<label>Priority</label>
 																	<div>High</div>
 																</div>
-																<div>
-																	<label>Delete</label>
-																</div>
+															</div>
+															<div>
+																<button>Delete</button>
 															</div>
 														</div>
 													</div>
 													<div>
 														<!-- <vue-feather type="more-horizontal" @click.prevent.stop="showCardMenu($event, card.id)"></vue-feather> -->
-														<vue-feather type="chevron-down" @click="showChecklistDropdownMenu($event, row)"></vue-feather>
+														<vue-feather type="chevron-down" @click="showChecklistDropdownMenu($event, row)" size="18"></vue-feather>
 													</div>
 												</div>
 											</div>
