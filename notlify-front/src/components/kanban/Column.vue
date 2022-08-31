@@ -78,19 +78,18 @@ export default {
 	methods: {
 		cardComposer (type, columnId) {
 			switch (type) {
-				case 'add':
-					this.selectedColumnId = columnId
-					this.isComposingNewCard = true
-					let newCardId = Math.floor(Math.random() * 100000)
-					this.newCardId = newCardId
-					break;
-				case 'save':
-					this.addCard(columnId)
-					this.resetCardComposer()
-					break;
-				case 'cancel':
-					this.resetCardComposer()
-					break;
+			case 'add':
+				this.selectedColumnId = columnId
+				this.isComposingNewCard = true
+				this.newCardId = Math.floor(Math.random() * 100000)
+				break;
+			case 'save':
+				this.addCard(columnId)
+				this.resetCardComposer()
+				break;
+			case 'cancel':
+				this.resetCardComposer()
+				break;
 			}
 		},
 		addCard (columnId) {
@@ -134,16 +133,16 @@ export default {
 		},
 		columnComposer (type) {
 			switch (type) {
-				case 'add':
-					this.isComposingNewColumn = true
-					break;
-				case 'save':
-					this.addColumn()
-					this.resetColumnComposer()
-					break;
-				case 'cancel':
-					this.resetColumnComposer()
-					break;
+			case 'add':
+				this.isComposingNewColumn = true
+				break;
+			case 'save':
+				this.addColumn()
+				this.resetColumnComposer()
+				break;
+			case 'cancel':
+				this.resetColumnComposer()
+				break;
 			}
 		},
 		addColumn () {

@@ -100,7 +100,7 @@ export default {
 			event.target.style.opacity = '0.4'
 			event.dataTransfer.effectAllowed = 'move'
 			event.dataTransfer.setData('text/plain', id)
-			
+
 			rect = draggingEle.getBoundingClientRect()
 			x = event.pageX - rect.left
 			y = event.pageY - rect.top

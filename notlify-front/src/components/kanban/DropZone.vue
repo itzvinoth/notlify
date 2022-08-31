@@ -46,7 +46,7 @@ export default {
 			
 			// to get position in the column
 			let droppedIndex = dropZonesInColumn.indexOf(event.target)
-			
+
 			let cardId = Number(event.dataTransfer.getData('text/plain'))
 
 			// kb-card__container contains data-id attribute

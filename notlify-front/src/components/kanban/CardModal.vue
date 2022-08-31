@@ -19,9 +19,7 @@
 							<div class="row addto-card__container">
 								<div class="checklist__container">
 									<div class="empty-checklist" v-if="!creatingNewSection && !isChecklistExist">
-										<button
-											@click="addNewSection"
-										>Add section</button>
+										<button @click="addNewSection">Add section</button>
 									</div>
 									<div class="add-checklist" v-if="creatingNewSection">
 										<div>
@@ -90,7 +88,7 @@
 						<div class="section" id="notes">
 							<h3 class="title">Notes</h3>
 						</div>
-					</tiny-tabs>                    
+					</tiny-tabs>
 				</template>
 			</modal>
 		</Teleport>

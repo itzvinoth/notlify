@@ -2,7 +2,7 @@ export default class KanbanApi {
 	static insertColumn (newProps) {
 		const data = read();
 		const columns = data;
-		
+
 		if (!columns) {
 			return [];
 		}
