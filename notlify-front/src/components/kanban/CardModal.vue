@@ -6,7 +6,7 @@
 				<template #header>
 					<label>Notlify / {{ columnTitle }}</label>
 					<h2 @click="onCardTitleClick" v-if="!isCardTitleSelected">{{ cardDetail.title }}</h2>
-					<textarea @blur="onTextareaBlur" @keypress.enter="onTextareaBlur" v-if="isCardTitleSelected" ref="cardtitle" :value="cardDetail.title" @input="onChangeCardTitle($event)">{{ cardDetail.title }}</textarea>
+					<textarea @blur="onCardTextareaBlur" @keypress.enter="onCardTextareaBlur" v-if="isCardTitleSelected" ref="cardtitle" :value="cardDetail.title" @input="onChangeCardTitle($event)">{{ cardDetail.title }}</textarea>
 				</template>
 				<template #body>
 					<tiny-tabs id="mytabs" :anchor="false" :closable="false" :hideTitle="false" @on-close="onClose" @on-before="onBefore" @on-after="onAfter">
@@ -40,10 +40,10 @@
 												<div class="checklist-row__item" v-for="(row, rowIndex) in item.rows" :key="rowIndex">
 													<div class="checklist-row__item--container">
 														<div class="flex">
-															<input type="checkbox" :value="row.completed" :checked="row.completed" @input="onChecklistChange($event, item.id, row)" />
+															<input type="checkbox" :value="row.completed" :checked="row.completed" @input="onChecklistChange($event, item.id, row, 'completed')" />
 															<div style="width: 100%;">
 																<span v-if="selectedChecklistId !== row.id" @click="onChecklistClick($event, item.id, row)" class="checklist-row__item--text" :class="row.completed ? 'strike' : 'normal'">{{ row.name }}</span>
-																<textarea v-if="selectedChecklistId === row.id" @blur="onChecklistBlur" @keypress.enter="onChecklistBlur" :value="row.name" @input="onChecklistChange($event, item.id, row)" class="checklist-row__item--textarea"></textarea>
+																<textarea v-if="selectedChecklistId === row.id" @blur="onChecklistTextareaBlur" @keypress.enter="onChecklistTextareaBlur" :value="row.name" @input="onChecklistChange($event, item.id, row)" class="checklist-row__item--textarea"></textarea>
 															</div>
 														</div>
 														<div v-if="selectedChecklistDropdownMenuId === row.id" class="checklist-dropdown__container">
@@ -98,7 +98,7 @@
 </template>
 
 <script>
-let FINAL_UPDATED_CARD_TITLE = ''
+let UPDATED_CARD_TITLE = ''
 
 import KanbanApi from '../../api/kanban/index'
 import Modal from '@/components/Modal.vue';
@@ -162,7 +162,7 @@ export default {
 	},
 	watch: {
 		cardTitle (newTitle, oldTitle) {
-			this.isCardTitleChanged = (newTitle !== FINAL_UPDATED_CARD_TITLE) ? true : false
+			this.isCardTitleChanged = (newTitle !== UPDATED_CARD_TITLE) ? true : false
 		}
 	},
 	methods: {
@@ -186,7 +186,7 @@ export default {
 		onCardTitleClick () {
 			this.isCardTitleSelected = true
 			this.cardTitle = this.cardDetail.title
-			FINAL_UPDATED_CARD_TITLE = this.cardDetail.title
+			UPDATED_CARD_TITLE = this.cardDetail.title
 			this.$nextTick(() => {
 				let len = this.cardTitle.length
 				this.$refs.cardtitle.setSelectionRange(len, len)
@@ -196,7 +196,7 @@ export default {
 		onChangeCardTitle (event) {
 			this.cardTitle = event.target.value
 		},
-		onTextareaBlur () {
+		onCardTextareaBlur () {
 			this.isCardTitleSelected = false
 			if (this.isCardTitleChanged) {
 				this.$nextTick(() => {
@@ -209,7 +209,7 @@ export default {
 				'title': this.cardTitle,
 				'checklist': this.cardDetail.checklist
 			})
-			FINAL_UPDATED_CARD_TITLE = this.cardTitle
+			UPDATED_CARD_TITLE = this.cardTitle
 			this.$store.dispatch('kanban/getColumns')
 		},
 		// section
@@ -278,7 +278,7 @@ export default {
 			this.selectedChecklistDropdownMenuId = row.id
 			console.log(event, row)
 		},
-		onChecklistBlur () {
+		onChecklistTextareaBlur () {
 			this.selectedChecklistId = null
 		}
 	}
