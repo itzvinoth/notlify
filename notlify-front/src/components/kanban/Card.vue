@@ -1,39 +1,75 @@
 <template>
 	<div class="kb__column--cards">
 		<drop-zone :dragging-elem-height="draggingElemHeight" />
-		<div class="kb-card__container" v-for="card in cards" :key="card.id" :data-id="card.id">
-			<div class="kb__card" draggable="true" @click.self="onCardClick(card)" @dragstart="onDragStart($event, card.id)" @dragend="onDragEnd" @drag="onDrag" @dragenter.prevent @dragover.prevent>
+		<div
+			class="kb-card__container"
+			v-for="card in cards"
+			:key="card.id"
+			:data-id="card.id"
+		>
+			<div
+				class="kb__card"
+				draggable="true"
+				@click.self="onCardClick(card)"
+				@dragstart="onDragStart($event, card.id)"
+				@dragend="onDragEnd"
+				@drag="onDrag"
+				@dragenter.prevent
+				@dragover.prevent
+			>
 				{{ card.title }}
 				<popover>
 					<template #trigger>
-						<vue-feather type="more-horizontal" @click.prevent.stop="showCardMenu($event, card.id)"></vue-feather>
+						<vue-feather
+							type="more-horizontal"
+							@click.prevent.stop="showCardMenu($event, card.id)"
+						></vue-feather>
 					</template>
 					<template #body>
-						<card-dropdown v-if="card.id === cardId" :pos="'right'" v-click-outside="onClickingOutsideCardMenu" :on-window-resize="'adjustable'">
+						<card-dropdown
+							v-if="card.id === cardId"
+							:pos="'right'"
+							v-click-outside="onClickingOutsideCardMenu"
+							:on-window-resize="'adjustable'"
+						>
 							<template #title></template>
 							<template #list>
 								<li><a href="" @click.prevent>Edit</a></li>
-								<li><a href="" @click.prevent @dblclick="onDblClick($event, card.id)">Delete</a></li>
+								<li>
+									<a
+										href=""
+										@click.prevent
+										@dblclick="onDblClick($event, card.id)"
+									>Delete</a>
+								</li>
 							</template>
 						</card-dropdown>
 					</template>
 				</popover>
 			</div>
-			<drop-zone :cardId="card.id" :dragging-elem-height="draggingElemHeight" />
+			<drop-zone
+				:cardId="card.id"
+				:dragging-elem-height="draggingElemHeight"
+			/>
 		</div>
-		<card-modal :show="showModal" :cardId="expandedCardId" :column-title="columnTitle" @update="onUpdate" />
+		<card-modal
+			:show="showModal"
+			:cardId="expandedCardId"
+			:column-title="columnTitle"
+			@update="onUpdate"
+		/>
 	</div>
 </template>
 
 <script>
-import DropZone from '@/components/kanban/DropZone.vue';
-import KanbanApi from '../../api/kanban/index'
-import CardDropdown from '@/components/kanban/CardDropdown.vue';
-import Popover from '@/components/Popover.vue';
-import Modal from '@/components/Modal.vue';
-import CardModal from '@/components/kanban/CardModal.vue';
+import DropZone from "@/components/kanban/DropZone.vue";
+import KanbanApi from "../../api/kanban/index";
+import CardDropdown from "@/components/kanban/CardDropdown.vue";
+import Popover from "@/components/Popover.vue";
+import Modal from "@/components/Modal.vue";
+import CardModal from "@/components/kanban/CardModal.vue";
 
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 
 let draggingEle;
 let isDraggingStarted = false;
@@ -43,79 +79,82 @@ let rect;
 let count = 0;
 
 export default {
-	name: 'card',
+	name: "card",
 	components: {
-		'drop-zone': DropZone,
-		'card-dropdown': CardDropdown,
-		'popover': Popover,
-		'card-modal': CardModal,
-		Modal
+		"drop-zone": DropZone,
+		"card-dropdown": CardDropdown,
+		popover: Popover,
+		"card-modal": CardModal,
+		Modal,
 	},
 	props: {
 		cards: {
-			type: Object
+			type: Object,
 		},
 		columnId: {
-			type: Number
+			type: Number,
 		},
 		columnTitle: {
-			type: String
-		}
+			type: String,
+		},
 	},
 	data() {
 		return {
-			content: '',
+			content: "",
 			draggingElemHeight: 0,
 			showModal: false,
 			cardDetail: null,
-			expandedCardId: null
-		}
+			expandedCardId: null,
+		};
 	},
 	computed: {
-		...mapGetters('kanban', {
-			cardId: 'cardId'
-		})
+		...mapGetters("kanban", {
+			cardId: "cardId",
+		}),
 	},
 	methods: {
-		onUpdate () {
-			this.showModal = false
+		onUpdate() {
+			this.showModal = false;
 		},
-		onClickingOutsideCardMenu () {
+		onClickingOutsideCardMenu() {
 			if (this.cardId !== null) {
-				this.$store.dispatch('kanban/getCardId', null)
-				return
+				this.$store.dispatch("kanban/getCardId", null);
+				return;
 			}
 		},
-		showCardMenu (event, id) {
+		showCardMenu(event, id) {
 			if (this.cardId === id) {
-				this.$store.dispatch('kanban/getCardId', null)
-				return
+				this.$store.dispatch("kanban/getCardId", null);
+				return;
 			}
-			this.$store.dispatch('kanban/getCardId', id)
+			this.$store.dispatch("kanban/getCardId", id);
 		},
-		onDragStart (event, id) {
-			draggingEle = event.target
+		onDragStart(event, id) {
+			draggingEle = event.target;
 			// const draggingRect = draggingEle.getBoundingClientRect()
 			// this.draggingElemHeight = draggingRect.height
-			event.target.style.opacity = '0.4'
-			event.dataTransfer.effectAllowed = 'move'
-			event.dataTransfer.setData('text/plain', id)
+			event.target.style.opacity = "0.4";
+			event.dataTransfer.effectAllowed = "move";
+			event.dataTransfer.setData("text/plain", id);
 
-			rect = draggingEle.getBoundingClientRect()
-			x = event.pageX - rect.left
-			y = event.pageY - rect.top
+			rect = draggingEle.getBoundingClientRect();
+			x = event.pageX - rect.left;
+			y = event.pageY - rect.top;
 			// document.addEventListener('mousemove', this.mouseMoveHandler);
 
 			// draggingEle.querySelector('.kb__card--input').style.display = 'none'
 			// draggingEle.querySelector('.kb__card--input').classList.add('placeholder')
 			// draggingEle.querySelector('.kb__dropzone').style.height = `${rect.height - 10}px`
 		},
-		onDragEnd (event) {
-			event.target.style.opacity = '1'
+		onDragEnd(event) {
+			event.target.style.opacity = "1";
 		},
-		onDrag (event) {
-			const draggingRect = draggingEle.getBoundingClientRect()
-			this.$store.dispatch('kanban/getDraggingElemHeight', draggingRect.height)
+		onDrag(event) {
+			const draggingRect = draggingEle.getBoundingClientRect();
+			this.$store.dispatch(
+				"kanban/getDraggingElemHeight",
+				draggingRect.height
+			);
 			// this.draggingElemHeight = draggingRect.height
 			// draggingEle.style.position = 'absolute'
 			// draggingEle.style.width = '190px'
@@ -134,22 +173,22 @@ export default {
 		// 		'title': newContent
 		// 	})
 		// },
-		onDblClick (event, id) {
-			let check = confirm('Are you sure you want to delete this card')
+		onDblClick(event, id) {
+			let check = confirm("Are you sure you want to delete this card");
 			if (check) {
-				this.onDeleteCard(id)
+				this.onDeleteCard(id);
 			}
 		},
-		onDeleteCard (id) {
-			KanbanApi.deleteCard(id)
+		onDeleteCard(id) {
+			KanbanApi.deleteCard(id);
 			// vuex commit update kanban
-			this.$store.dispatch('kanban/getColumns')
+			this.$store.dispatch("kanban/getColumns");
 		},
-		onCardClick (card) {
-			this.showModal = true
-			this.cardDetail = card
-			this.expandedCardId = card.id
-		}
+		onCardClick(card) {
+			this.showModal = true;
+			this.cardDetail = card;
+			this.expandedCardId = card.id;
+		},
 		// addCard (id) {
 		// 	let newCard = {
 		// 		id: this.lists[key].length,
@@ -159,5 +198,5 @@ export default {
 		// 	this.resetting(key)
 		// }
 	},
-}
+};
 </script>

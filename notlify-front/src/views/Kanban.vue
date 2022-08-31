@@ -8,22 +8,22 @@
 </template>
 
 <script>
-import Column from '@/components/kanban/Column.vue';
+import Column from "@/components/kanban/Column.vue";
 
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-	name: 'kanban',
+	name: "kanban-board",
 	components: {
-		'column': Column
+		column: Column,
 	},
 	computed: {
-		...mapGetters('kanban', {
-			columns: 'columns'
-		})
+		...mapGetters("kanban", {
+			columns: "columns",
+		}),
 	},
-	created () {
-		this.$store.dispatch('kanban/getColumns')
-	}
-}
+	created() {
+		this.$store.dispatch("kanban/getColumns");
+	},
+};
 </script>

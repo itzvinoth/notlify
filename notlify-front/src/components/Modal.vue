@@ -26,25 +26,25 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref } from "vue";
 // https://vueuse.org/core/onclickoutside/#onclickoutside
 import { onClickOutside } from '@vueuse/core';
 
-const modal = ref(null)
+const modal = ref(null);
 
 export default {
-	name: 'Modal',
+	name: "Modal",
 	props: {
-		show: Boolean
+		show: Boolean,
 	},
-	setup (props, contenxt) {
+	setup(props, contenxt) {
 		// https://vuejs.org/api/composition-api-setup.html#setup-context
 		const target = ref(null)
 		onClickOutside(target, (event) => {
-			contenxt.emit('close')
-		})
+			contenxt.emit("close");
+		});
 
-		return { target }
-	}
-}
+		return { target };
+	},
+};
 </script>

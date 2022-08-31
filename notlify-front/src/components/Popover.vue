@@ -10,12 +10,12 @@
 <script>
 // get position of the trigger element in the browser
 export default {
-	name: 'Popover',
-	data () {
+	name: "Popover",
+	data() {
 		return {
 			width: window.innerWidth,
-			height: window.innerHeight
-		}
-	}
+			height: window.innerHeight,
+		};
+	},
 };
 </script>
