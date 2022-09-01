@@ -46,7 +46,6 @@ function updateSectionChecklist(columns, cardId, sectionItemId, rowId, param, ch
 				if (section.id === sectionItemId) {
 					let rows = section.rows || [];
 					for (let l = 0; l < rows.length; l++) {
-						console.log("params: ", columns, cardId, sectionItemId, rowId, param, checklistText);
 						if (rows[l].id === rowId) {
 							if (param === "completed") {
 								rows[l].completed = !rows[l].completed;

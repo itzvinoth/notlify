@@ -115,7 +115,8 @@
 													</div>
 													<div>
 														<!-- <vue-feather type="more-horizontal" @click.prevent.stop="showCardMenu($event, card.id)"></vue-feather> -->
-														<vue-feather type="chevron-down" @click="showChecklistDropdownMenu($event, row)" size="18"></vue-feather>
+														<vue-feather v-if="selectedChecklistDropdownMenuId === row.id" type="chevron-up" @click="showChecklistDropdownMenu($event, row)" size="18"></vue-feather>
+														<vue-feather v-if="selectedChecklistDropdownMenuId !== row.id" type="chevron-down" @click="showChecklistDropdownMenu($event, row)" size="18"></vue-feather>
 													</div>
 												</div>
 											</div>
@@ -345,7 +346,6 @@ export default {
 				return;
 			}
 			this.selectedChecklistDropdownMenuId = row.id;
-			console.log(event, row);
 		},
 		onChecklistTextareaBlur(event, itemId, row, param) {
 			this.selectedChecklistId = null;
