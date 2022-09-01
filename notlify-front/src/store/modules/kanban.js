@@ -63,6 +63,10 @@ function updateSectionChecklist(columns, cardId, sectionItemId, rowId, param, ch
 	return cols;
 }
 
+function deleteSectionChecklist() {
+	return;
+}
+
 function save(data) {
 	localStorage.setItem("kanban-data", JSON.stringify(data));
 }

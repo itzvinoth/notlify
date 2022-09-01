@@ -1,7 +1,7 @@
 <template>
 	<div class="notes">
 		<div class="notes-sidebar">
-			<button class="note-add--btn" @click="onAddNote">
+			<button type="button" class="note-add--btn" @click="onAddNote">
 				+ Add a note
 			</button>
 			<div class="notes-list">

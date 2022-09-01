@@ -41,7 +41,7 @@
 							<div class="row addto-card__container">
 								<div class="checklist__container">
 									<div class="empty-checklist" v-if="!creatingNewSection && !isChecklistExist">
-										<button @click="addNewSection">Add section</button>
+										<button type="button" @click="addNewSection">Add section</button>
 									</div>
 									<div
 										class="add-checklist"
@@ -52,8 +52,8 @@
 											<input type="text" v-model="sectionTitle"/>
 										</div>
 										<div>
-											<button @click="addChecklistItem">Add</button>
-											<button @click="cancelChecklistItem">Cancel</button>
+											<button type="button" @click="addChecklistItem">Add</button>
+											<button type="button" @click="cancelChecklistItem">Cancel</button>
 										</div>
 									</div>
 									<div class="checklist-list" v-if="cardDetail.checklist && cardDetail.checklist.length > 0">
@@ -109,7 +109,7 @@
 																</div>
 															</div>
 															<div>
-																<button>Delete</button>
+																<button type="button" @click="deleteChecklistItem">Delete</button>
 															</div>
 														</div>
 													</div>
@@ -126,6 +126,7 @@
 												<button type="button" @click="cancelItem(checklistIndex)">Cancel</button>
 											</div>
 											<button
+												type="button"
 												v-if="sectionItemId !== item.id"
 												@click="showItemAdd(checklistIndex, item.id)"
 											>
@@ -364,6 +365,9 @@ export default {
 				text: this.checklistText,
 			};
 			this.$store.dispatch("kanban/updateSectionChecklist", detail);
+		},
+		deleteChecklistItem() {
+			console.log("delete");
 		},
 	},
 };

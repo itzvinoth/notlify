@@ -45,6 +45,7 @@
 								placeholder="Add board title"
 							/>
 							<button
+								type="button"
 								:disabled="!boardTitle"
 								class="create-board__button"
 								@click="createBoard"

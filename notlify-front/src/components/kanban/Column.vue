@@ -61,8 +61,8 @@
 						@keypress.enter="cardComposer('save', column.id)"
 						placeholder="Enter a card title"
 					/>
-					<button @click="cardComposer('save', column.id)" class="save-card">Save</button>
-					<button @click="cardComposer('cancel')" class="cancel-card">Cancel</button>
+					<button type="button" @click="cardComposer('save', column.id)" class="save-card">Save</button>
+					<button type="button" @click="cardComposer('cancel')" class="cancel-card">Cancel</button>
 				</div>
 			</div>
 		</div>
@@ -82,8 +82,8 @@
 						@keypress.enter="columnComposer('save')"
 						placeholder="Enter a column title"
 					/>
-					<button @click="columnComposer('save')" class="save-column">Save</button>
-					<button @click="columnComposer('cancel')" class="cancel-column">Cancel</button>
+					<button type="button" @click="columnComposer('save')" class="save-column">Save</button>
+					<button type="button" @click="columnComposer('cancel')" class="cancel-column">Cancel</button>
 				</div>
 			</div>
 		</div>
