@@ -49,7 +49,8 @@ export default {
 			let columnId = Number(columnElement.dataset.id);
 
 			let dropZonesInColumn = Array.from(
-				columnElement.querySelectorAll(".kb__dropzone"))
+				columnElement.querySelectorAll(".kb__dropzone")
+			);
 
 			// to get position in the column
 			let droppedIndex = dropZonesInColumn.indexOf(event.target);

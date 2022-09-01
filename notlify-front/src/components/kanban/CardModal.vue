@@ -123,12 +123,7 @@
 											</div>
 											<button
 												v-if="sectionItemId !== item.id"
-												@click="
-													showItemAdd(
-														checklistIndex,
-														item.id
-													)
-												"
+												@click="showItemAdd(checklistIndex, item.id)"
 											>
 												Add an item
 											</button>
@@ -148,7 +143,7 @@
 </template>
 
 <script>
-let UPDATED_CARD_TITLE = ''
+let UPDATED_CARD_TITLE = "";
 
 import KanbanApi from "../../api/kanban/index";
 import Modal from "@/components/Modal.vue";
@@ -214,8 +209,7 @@ export default {
 	},
 	watch: {
 		cardTitle(newTitle) {
-			this.isCardTitleChanged =
-				newTitle !== UPDATED_CARD_TITLE ? true : false;
+			this.isCardTitleChanged = newTitle !== UPDATED_CARD_TITLE ? true : false;
 		},
 	},
 	methods: {
@@ -230,10 +224,10 @@ export default {
 			console.log("Callback function that gets evaluated while closing the tab", id);
 		},
 		onBefore(id, tab) {
-			console.log('Callback function that gets evaluated before a tab is activated', id, tab);
+			console.log("Callback function that gets evaluated before a tab is activated", id, tab);
 		},
 		onAfter(id, tab) {
-			console.log('Callback function that gets evaluated after a tab is activated', id, tab);
+			console.log("Callback function that gets evaluated after a tab is activated", id, tab);
 		},
 		// card
 		onCardTitleClick() {
@@ -244,7 +238,7 @@ export default {
 				let len = this.cardTitle.length;
 				this.$refs.cardtitle.setSelectionRange(len, len);
 				this.$refs.cardtitle.focus();
-			})
+			});
 		},
 		onChangeCardTitle(event) {
 			this.cardTitle = event.target.value;
@@ -274,7 +268,7 @@ export default {
 			let newChecklistSectionDetail = {
 				cardId: this.cardId,
 				item: newChecklistSection,
-			}
+			};
 			this.$store.dispatch(
 				"kanban/addCardSection",
 				newChecklistSectionDetail
@@ -291,7 +285,7 @@ export default {
 			this.sectionTitle = "";
 			this.creatingNewSection = false;
 		},
-		showItemAdd(checklistIndex, itemId) {
+		showItemAdd(_checklistIndex, itemId) {
 			this.sectionItemId = itemId;
 		},
 		resetSectionChecklist() {
@@ -315,7 +309,7 @@ export default {
 		cancelItem() {
 			this.resetSectionChecklist();
 		},
-		onChecklistChange(event, itemId, row) {
+		onChecklistChange(_event, itemId, row) {
 			let detail = {
 				cardId: this.cardId,
 				sectionItemId: itemId,
@@ -323,7 +317,7 @@ export default {
 			};
 			this.$store.dispatch("kanban/updateSectionChecklist", detail);
 		},
-		onChecklistClick(event, itemId, row) {
+		onChecklistClick(_event, _itemId, row) {
 			this.selectedChecklistId = row.id;
 		},
 		showChecklistDropdownMenu(event, row) {
