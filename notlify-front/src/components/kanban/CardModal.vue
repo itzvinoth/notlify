@@ -80,9 +80,10 @@
 																</span>
 																<textarea
 																	v-if="selectedChecklistId === row.id"
-																	@blur="onChecklistTextareaBlur" @keypress.enter="onChecklistTextareaBlur"
+																	@blur="onChecklistTextareaBlur($event, item.id, row, 'name')"
+																	@keypress.enter="onChecklistTextareaBlur($event, item.id, row, 'name')"
 																	:value="row.name"
-																	@input="onChecklistChange($event, item.id, row)"
+																	@input="onChecklistTextChange($event)"
 																	:id="`checklist-${row.id}`"
 																	class="checklist-row__item--textarea"
 																></textarea>
@@ -119,7 +120,7 @@
 												</div>
 											</div>
 											<div v-if="sectionItemId === item.id" class="new-checklist-edit__container">
-												<div><input type="text" v-model="inputItem" placeholder="Add an item" /></div>
+												<div><input type="text" v-model="checklistText" placeholder="Add an item" /></div>
 												<button type="button" @click="addItem(checklistIndex)">Add</button>
 												<button type="button" @click="cancelItem(checklistIndex)">Cancel</button>
 											</div>
@@ -146,6 +147,7 @@
 
 <script>
 let UPDATED_CARD_TITLE = "";
+let UPDATED_CHECKLIST_TEXT = "";
 
 import KanbanApi from "../../api/kanban/index";
 import Modal from "@/components/Modal.vue";
@@ -185,9 +187,10 @@ export default {
 
 			isChecklistExist: false,
 
-			inputItem: "",
+			checklistText: "",
 			selectedChecklistId: null,
 			selectedChecklistDropdownMenuId: null,
+			isChecklistTextChanged: false,
 		};
 	},
 	computed: {
@@ -212,6 +215,9 @@ export default {
 	watch: {
 		cardTitle(newTitle) {
 			this.isCardTitleChanged = newTitle !== UPDATED_CARD_TITLE ? true : false;
+		},
+		checklistText(newText) {
+			this.isChecklistTextChanged = newText !== UPDATED_CHECKLIST_TEXT ? true : false;
 		},
 	},
 	methods: {
@@ -291,14 +297,14 @@ export default {
 			this.sectionItemId = itemId;
 		},
 		resetSectionChecklist() {
-			this.inputItem = "";
+			this.checklistText = "";
 			this.sectionItemId = null;
 		},
 		// Checklist
 		addItem() {
 			let row = {};
 			row["id"] = Math.floor(Math.random() * 10000000000);
-			row["name"] = this.inputItem;
+			row["name"] = this.checklistText;
 			row["completed"] = false;
 			let detail = {
 				cardId: this.cardId,
@@ -311,16 +317,21 @@ export default {
 		cancelItem() {
 			this.resetSectionChecklist();
 		},
-		onChecklistChange(_event, itemId, row) {
+		onChecklistChange(event, itemId, row, param) {
 			let detail = {
 				cardId: this.cardId,
 				sectionItemId: itemId,
 				rowId: row.id,
+				param: param,
 			};
 			this.$store.dispatch("kanban/updateSectionChecklist", detail);
 		},
+		onChecklistTextChange(event) {
+			this.checklistText = event.target.value;
+		},
 		onChecklistClick(event, _itemId, row) {
 			this.selectedChecklistId = row.id;
+			UPDATED_CHECKLIST_TEXT = row.name;
 			this.$nextTick(() => {
 				let len = row.name.length;
 				let element = document.getElementById(`checklist-${row.id}`);
@@ -336,8 +347,23 @@ export default {
 			this.selectedChecklistDropdownMenuId = row.id;
 			console.log(event, row);
 		},
-		onChecklistTextareaBlur() {
+		onChecklistTextareaBlur(event, itemId, row, param) {
 			this.selectedChecklistId = null;
+			if (this.isChecklistTextChanged) {
+				this.$nextTick(() => {
+					this.checklistTextUpdate(itemId, row, param);
+				});
+			}
+		},
+		checklistTextUpdate(itemId, row, param) {
+			let detail = {
+				cardId: this.cardId,
+				sectionItemId: itemId,
+				rowId: row.id,
+				param: param,
+				text: this.checklistText,
+			};
+			this.$store.dispatch("kanban/updateSectionChecklist", detail);
 		},
 	},
 };

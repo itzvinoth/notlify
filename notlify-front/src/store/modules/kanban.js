@@ -35,7 +35,7 @@ function addSectionChecklist(columns, cardId, sectionItemId, row) {
 	return cols;
 }
 
-function updateSectionChecklist(columns, cardId, sectionItemId, rowId) {
+function updateSectionChecklist(columns, cardId, sectionItemId, rowId, param, checklistText) {
 	let cols = [];
 	for (let i = 0; i < columns.length; i++) {
 		let column = columns[i];
@@ -46,8 +46,13 @@ function updateSectionChecklist(columns, cardId, sectionItemId, rowId) {
 				if (section.id === sectionItemId) {
 					let rows = section.rows || [];
 					for (let l = 0; l < rows.length; l++) {
+						console.log("params: ", columns, cardId, sectionItemId, rowId, param, checklistText);
 						if (rows[l].id === rowId) {
-							rows[l].completed = !rows[l].completed;
+							if (param === "completed") {
+								rows[l].completed = !rows[l].completed;
+							} else if (param === "name") {
+								rows[l].name = checklistText;
+							}
 						}
 					}
 					section.rows = rows;
@@ -170,11 +175,15 @@ const mutations = {
 		let cardId = detail.cardId;
 		let sectionItemId = detail.sectionItemId;
 		let rowId = detail.rowId;
+		let param = detail.param;
+		let checklistText = detail.text;
 		let columns = updateSectionChecklist(
 			payload.columns,
 			cardId,
 			sectionItemId,
-			rowId
+			rowId,
+			param,
+			checklistText
 		);
 		save(columns);
 		state.columns = columns;
