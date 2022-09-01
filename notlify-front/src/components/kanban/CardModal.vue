@@ -109,7 +109,7 @@
 																</div>
 															</div>
 															<div>
-																<button type="button" @click="deleteChecklistItem">Delete</button>
+																<button type="button" @click="deleteChecklistItem($event, item.id, row)">Delete</button>
 															</div>
 														</div>
 													</div>
@@ -376,8 +376,13 @@ export default {
 			};
 			this.$store.dispatch("kanban/updateSectionChecklist", detail);
 		},
-		deleteChecklistItem() {
-			console.log("delete");
+		deleteChecklistItem(event, itemId, row) {
+			let detail = {
+				cardId: this.cardId,
+				sectionItemId: itemId,
+				rowId: row.id,
+			};
+			this.$store.dispatch("kanban/deleteSectionChecklist", detail);
 		},
 	},
 };

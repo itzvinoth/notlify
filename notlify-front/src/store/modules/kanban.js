@@ -63,8 +63,28 @@ function updateSectionChecklist(columns, cardId, sectionItemId, rowId, param, ch
 	return cols;
 }
 
-function deleteSectionChecklist() {
-	return;
+function deleteSectionChecklist(columns, cardId, sectionItemId, rowId) {
+	let cols = [];
+	for (let i = 0; i < columns.length; i++) {
+		let column = columns[i];
+		for (let j = 0; j < columns[i].cards.length; j++) {
+			let card = columns[i].cards[j];
+			for (let k = 0; k < card.checklist.length; k++) {
+				let section = columns[i].cards[j].checklist[k];
+				if (section.id === sectionItemId) {
+					let rows = section.rows || [];
+					for (let l = 0; l < rows.length; l++) {
+						if (rows[l].id === rowId) {
+							rows.splice(l, 1);
+						}
+					}
+					section.rows = rows;
+				}
+			}
+		}
+		cols.push(column);
+	}
+	return cols;
 }
 
 function save(data) {
@@ -135,6 +155,17 @@ const actions = {
 		let payload = { ...d, ...c };
 		commit("updateExistingSectionChecklist", payload);
 	},
+	async deleteSectionChecklist({ commit }, detail) {
+		const columns = await localStorage.getItem("kanban-data");
+		let d = {
+			detail: detail,
+		};
+		let c = {
+			columns: JSON.parse(columns),
+		};
+		let payload = { ...d, ...c };
+		commit("deletingSectionChecklist", payload);
+	},
 };
 
 // mutations
@@ -187,6 +218,21 @@ const mutations = {
 			rowId,
 			param,
 			checklistText
+		);
+		save(columns);
+		state.columns = columns;
+	},
+	deletingSectionChecklist(state, payload) {
+		let detail = payload.detail;
+		let cardId = detail.cardId;
+		let sectionItemId = detail.sectionItemId;
+		let rowId = detail.rowId;
+		console.log(payload.columns, cardId, sectionItemId, rowId);
+		let columns = deleteSectionChecklist(
+			payload.columns,
+			cardId,
+			sectionItemId,
+			rowId
 		);
 		save(columns);
 		state.columns = columns;
