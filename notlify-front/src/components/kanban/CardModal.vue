@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
 	<div>
 		<Teleport to="body">
@@ -82,6 +83,7 @@
 																	@blur="onChecklistTextareaBlur" @keypress.enter="onChecklistTextareaBlur"
 																	:value="row.name"
 																	@input="onChecklistChange($event, item.id, row)"
+																	:id="`checklist-${row.id}`"
 																	class="checklist-row__item--textarea"
 																></textarea>
 															</div>
@@ -317,8 +319,14 @@ export default {
 			};
 			this.$store.dispatch("kanban/updateSectionChecklist", detail);
 		},
-		onChecklistClick(_event, _itemId, row) {
+		onChecklistClick(event, _itemId, row) {
 			this.selectedChecklistId = row.id;
+			this.$nextTick(() => {
+				let len = row.name.length;
+				let element = document.getElementById(`checklist-${row.id}`);
+				element.setSelectionRange(len, len);
+				element.focus();
+			});
 		},
 		showChecklistDropdownMenu(event, row) {
 			if (this.selectedChecklistDropdownMenuId === row.id) {
