@@ -50,7 +50,7 @@ export default {
 			notes: "notes",
 		}),
 	},
-	created () {
+	created() {
 		this.$store.dispatch("notes/getNotes");
 	},
 	methods: {
