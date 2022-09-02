@@ -35,7 +35,14 @@ function addSectionChecklist(columns, cardId, sectionItemId, row) {
 	return cols;
 }
 
-function updateSectionChecklist(columns, cardId, sectionItemId, rowId, param, checklistText) {
+function updateSectionChecklist(
+	columns,
+	cardId,
+	sectionItemId,
+	rowId,
+	param,
+	checklistText
+) {
 	let cols = [];
 	for (let i = 0; i < columns.length; i++) {
 		let column = columns[i];
@@ -153,7 +160,7 @@ const actions = {
 			columns: JSON.parse(columns),
 		};
 		let payload = { ...d, ...c };
-		commit("UPDATE_EXISTING_SECTION_CHECKLIST", payload);
+		commit("UPDATE_SECTION_CHECKLIST", payload);
 	},
 	async deleteSectionChecklist({ commit }, detail) {
 		const columns = await localStorage.getItem("kanban-data");
@@ -204,7 +211,7 @@ const mutations = {
 		save(columns);
 		state.columns = columns;
 	},
-	UPDATE_EXISTING_SECTION_CHECKLIST(state, payload) {
+	UPDATE_SECTION_CHECKLIST(state, payload) {
 		let detail = payload.detail;
 		let cardId = detail.cardId;
 		let sectionItemId = detail.sectionItemId;

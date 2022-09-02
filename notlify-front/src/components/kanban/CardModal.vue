@@ -99,11 +99,11 @@
 																<div>
 																	<label>Priority</label>
 																	<div class="checklist-dropdown__value">
-																		<select>
-																			<option>None</option>
-																			<option>Low</option>
-																			<option>Medium</option>
-																			<option>High</option>
+																		<select @change="onChecklistPriorityChange($event, item.id, row, 'priority')">
+																			<option value="0">None</option>
+																			<option value="1">Low</option>
+																			<option value="2">Medium</option>
+																			<option value="3">High</option>
 																		</select>
 																	</div>
 																</div>
@@ -383,6 +383,16 @@ export default {
 				rowId: row.id,
 			};
 			this.$store.dispatch("kanban/deleteSectionChecklist", detail);
+		},
+		onChecklistPriorityChange(event, itemId, row, param) {
+			let detail = {
+				cardId: this.cardId,
+				sectionItemId: itemId,
+				rowId: row.id,
+				param: param,
+				priority: event.target.value,
+			};
+			this.$store.dispatch("kanban/updateSectionChecklist", detail);
 		},
 	},
 };
