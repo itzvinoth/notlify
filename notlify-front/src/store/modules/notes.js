@@ -12,13 +12,13 @@ const getters = {
 const actions = {
 	async getNotes({ commit }) {
 		const notes = await localStorage.getItem("notes-data");
-		commit("setNotes", JSON.parse(notes));
+		commit("SET_NOTES", JSON.parse(notes));
 	},
 };
 
 // mutations
 const mutations = {
-	setNotes(state, notes) {
+	SET_NOTES(state, notes) {
 		state.notes = notes;
 	},
 };

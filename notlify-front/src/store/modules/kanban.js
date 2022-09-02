@@ -111,16 +111,16 @@ const getters = {
 const actions = {
 	async getColumns({ commit }) {
 		const columns = await localStorage.getItem("kanban-data");
-		commit("setColumns", JSON.parse(columns));
+		commit("SET_COLUMNS", JSON.parse(columns));
 	},
 	async getColumnId({ commit }, columnId) {
-		commit("setColumnId", columnId);
+		commit("SET_COLUMN_ID", columnId);
 	},
 	async getCardId({ commit }, cardId) {
-		commit("setCardId", cardId);
+		commit("SET_CARD_ID", cardId);
 	},
 	async getDraggingElemHeight({ commit }, height) {
-		commit("setDraggingElemHeight", height);
+		commit("SET_DRAGGING_ELEM_HEIGHT", height);
 	},
 	async addCardSection({ commit }, detail) {
 		const columns = await localStorage.getItem("kanban-data");
@@ -131,7 +131,7 @@ const actions = {
 			columns: JSON.parse(columns),
 		};
 		let payload = { ...d, ...c };
-		commit("createNewCardSection", payload);
+		commit("CREATE_NEW_CARD_SECTION", payload);
 	},
 	async addSectionChecklist({ commit }, detail) {
 		const columns = await localStorage.getItem("kanban-data");
@@ -142,7 +142,7 @@ const actions = {
 			columns: JSON.parse(columns),
 		};
 		let payload = { ...d, ...c };
-		commit("createNewSectionChecklist", payload);
+		commit("CREATE_NEW_SECTION_CHECKLIST", payload);
 	},
 	async updateSectionChecklist({ commit }, detail) {
 		const columns = await localStorage.getItem("kanban-data");
@@ -153,7 +153,7 @@ const actions = {
 			columns: JSON.parse(columns),
 		};
 		let payload = { ...d, ...c };
-		commit("updateExistingSectionChecklist", payload);
+		commit("UPDATE_EXISTING_SECTION_CHECKLIST", payload);
 	},
 	async deleteSectionChecklist({ commit }, detail) {
 		const columns = await localStorage.getItem("kanban-data");
@@ -164,25 +164,25 @@ const actions = {
 			columns: JSON.parse(columns),
 		};
 		let payload = { ...d, ...c };
-		commit("deletingSectionChecklist", payload);
+		commit("DELETE_SECTION_CHECKLIST", payload);
 	},
 };
 
 // mutations
 const mutations = {
-	setColumns(state, columns) {
+	SET_COLUMNS(state, columns) {
 		state.columns = columns;
 	},
-	setColumnId(state, columnId) {
+	SET_COLUMN_ID(state, columnId) {
 		state.columnId = columnId;
 	},
-	setCardId(state, cardId) {
+	SET_CARD_ID(state, cardId) {
 		state.cardId = cardId;
 	},
-	setDraggingElemHeight(state, height) {
+	SET_DRAGGING_ELEM_HEIGHT(state, height) {
 		state.draggingElemHeight = height;
 	},
-	createNewCardSection(state, payload) {
+	CREATE_NEW_CARD_SECTION(state, payload) {
 		let detail = payload.detail;
 		let cardId = detail.cardId;
 		let item = detail.item;
@@ -190,7 +190,7 @@ const mutations = {
 		save(columns);
 		state.columns = columns;
 	},
-	createNewSectionChecklist(state, payload) {
+	CREATE_NEW_SECTION_CHECKLIST(state, payload) {
 		let detail = payload.detail;
 		let cardId = detail.cardId;
 		let sectionItemId = detail.sectionItemId;
@@ -204,7 +204,7 @@ const mutations = {
 		save(columns);
 		state.columns = columns;
 	},
-	updateExistingSectionChecklist(state, payload) {
+	UPDATE_EXISTING_SECTION_CHECKLIST(state, payload) {
 		let detail = payload.detail;
 		let cardId = detail.cardId;
 		let sectionItemId = detail.sectionItemId;
@@ -222,12 +222,11 @@ const mutations = {
 		save(columns);
 		state.columns = columns;
 	},
-	deletingSectionChecklist(state, payload) {
+	DELETE_SECTION_CHECKLIST(state, payload) {
 		let detail = payload.detail;
 		let cardId = detail.cardId;
 		let sectionItemId = detail.sectionItemId;
 		let rowId = detail.rowId;
-		console.log(payload.columns, cardId, sectionItemId, rowId);
 		let columns = deleteSectionChecklist(
 			payload.columns,
 			cardId,
