@@ -99,7 +99,7 @@
 																<div>
 																	<label>Priority</label>
 																	<div class="checklist-dropdown__value">
-																		<select @change="onChecklistPriorityChange($event, item.id, row, 'priority')">
+																		<select @change="onChecklistPriorityChange($event, item.id, row, 'priority')" :value="row.priority">
 																			<option value="0">None</option>
 																			<option value="1">Low</option>
 																			<option value="2">Medium</option>
@@ -318,6 +318,8 @@ export default {
 			row["id"] = Math.floor(Math.random() * 10000000000);
 			row["name"] = this.checklistText;
 			row["completed"] = false;
+			row["reminder"] = "";
+			row["priority"] = 0;
 			let detail = {
 				cardId: this.cardId,
 				sectionItemId: this.sectionItemId,
@@ -333,7 +335,7 @@ export default {
 			let detail = {
 				cardId: this.cardId,
 				sectionItemId: itemId,
-				rowId: row.id,
+				row: row,
 				param: param,
 			};
 			this.$store.dispatch("kanban/updateSectionChecklist", detail);
@@ -367,12 +369,13 @@ export default {
 			}
 		},
 		checklistTextUpdate(itemId, row, param) {
+			// {id: 4800603513, name: 'check1', completed: true, reminder: '', priority: 0}
+			let updatedRow = {...row, name: this.checklistText };
 			let detail = {
 				cardId: this.cardId,
 				sectionItemId: itemId,
-				rowId: row.id,
+				row: updatedRow,
 				param: param,
-				text: this.checklistText,
 			};
 			this.$store.dispatch("kanban/updateSectionChecklist", detail);
 		},
@@ -392,7 +395,8 @@ export default {
 				param: param,
 				priority: event.target.value,
 			};
-			this.$store.dispatch("kanban/updateSectionChecklist", detail);
+			console.log("detail: ", detail);
+			// this.$store.dispatch("kanban/updateSectionChecklist", detail);
 		},
 	},
 };
