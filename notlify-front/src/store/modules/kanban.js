@@ -51,6 +51,8 @@ function updateSectionChecklist(columns, cardId, sectionItemId, row, param) {
 								rows[l].completed = !rows[l].completed;
 							} else if (param === "name") {
 								rows[l].name = row.name;
+							} else if (param === "priority") {
+								rows[l].priority = row.priority;
 							}
 						}
 					}

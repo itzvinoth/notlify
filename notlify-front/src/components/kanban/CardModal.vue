@@ -60,7 +60,7 @@
 										<div class="checklist-list__item" v-for="(item, checklistIndex) in cardDetail.checklist" :key="item.id">
 											<h4>{{ item.sectionTitle }}</h4>
 											<div class="checklist-row__container">
-												<div class="checklist-row__item" v-for="(row, rowIndex) in item.rows" :key="rowIndex">
+												<div class="checklist-row__item" v-for="(row, rowIndex) in item.rows" :key="rowIndex" :class="getPriorityClass(row.priority)">
 													<div class="checklist-row__item--container">
 														<div class="flex">
 															<input
@@ -209,7 +209,7 @@ export default {
 		...mapGetters("kanban", {
 			columns: "columns",
 		}),
-		cardDetail () {
+		cardDetail() {
 			const [card, currentColumn] = (() => {
 				for (const column of this.columns) {
 					const card = column.cards.find(
@@ -222,6 +222,15 @@ export default {
 				}
 			})();
 			return card;
+		},
+		getPriorityClass() {
+			let classNames = [
+				"no-priority",
+				"low-priority",
+				"medium-priority",
+				"high-priority",
+			];
+			return (p) => `${classNames[p]}`;
 		},
 	},
 	watch: {
@@ -388,15 +397,14 @@ export default {
 			this.$store.dispatch("kanban/deleteSectionChecklist", detail);
 		},
 		onChecklistPriorityChange(event, itemId, row, param) {
+			let updatedRow = { ...row, priority: event.target.value };
 			let detail = {
 				cardId: this.cardId,
 				sectionItemId: itemId,
-				rowId: row.id,
+				row: updatedRow,
 				param: param,
-				priority: event.target.value,
 			};
-			console.log("detail: ", detail);
-			// this.$store.dispatch("kanban/updateSectionChecklist", detail);
+			this.$store.dispatch("kanban/updateSectionChecklist", detail);
 		},
 	},
 };

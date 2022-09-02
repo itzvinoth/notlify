@@ -54,9 +54,20 @@
 						padding: 6px 0;
 						margin-bottom: 5px;
 						border: 1px solid rgba(60, 60, 60, 0.12);
-						border-left: 5px solid #ccc;
 						display: flex;
 						justify-content: space-between;
+						&.no-priority {
+							border-left: 5px solid #ccc;
+						}
+						&.low-priority {
+							border-left: 5px solid blue;
+						}
+						&.medium-priority {
+							border-left: 5px solid orange;
+						}
+						&.high-priority {
+							border-left: 5px solid red;
+						}
 						.checklist-row__item--container {
 							width: 100%;
 							.checklist-row__item--text {
