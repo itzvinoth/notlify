@@ -92,11 +92,13 @@
 														<div v-if="selectedChecklistDropdownMenuId === row.id" class="checklist-dropdown__container">
 															<!-- Expanded -->
 															<div class="checklist-dropdown">
-																<div>
+																<div class="reminder">
 																	<label>Reminder</label>
-																	<div class="checklist-dropdown__value">Set date</div>
+																	<div class="checklist-dropdown__value">
+																		<date-picker v-model="picked" />
+																	</div>
 																</div>
-																<div>
+																<div class="priority">
 																	<label>Priority</label>
 																	<div class="checklist-dropdown__value">
 																		<select @change="onChecklistPriorityChange($event, item.id, row, 'priority')" :value="row.priority">
@@ -169,12 +171,14 @@ import { mapGetters } from "vuex";
 
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import Datepicker from "vue3-datepicker";
 
 export default {
 	components: {
 		Modal,
 		"tiny-tabs": TinyTabs,
 		QuillEditor,
+		"date-picker": Datepicker,
 	},
 	props: {
 		show: {
@@ -203,6 +207,7 @@ export default {
 			selectedChecklistId: null,
 			selectedChecklistDropdownMenuId: null,
 			isChecklistTextChanged: false,
+			picked: "",
 		};
 	},
 	computed: {
@@ -378,8 +383,7 @@ export default {
 			}
 		},
 		checklistTextUpdate(itemId, row, param) {
-			// {id: 4800603513, name: 'check1', completed: true, reminder: '', priority: 0}
-			let updatedRow = {...row, name: this.checklistText };
+			let updatedRow = { ...row, name: this.checklistText };
 			let detail = {
 				cardId: this.cardId,
 				sectionItemId: itemId,

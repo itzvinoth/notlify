@@ -96,7 +96,7 @@
 								align-items: end;
 								justify-content: space-between;
 								.checklist-dropdown {
-									width: 180px;
+									// width: 180px;
 									margin-top: 10px;
 									padding-left: 5px;
 									display: flex;
@@ -104,9 +104,16 @@
 									label {
 										margin-bottom: 4px;
 									}
+									.priority {
+										margin-left: 20px;
+
+									}
 								}
 								.checklist-dropdown .checklist-dropdown__value {
 									margin-top: 4px;
+									select {
+										padding: 1px;
+									}
 								}
 							}
 						}
