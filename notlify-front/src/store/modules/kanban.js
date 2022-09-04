@@ -53,6 +53,8 @@ function updateSectionChecklist(columns, cardId, sectionItemId, row, param) {
 								rows[l].name = row.name;
 							} else if (param === "priority") {
 								rows[l].priority = row.priority;
+							} else if (param === "reminder") {
+								rows[l].reminder = row.reminder;
 							}
 						}
 					}

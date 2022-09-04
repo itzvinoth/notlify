@@ -94,8 +94,14 @@
 															<div class="checklist-dropdown">
 																<div class="reminder">
 																	<label>Reminder</label>
-																	<div class="checklist-dropdown__value">
-																		<date-picker v-model="picked" />
+																	<div class="flex checklist-dropdown__value">
+																		<date-picker v-model="pickedDate" />
+																		<vue-feather
+																			type="check"
+																			@click="onUpdateReminder($event, item.id, row, 'reminder')"
+																			size="18"
+																			style="margin-left: 5px; cursor: pointer;">
+																		</vue-feather>
 																	</div>
 																</div>
 																<div class="priority">
@@ -207,7 +213,7 @@ export default {
 			selectedChecklistId: null,
 			selectedChecklistDropdownMenuId: null,
 			isChecklistTextChanged: false,
-			picked: "",
+			pickedDate: null,
 		};
 	},
 	computed: {
@@ -370,9 +376,11 @@ export default {
 		showChecklistDropdownMenu(event, row) {
 			if (this.selectedChecklistDropdownMenuId === row.id) {
 				this.selectedChecklistDropdownMenuId = null;
+				this.pickedDate = null;
 				return;
 			}
 			this.selectedChecklistDropdownMenuId = row.id;
+			this.pickedDate = row.reminder ? new Date(row.reminder) : null;
 		},
 		onChecklistTextareaBlur(event, itemId, row, param) {
 			this.selectedChecklistId = null;
@@ -402,6 +410,17 @@ export default {
 		},
 		onChecklistPriorityChange(event, itemId, row, param) {
 			let updatedRow = { ...row, priority: event.target.value };
+			let detail = {
+				cardId: this.cardId,
+				sectionItemId: itemId,
+				row: updatedRow,
+				param: param,
+			};
+			this.$store.dispatch("kanban/updateSectionChecklist", detail);
+		},
+		onUpdateReminder(event, itemId, row, param) {
+			let formattedDate = this.pickedDate.toISOString().slice(0, 10);
+			let updatedRow = { ...row, reminder: formattedDate };
 			let detail = {
 				cardId: this.cardId,
 				sectionItemId: itemId,
