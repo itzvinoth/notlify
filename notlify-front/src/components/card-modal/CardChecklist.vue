@@ -131,23 +131,25 @@
 						v-if="sectionItemId === item.id"
 						class="new-checklist-edit__container"
 					>
-						<div>
+						<div v-if="!selectedChecklistId">
 							<input
 								type="text"
 								v-model="checklistText"
 								placeholder="Add an item"
 							/>
+							<div>
+								<button type="button" @click="addItem(checklistIndex)">
+									Add
+								</button>
+								<button type="button" @click="cancelItem(checklistIndex)">
+									Cancel
+								</button>
+							</div>
 						</div>
-						<button type="button" @click="addItem(checklistIndex)">
-							Add
-						</button>
-						<button type="button" @click="cancelItem(checklistIndex)">
-							Cancel
-						</button>
 					</div>
 					<button
 						type="button"
-						v-if="sectionItemId !== item.id"
+						v-if="sectionItemId !== item.id || selectedChecklistId"
 						@click="showItemAdd(checklistIndex, item.id)"
 					>
 						Add an item
@@ -236,6 +238,7 @@ export default {
 			this.creatingNewSection = false;
 		},
 		showItemAdd(_checklistIndex, itemId) {
+			this.resetSectionChecklist();
 			this.sectionItemId = itemId;
 		},
 		resetSectionChecklist() {
@@ -281,6 +284,8 @@ export default {
 				let element = document.getElementById(`checklist-${row.id}`);
 				element.setSelectionRange(len, len);
 				element.focus();
+
+				this.resetSectionChecklist();
 			});
 		},
 		showChecklistDropdownMenu(event, row) {
