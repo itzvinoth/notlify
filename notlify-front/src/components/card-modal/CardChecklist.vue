@@ -35,7 +35,7 @@
 						<h4>{{ item.sectionTitle }}</h4>
 						<div class="flex">
 							<input type="checkbox"><label>Hide finished items ({{ item.rows.length }})</label>
-							<div style="margin-left: 5px;"><button type="button">Delete</button></div>
+							<div style="margin-left: 5px;"><button type="button" @click="deleteSection($event, item)">Delete</button></div>
 						</div>
 					</div>
 					<div class="checklist-row__container">
@@ -250,6 +250,13 @@ export default {
 		resetSectionChecklist() {
 			this.checklistText = "";
 			this.sectionItemId = null;
+		},
+		deleteSection(event, item) {
+			let detail = {
+				cardId: this.cardId,
+				item: item,
+			};
+			this.$store.dispatch("kanban/deleteCardSection", detail);
 		},
 		// Checklist
 		addItem() {

@@ -15,6 +15,26 @@ function addCardSection(columns, cardId, item) {
 	return cols;
 }
 
+function deleteCardSection(columns, cardId, sectionItem) {
+	let cols = [];
+	for (let i = 0; i < columns.length; i++) {
+		let column = columns[i];
+		for (let j = 0; j < column.cards.length; j++) {
+			let card = columns[i].cards[j];
+			let newChecklist = [];
+			for (let k = 0; k < card.checklist.length; k++) {
+				let section = card.checklist[k];
+				if (section.id !== sectionItem.id) {
+					newChecklist.push(section);
+				}
+			}
+			card.checklist = newChecklist;
+		}
+		cols.push(column);
+	}
+	return cols;
+}
+
 function addSectionChecklist(columns, cardId, sectionItemId, row) {
 	let cols = [];
 	for (let i = 0; i < columns.length; i++) {
@@ -137,6 +157,17 @@ const actions = {
 		let payload = { ...d, ...c };
 		commit("CREATE_NEW_CARD_SECTION", payload);
 	},
+	async deleteCardSection({ commit }, detail) {
+		const columns = await localStorage.getItem("kanban-data");
+		let d = {
+			detail: detail,
+		};
+		let c = {
+			columns: JSON.parse(columns),
+		};
+		let payload = { ...d, ...c };
+		commit("DELETE_CARD_SECTION", payload);
+	},
 	async addSectionChecklist({ commit }, detail) {
 		const columns = await localStorage.getItem("kanban-data");
 		let d = {
@@ -191,6 +222,14 @@ const mutations = {
 		let cardId = detail.cardId;
 		let item = detail.item;
 		let columns = addCardSection(payload.columns, cardId, item);
+		save(columns);
+		state.columns = columns;
+	},
+	DELETE_CARD_SECTION(state, payload) {
+		let detail = payload.detail;
+		let cardId = detail.cardId;
+		let item = detail.item;
+		let columns = deleteCardSection(payload.columns, cardId, item);
 		save(columns);
 		state.columns = columns;
 	},
