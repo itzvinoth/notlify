@@ -31,7 +31,12 @@
 					v-for="(item, checklistIndex) in cardDetail.checklist"
 					:key="item.id"
 				>
-					<h4>{{ item.sectionTitle }}</h4>
+					<div class="checklist-list__item--title">
+						<h4>{{ item.sectionTitle }}</h4>
+						<div>
+							<input type="checkbox"><label>Show finished items ({{ item.rows.length }})</label>
+						</div>
+					</div>
 					<div class="checklist-row__container">
 						<div
 							class="checklist-row__item"

@@ -40,14 +40,19 @@
 		.checklist-list {
 			.checklist-list__item {
 				border: 1px solid #ccc;
-				padding: 10px;
+				padding: 5px 10px 10px 10px;
 				border-radius: 3px;
 				margin-bottom: 10px;
 				&:first-child {
 					margin-top: 5px;
 				}
-				h4 {
+				.checklist-list__item--title {
 					margin: 5px 0;
+					display: flex;
+					justify-content: space-between;
+				}
+				h4 {
+					margin: 0;
 				}
 				.checklist-row__container {
 					.checklist-row__item {
