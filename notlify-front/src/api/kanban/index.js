@@ -117,18 +117,13 @@ export default class KanbanApi {
 function read() {
 	const json = localStorage.getItem("kanban-data");
 	if (!json) {
-		return [{
-			id: 1,
-			items: [],
-		},
-		{
-			id: 2,
-			items: [],
-		},
-		{
-			id: 3,
-			items: [],
-		}];
+		return [
+			{
+				id: 1,
+				title: "First column",
+				cards: [],
+			},
+		];
 	}
 	return JSON.parse(json);
 }
