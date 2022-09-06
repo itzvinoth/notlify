@@ -34,7 +34,7 @@
 					<div class="checklist-list__item--title">
 						<h4>{{ item.sectionTitle }}</h4>
 						<div class="flex">
-							<input type="checkbox"><label>Hide finished items ({{ item.rows.length }})</label>
+							<div v-if="item.rows.length > 0"><input type="checkbox"><label>Hide finished items ({{ finishedChecklist(item) }})</label></div>
 							<div style="margin-left: 5px;"><button type="button" @click="deleteSection($event, item)">Delete</button></div>
 						</div>
 					</div>
@@ -209,6 +209,11 @@ export default {
 				"high-priority",
 			];
 			return (p) => `${classNames[p]}`;
+		},
+		finishedChecklist() {
+			return function (item) {
+				return `${item.rows.filter((row) => row.completed).length}`;
+			};
 		},
 	},
 	watch: {
