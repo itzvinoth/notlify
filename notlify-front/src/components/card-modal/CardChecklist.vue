@@ -33,8 +33,9 @@
 				>
 					<div class="checklist-list__item--title">
 						<h4>{{ item.sectionTitle }}</h4>
-						<div>
-							<input type="checkbox"><label>Show finished items ({{ item.rows.length }})</label>
+						<div class="flex">
+							<input type="checkbox"><label>Hide finished items ({{ item.rows.length }})</label>
+							<div style="margin-left: 5px;"><button type="button">Delete</button></div>
 						</div>
 					</div>
 					<div class="checklist-row__container">
