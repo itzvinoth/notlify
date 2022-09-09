@@ -37,11 +37,11 @@ export default {
 	props: {
 		show: Boolean,
 	},
-	setup(props, contenxt) {
+	setup(props, context) {
 		// https://vuejs.org/api/composition-api-setup.html#setup-context
 		const target = ref(null)
 		onClickOutside(target, (event) => {
-			contenxt.emit("close");
+			context.emit("close");
 		});
 
 		return { target };

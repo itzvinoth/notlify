@@ -11,8 +11,10 @@
 }
 
 .modal-wrapper {
-	display: table-cell;
+	// display: table-cell;
 	// vertical-align: middle;
+	overflow: auto;
+	height: 100vh;
 }
 
 .modal-container {

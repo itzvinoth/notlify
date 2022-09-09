@@ -34,7 +34,7 @@
 					>
 						<div class="section" id="description">
 							<h3 class="title">Description</h3>
-							<QuillEditor theme="snow" />
+							<card-description></card-description>
 						</div>
 						<div class="section" id="checklist" default>
 							<h3 class="title">Checklist</h3>
@@ -57,6 +57,7 @@ import KanbanApi from "../../api/kanban/index";
 import Modal from "@/components/Modal.vue";
 import TinyTabs from "@/components/TinyTabs.vue";
 import CardChecklist from "@/components/card-modal/CardChecklist.vue";
+import CardDescription from "@/components/card-modal/CardDescription.vue";
 
 import { mapGetters } from "vuex";
 
@@ -69,6 +70,7 @@ export default {
 		"tiny-tabs": TinyTabs,
 		QuillEditor,
 		"card-checklist": CardChecklist,
+		"card-description": CardDescription,
 	},
 	props: {
 		show: {

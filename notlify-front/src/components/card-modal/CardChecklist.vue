@@ -362,6 +362,6 @@ export default {
 			};
 			this.$store.dispatch("kanban/updateSectionChecklist", detail);
 		},
-	}
-}
+	},
+};
 </script>
