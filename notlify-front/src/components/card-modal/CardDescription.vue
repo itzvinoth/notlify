@@ -1,6 +1,12 @@
 <template>
 	<div>
-		<quill-editor theme="snow" v-model:content="content" @textChange="onEditorChange($event)" />
+		<quill-editor
+			theme="snow"
+			ref="editor"
+			content-type="html"
+			v-model:content="content"
+			@blur="onblur($event)"
+		/>
 	</div>
 </template>
 
@@ -13,20 +19,17 @@ export default {
 	components: {
 		"quill-editor": QuillEditor,
 	},
-	data() {
+	data () {
 		return {
-			content: {"ops":[{"insert":"Lorem ipsum dolor sit amet"},{"attributes":{"header":3},"insert":"\n"},{"insert":"consectetur adipiscing elit. "},{"attributes":{"bold":true},"insert":"Nunc ultrices ligula"},{"insert":" eu eros pulvinar, eu consequat nulla consectetur. Cras ut purus felis. Nunc placerat risus a augue sodales, at ultricies diam tristique. Donec venenatis auctor mauris,"},{"attributes":{"italic":true},"insert":" at molestie enim euismo"},{"insert":"d ac. Mauris viverra, leo id porttitor maximus, diam magna blandit nibh, ac vehicula nulla diam in eros. Nullam mi risus, blandit a elit quis, aliquam porttitor diam. In mauris nunc, fringilla at auctor in, sodales eu diam. In convallis gravida urna, ut gravida massa euismod quis.\nProin rutrum tortor at augue eleifend finibus. "},{"attributes":{"underline":true},"insert":"Quisque non tincidunt dolor."},{"insert":" Aenean ullamcorper, diam ac vehicula imperdiet, arcu erat sodales sem, vitae lobortis dolor urna dapibus nisi. Nulla lacus urna, vehicula quis rutrum sit amet, "},{"attributes":{"link":"http://localhost"},"insert":"porttitor eget ligula"},{"insert":". Nam eget ante ornare, egestas nulla dapibus, tempus nisi. Sed vel odio augue. Fusce vulputate, risus sit amet venenatis tristique, ex ex pulvinar orci, vitae lobortis massa enim ac ante. Nulla sodales mauris ligula, a tempus felis vulputate ut. Sed scelerisque dolor at leo hendrerit vehicula.\n"}]}
+			content: "<h1>hola</h1><br><h2>hello</h2>"
 		}
 	},
 	methods: {
-		// onEditorChange({ quill, html, text }) {
-		// 	console.log("editor change!", quill, html, text);
-		// 	this.content = html;
-		// },
-		onEditorChange(event) {
-			console.log("editor change!", event);
-			// this.content = html;
-		},
+		onblur (event) {
+			let el = event.value;
+			let el2 = el.querySelector(".ql-editor").innerHTML;
+			console.log(el2)
+		}
 	}
 };
 </script>
