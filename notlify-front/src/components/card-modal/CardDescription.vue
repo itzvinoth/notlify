@@ -19,6 +19,14 @@ export default {
 	components: {
 		"quill-editor": QuillEditor,
 	},
+	props: {
+		cardId: {
+			type: Number,
+		},
+		cardDetail: {
+			type: Object,
+		},
+	},
 	data () {
 		return {
 			content: "<h1>hola</h1><br><h2>hello</h2>"
@@ -29,7 +37,10 @@ export default {
 			let el = event.value;
 			let el2 = el.querySelector(".ql-editor").innerHTML;
 			console.log(el2)
-		}
-	}
+		},
+	},
+	// mounted () {
+		// this.$refs.editor.setContents("<h1>hola</h1><br><h2>hai</h2>");
+	// }
 };
 </script>

@@ -1,4 +1,3 @@
-<!-- eslint-disable prettier/prettier -->
 <template>
 	<div class="row addto-card__container">
 		<div class="checklist__container">
@@ -211,9 +210,7 @@ export default {
 			return (p) => `${classNames[p]}`;
 		},
 		finishedChecklist() {
-			return function (item) {
-				return `${item.rows.filter((row) => row.completed).length}`;
-			};
+			return (item) => `${item.rows.filter((row) => row.completed).length}`;
 		},
 	},
 	watch: {

@@ -34,7 +34,7 @@
 					>
 						<div class="section" id="description">
 							<h3 class="title">Description</h3>
-							<card-description></card-description>
+							<card-description :card-detail="cardDetail" :card-id="cardId"></card-description>
 						</div>
 						<div class="section" id="checklist" default>
 							<h3 class="title">Checklist</h3>

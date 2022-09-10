@@ -6,17 +6,26 @@
             {
                 "id": 45798,
                 "title": "Set of lists is a board",
-                "checklist": []
+                "checklist": [],
+                "description": {
+                    "content": ""
+                }
             },
             {
                 "id": 25798,
                 "title": "Set of cards is a list",
-                "checklist": []
+                "checklist": [],
+                "description": {
+                    "content": ""
+                }
             },
             {
                 "id": 15798,
                 "title": "All data is saved",
-                "checklist": []
+                "checklist": [],
+                "description": {
+                    "content": ""
+                }
             }
         ]
     },
@@ -27,7 +36,10 @@
             {
                 "id": 72714,
                 "title": "Click on a card to edit",
-                "checklist": []
+                "checklist": [],
+                "description": {
+                    "content": ""
+                }
             },
             {
                 "id": 12714,
@@ -43,12 +55,18 @@
                         "sectionTitle": "section 2",
                         "rows": []
                     }
-                ]
+                ],
+                "description": {
+                    "content": ""
+                }
             },
             {
                 "id": 22714,
                 "title": "To discard chages press esc",
-                "checklist": []
+                "checklist": [],
+                "description": {
+                    "content": ""
+                }
             }
         ]
     },
@@ -59,12 +77,18 @@
             {
                 "id": 23044,
                 "title": "Drag notes around to rearrange.",
-                "checklist": []
+                "checklist": [],
+                "description": {
+                    "content": ""
+                }
             },
             {
                 "id": 13044,
                 "title": "Works between the lists too",
-                "checklist": []
+                "checklist": [],
+                "description": {
+                    "content": ""
+                }
             },
             {
                 "id": 33044,
@@ -114,7 +138,10 @@
                         "sectionTitle": "section 3",
                         "rows": []
                     }
-                ]
+                ],
+                "description": {
+                    "content": ""
+                }
             },
             {
                 "id": 21923,
@@ -178,7 +205,10 @@
                         "sectionTitle": "section 4",
                         "rows": []
                     }
-                ]
+                ],
+                "description": {
+                    "content": ""
+                }
             }
         ]
     },
@@ -189,12 +219,18 @@
             {
                 "id": 49583,
                 "title": "hello robo",
-                "checklist": []
+                "checklist": [],
+                "description": {
+                    "content": ""
+                }
             },
             {
                 "id": 21102,
                 "title": "hello testng",
-                "checklist": []
+                "checklist": [],
+                "description": {
+                    "content": ""
+                }
             },
             {
                 "id": 70690,
@@ -220,25 +256,10 @@
                             }
                         ]
                     }
-                ]
-            }
-        ]
-    },
-    {
-        "id": 5,
-        "title": "column no 5",
-        "cards": [
-            {
-                "id": 75495,
-                "content": "",
-                "checklist": [],
-                "title": "program 1"
-            },
-            {
-                "id": 15374,
-                "content": "",
-                "checklist": [],
-                "title": "program 2"
+                ],
+                "description": {
+                    "content": ""
+                }
             }
         ]
     }
