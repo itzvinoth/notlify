@@ -6,6 +6,8 @@ import {
 	deleteSectionChecklist,
 } from "../../js/kanban/checklist";
 
+import { updateCardDescription } from "../../js/kanban/description";
+
 function save(data) {
 	localStorage.setItem("kanban-data", JSON.stringify(data));
 }
@@ -28,6 +30,7 @@ const getters = {
 
 // actions
 const actions = {
+	// columns
 	async getColumns({ commit }) {
 		const columns = await localStorage.getItem("kanban-data");
 		commit("SET_COLUMNS", JSON.parse(columns));
@@ -35,12 +38,14 @@ const actions = {
 	async getColumnId({ commit }, columnId) {
 		commit("SET_COLUMN_ID", columnId);
 	},
+	// card
 	async getCardId({ commit }, cardId) {
 		commit("SET_CARD_ID", cardId);
 	},
 	async getDraggingElemHeight({ commit }, height) {
 		commit("SET_DRAGGING_ELEM_HEIGHT", height);
 	},
+	// card checklist
 	async addCardSection({ commit }, detail) {
 		const columns = await localStorage.getItem("kanban-data");
 		let d = {
@@ -96,22 +101,37 @@ const actions = {
 		let payload = { ...d, ...c };
 		commit("DELETE_SECTION_CHECKLIST", payload);
 	},
+	// card description
+	async updateCardDescription({ commit }, detail) {
+		const columns = await localStorage.getItem("kanban-data");
+		let d = {
+			detail: detail,
+		};
+		let c = {
+			columns: JSON.parse(columns),
+		};
+		let payload = { ...d, ...c };
+		commit("UPDATE_CARD_DESCRIPTION", payload);
+	}
 };
 
 // mutations
 const mutations = {
+	// columns
 	SET_COLUMNS(state, columns) {
 		state.columns = columns;
 	},
 	SET_COLUMN_ID(state, columnId) {
 		state.columnId = columnId;
 	},
+	// card
 	SET_CARD_ID(state, cardId) {
 		state.cardId = cardId;
 	},
 	SET_DRAGGING_ELEM_HEIGHT(state, height) {
 		state.draggingElemHeight = height;
 	},
+	// card checklist
 	CREATE_NEW_CARD_SECTION(state, payload) {
 		let detail = payload.detail;
 		let cardId = detail.cardId;
@@ -172,6 +192,19 @@ const mutations = {
 		save(columns);
 		state.columns = columns;
 	},
+	// card description
+	UPDATE_CARD_DESCRIPTION(state, payload) {
+		let detail = payload.detail;
+		let cardId = detail.cardId;
+		let description = detail.description;
+		let columns = updateCardDescription(
+			payload.columns,
+			cardId,
+			description,
+		);
+		save(columns);
+		state.columns = columns;
+	}
 };
 
 export default {

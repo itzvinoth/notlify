@@ -8,7 +8,7 @@
                 "title": "Set of lists is a board",
                 "checklist": [],
                 "description": {
-                    "content": ""
+                    "content": "<h1>hola</h1><br><h2>hello</h2>"
                 }
             },
             {
@@ -140,7 +140,7 @@
                     }
                 ],
                 "description": {
-                    "content": ""
+                    "content": "<h1>hola</h1><br><h2>hello</h2><h2>world</h2>"
                 }
             },
             {

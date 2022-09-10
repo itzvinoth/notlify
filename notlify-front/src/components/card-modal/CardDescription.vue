@@ -4,7 +4,7 @@
 			theme="snow"
 			ref="editor"
 			content-type="html"
-			v-model:content="content"
+			@ready="onReady()"
 			@blur="onblur($event)"
 		/>
 	</div>
@@ -29,14 +29,33 @@ export default {
 	},
 	data () {
 		return {
-			content: "<h1>hola</h1><br><h2>hello</h2>"
+			content: ""
+		}
+	},
+	computed: {
+		cardDescription () {
+			return this.cardDetail && this.cardDetail.description;
 		}
 	},
 	methods: {
-		onblur (event) {
+		onReady() {
+			let cardDescription = this.cardDetail && this.cardDetail.description;
+			this.$refs.editor.setContents(cardDescription.content);
+		},
+		onblur(event) {
 			let el = event.value;
-			let el2 = el.querySelector(".ql-editor").innerHTML;
-			console.log(el2)
+			let value = el.querySelector(".ql-editor").innerHTML;
+			this.onUpdateCardDescription(value)
+		},
+		onUpdateCardDescription(value) {
+			let description = {
+				"content": value
+			};
+			let detail = {
+				cardId: this.cardId,
+				description,
+			};
+			this.$store.dispatch("kanban/updateCardDescription", detail);
 		},
 	},
 	// mounted () {
