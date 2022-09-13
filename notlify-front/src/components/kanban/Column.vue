@@ -38,8 +38,8 @@
 				<span @click="onColumnTitleClick($event, column)">{{ column.title }}</span>
 				<textarea
 					v-if="false"
-					@blur="onChecklistTextareaBlur($event, column)"
-					@keypress.enter="onChecklistTextareaBlur($event, column)"
+					@blur="onColumnTextareaBlur($event, column)"
+					@keypress.enter="onColumnTextareaBlur($event, column)"
 					:value="column.title"
 					@input="onColumnTextChange($event)"
 					:id="`column-${column.id}`"
@@ -155,6 +155,64 @@ export default {
 		}),
 	},
 	methods: {
+		// COLUMN
+		// Add column
+		columnComposer(type) {
+			switch (type) {
+			case "add":
+				this.isComposingNewColumn = true;
+				break;
+			case "save":
+				this.addColumn();
+				this.resetColumnComposer();
+				break;
+			case "cancel":
+				this.resetColumnComposer();
+				break;
+			}
+		},
+		addColumn() {
+			const column = {
+				id: this.columns.length + 1,
+				title: this.newColumnTitle,
+				cards: [],
+			};
+			KanbanApi.insertColumn(column);
+			this.$store.dispatch("kanban/getColumns");
+		},
+		resetColumnComposer() {
+			this.isComposingNewColumn = false;
+			this.newColumnTitle = "";
+		},
+		// Edit column
+		onColumnTitleClick(event, column) {},
+		onColumnTextareaBlur(event, column) {},
+		onColumnTextChange(event, column) {},
+		showColumnMenu(event, id) {
+			if (this.columnId === id) {
+				this.$store.dispatch("kanban/getColumnId", null);
+				return;
+			}
+			this.$store.dispatch("kanban/getColumnId", id);
+		},
+		onDblClickColumnDeleteMenu(event, id) {
+			let check = confirm("Are you sure you want to delete this column");
+			if (check) {
+				this.onDeleteColumn(id);
+			};
+		},
+		onDeleteColumn(id) {
+			KanbanApi.deleteColumn(id);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
+		},
+		onClickingOutsideColumnMenu() {
+			if (this.columnId !== null) {
+				this.$store.dispatch("kanban/getColumnId", null);
+				return;
+			}
+		},
+		// card
 		cardComposer(type, columnId) {
 			switch (type) {
 			case "add":
@@ -185,57 +243,6 @@ export default {
 			this.newCardTitle = "";
 			this.newCardId = null;
 			this.selectedColumnId = null;
-		},
-		showColumnMenu(event, id) {
-			if (this.columnId === id) {
-				this.$store.dispatch("kanban/getColumnId", null);
-				return;
-			}
-			this.$store.dispatch("kanban/getColumnId", id);
-		},
-		onDblClickColumnDeleteMenu(event, id) {
-			let check = confirm("Are you sure you want to delete this column");
-			if (check) {
-				this.onDeleteColumn(id);
-			};
-		},
-		onDeleteColumn(id) {
-			KanbanApi.deleteColumn(id);
-			// vuex commit update kanban
-			this.$store.dispatch("kanban/getColumns");
-		},
-		onClickingOutsideColumnMenu() {
-			if (this.columnId !== null) {
-				this.$store.dispatch("kanban/getColumnId", null);
-				return;
-			}
-		},
-		columnComposer(type) {
-			switch (type) {
-			case "add":
-				this.isComposingNewColumn = true;
-				break;
-			case "save":
-				this.addColumn();
-				this.resetColumnComposer();
-				break;
-			case "cancel":
-				this.resetColumnComposer();
-				break;
-			}
-		},
-		addColumn() {
-			const column = {
-				id: this.columns.length + 1,
-				title: this.newColumnTitle,
-				cards: [],
-			};
-			KanbanApi.insertColumn(column);
-			this.$store.dispatch("kanban/getColumns");
-		},
-		resetColumnComposer() {
-			this.isComposingNewColumn = false;
-			this.newColumnTitle = "";
 		},
 	},
 }
