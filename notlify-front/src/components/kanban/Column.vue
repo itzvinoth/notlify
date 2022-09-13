@@ -99,7 +99,7 @@
 				<div v-if="isComposingNewColumn">
 					<textarea
 						class="textarea-kanban column-composer__textarea"
-						v-model="newColumnTitle"
+						v-model="columnTitle"
 						@keypress.enter="columnComposer('save')"
 						placeholder="Enter a column title"
 					/>
@@ -124,6 +124,8 @@
 </template>
 
 <script>
+let COLUMN_TITLE = "";
+
 import Card from "@/components/kanban/Card.vue";
 import KanbanApi from "../../api/kanban/index";
 import CardDropdown from "@/components/kanban/CardDropdown.vue";
@@ -139,12 +141,14 @@ export default {
 	},
 	data() {
 		return {
-			newColumnTitle: "",
+			columnTitle: "",
 			isComposingNewColumn: false,
+			selectedColumnId: null,
+			isColumnTitleChanged: false,
+
 			isComposingNewCard: false,
 			newCardTitle: "",
 			newCardId: null,
-			selectedColumnId: null,
 		};
 	},
 	computed: {
@@ -153,6 +157,12 @@ export default {
 			cardId: "cardId",
 			columns: "columns",
 		}),
+	},
+
+	watch: {
+		columnTitle(newTitle) {
+			this.isColumnTitleChanged = newTitle !== COLUMN_TITLE ? true : false;
+		},
 	},
 	methods: {
 		// COLUMN
@@ -174,7 +184,7 @@ export default {
 		addColumn() {
 			const column = {
 				id: this.columns.length + 1,
-				title: this.newColumnTitle,
+				title: this.columnTitle,
 				cards: [],
 			};
 			KanbanApi.insertColumn(column);
@@ -182,7 +192,7 @@ export default {
 		},
 		resetColumnComposer() {
 			this.isComposingNewColumn = false;
-			this.newColumnTitle = "";
+			this.columnTitle = "";
 		},
 		// Edit column
 		onColumnTitleClick(event, column) {},

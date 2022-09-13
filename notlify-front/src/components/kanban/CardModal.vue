@@ -51,7 +51,7 @@
 </template>
 
 <script>
-let UPDATED_CARD_TITLE = "";
+let CARD_TITLE = "";
 
 import KanbanApi from "../../api/kanban/index";
 import Modal from "@/components/Modal.vue";
@@ -111,7 +111,7 @@ export default {
 	},
 	watch: {
 		cardTitle(newTitle) {
-			this.isCardTitleChanged = newTitle !== UPDATED_CARD_TITLE ? true : false;
+			this.isCardTitleChanged = newTitle !== CARD_TITLE ? true : false;
 		},
 	},
 	methods: {
@@ -135,7 +135,7 @@ export default {
 		onCardTitleClick() {
 			this.isCardTitleSelected = true;
 			this.cardTitle = this.cardDetail.title;
-			UPDATED_CARD_TITLE = this.cardDetail.title;
+			CARD_TITLE = this.cardDetail.title;
 			this.$nextTick(() => {
 				let len = this.cardTitle.length;
 				this.$refs.cardtitle.setSelectionRange(len, len);
@@ -158,7 +158,7 @@ export default {
 				title: this.cardTitle,
 				checklist: this.cardDetail.checklist,
 			});
-			UPDATED_CARD_TITLE = this.cardTitle;
+			CARD_TITLE = this.cardTitle;
 			this.$store.dispatch("kanban/getColumns");
 		},
 	},

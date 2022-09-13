@@ -166,7 +166,7 @@
 </template>
 
 <script>
-let UPDATED_CHECKLIST_TEXT = "";
+let CHECKLIST_TEXT = "";
 
 import { mapGetters } from "vuex";
 
@@ -215,7 +215,7 @@ export default {
 	},
 	watch: {
 		checklistText(newText) {
-			this.isChecklistTextChanged = newText !== UPDATED_CHECKLIST_TEXT ? true : false;
+			this.isChecklistTextChanged = newText !== CHECKLIST_TEXT ? true : false;
 		},
 	},
 	methods: {
@@ -293,7 +293,7 @@ export default {
 		},
 		onChecklistClick(event, _itemId, row) {
 			this.selectedChecklistId = row.id;
-			UPDATED_CHECKLIST_TEXT = row.name;
+			CHECKLIST_TEXT = row.name;
 			this.$nextTick(() => {
 				let len = row.name.length;
 				let element = document.getElementById(`checklist-${row.id}`);
