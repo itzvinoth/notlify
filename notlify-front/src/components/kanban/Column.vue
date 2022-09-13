@@ -35,7 +35,16 @@
 				</template>
 			</popover>
 			<div class="kb__column--title">
-				{{ column.title }}
+				<span @click="onColumnTitleClick($event, column)">{{ column.title }}</span>
+				<textarea
+					v-if="false"
+					@blur="onChecklistTextareaBlur($event, column)"
+					@keypress.enter="onChecklistTextareaBlur($event, column)"
+					:value="column.title"
+					@input="onColumnTextChange($event)"
+					:id="`column-${column.id}`"
+					class="column--textarea"
+				></textarea>
 			</div>
 			<card
 				:cards="column.cards"
