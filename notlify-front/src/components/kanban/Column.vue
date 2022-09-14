@@ -59,14 +59,14 @@
 			<!-- <button class="kb__add-item" type="button" @click="addCard(column.id)">Add a card</button> -->
 			<div class="card-composer">
 				<div
-					v-if="column.id !== selectedColumnId"
+					v-if="column.id !== cardComposerColumnId"
 					@click="cardComposer('add', column.id)"
 					class="add-card"
 				>
 					Add a card
 				</div>
 				<div
-					v-if="isComposingNewCard && column.id === selectedColumnId"
+					v-if="isComposingNewCard && column.id === cardComposerColumnId"
 				>
 					<textarea
 						class="textarea-kanban card-composer__textarea"
@@ -151,6 +151,7 @@ export default {
 			selectedColumnId: null,
 			isColumnTitleChanged: false,
 
+			cardComposerColumnId: null,
 			isComposingNewCard: false,
 			newCardTitle: "",
 			newCardId: null,
@@ -262,7 +263,7 @@ export default {
 		cardComposer(type, columnId) {
 			switch (type) {
 			case "add":
-				this.selectedColumnId = columnId;
+				this.cardComposerColumnId = columnId;
 				this.isComposingNewCard = true;
 				this.newCardId = Math.floor(Math.random() * 100000);
 				break;
@@ -288,7 +289,7 @@ export default {
 		resetCardComposer() {
 			this.newCardTitle = "";
 			this.newCardId = null;
-			this.selectedColumnId = null;
+			this.cardComposerColumnId = null;
 		},
 	},
 }
