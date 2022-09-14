@@ -35,14 +35,18 @@
 				</template>
 			</popover>
 			<div class="kb__column--title">
-				<span @click="onColumnTitleClick($event, column)">{{ column.title }}</span>
+				<span
+					@click="onColumnTitleClick($event, column)"
+					v-if="selectedColumnId !== column.id">
+					{{ column.title }}
+				</span>
 				<textarea
-					v-if="false"
+					v-if="selectedColumnId === column.id"
 					@blur="onColumnTextareaBlur($event, column)"
 					@keypress.enter="onColumnTextareaBlur($event, column)"
 					:value="column.title"
 					@input="onColumnTextChange($event)"
-					:id="`column-${column.id}`"
+					:id="`column-${column.id}-textarea`"
 					class="column--textarea"
 				></textarea>
 			</div>
@@ -195,9 +199,41 @@ export default {
 			this.columnTitle = "";
 		},
 		// Edit column
-		onColumnTitleClick(event, column) {},
-		onColumnTextareaBlur(event, column) {},
-		onColumnTextChange(event, column) {},
+		onColumnTitleClick(event, column) {
+			console.log("event, column: ", event, column);
+			this.selectedColumnId = column.id;
+			COLUMN_TITLE = column.title;
+			this.$nextTick(() => {
+				let len = column.title.length;
+				let element = document.getElementById(`column-${column.id}-textarea`);
+				element.setSelectionRange(len, len);
+				element.focus();
+
+				// this.resetColumn();
+			});
+		},
+		onColumnTextareaBlur(event, column) {
+			this.selectedColumnId = null;
+			if (this.isColumnTitleChanged) {
+				this.$nextTick(() => {
+					this.columnTitleUpdate(column);
+				});
+			}
+		},
+		onColumnTextChange(event, column) {
+			this.columnTitle = event.target.value;
+		},
+		columnTitleUpdate(column) {
+			let updatedColumn = { ...column, title: this.columnTitle };
+			let detail = {
+				column: updatedColumn,
+			};
+			this.$store.dispatch("kanban/updateColumnTitle", detail);
+		},
+		resetColumn() {
+			this.columnTitle = "";
+			this.selectedColumnId = null;
+		},
 		showColumnMenu(event, id) {
 			if (this.columnId === id) {
 				this.$store.dispatch("kanban/getColumnId", null);
