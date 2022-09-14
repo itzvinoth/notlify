@@ -41,7 +41,15 @@ const actions = {
 		commit("SET_COLUMN_ID", columnId);
 	},
 	async updateColumnTitle({ commit }, detail) {
-		commit("UPDATE_COLUMN_TITLE", detail);
+		const columns = await localStorage.getItem("kanban-data");
+		let d = {
+			detail: detail,
+		};
+		let c = {
+			columns: JSON.parse(columns),
+		};
+		let payload = { ...d, ...c };
+		commit("UPDATE_COLUMN_TITLE", payload);
 	},
 	// card
 	async getCardId({ commit }, cardId) {
@@ -130,7 +138,9 @@ const mutations = {
 		state.columnId = columnId;
 	},
 	UPDATE_COLUMN_TITLE(state, payload) {
-		let columns = updateColumnTitle(payload.columns);
+		let detail = payload.detail;
+		let updatedColumn = detail.column;
+		let columns = updateColumnTitle(payload.columns, updatedColumn);
 		save(columns);
 		state.columns = columns;
 	},

@@ -36,6 +36,7 @@
 			</popover>
 			<div class="kb__column--title">
 				<span
+					style="display: block; width: 100%;"
 					@click="onColumnTitleClick($event, column)"
 					v-if="selectedColumnId !== column.id">
 					{{ column.title }}
@@ -200,7 +201,6 @@ export default {
 		},
 		// Edit column
 		onColumnTitleClick(event, column) {
-			console.log("event, column: ", event, column);
 			this.selectedColumnId = column.id;
 			COLUMN_TITLE = column.title;
 			this.$nextTick(() => {
