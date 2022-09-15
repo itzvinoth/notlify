@@ -39,8 +39,10 @@ export default class KanbanApi {
 		const column = data.find((column) => column.id === columnId);
 		const card = {
 			id: cardId,
-			content: "",
 			checklist: [],
+			description: {
+				content: "",
+			}
 		};
 
 		if (!column) {
