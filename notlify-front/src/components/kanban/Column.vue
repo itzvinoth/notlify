@@ -48,7 +48,7 @@
 					:value="column.title"
 					@input="onColumnTextChange($event)"
 					:id="`column-${column.id}-textarea`"
-					class="column--textarea"
+					class="textarea-kanban column-title__textarea"
 				></textarea>
 			</div>
 			<card

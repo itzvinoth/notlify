@@ -37,9 +37,6 @@
 	overflow: hidden;
 	overflow-wrap: break-word;
 	resize: none;
-	height: 54px;
-	max-height: 162px;
-	min-height: 54px;
 	background: none;
 	border: none;
 	box-shadow: none;
@@ -48,6 +45,16 @@
 	background-color: $white;
 	box-sizing: border-box;
 	padding: 5px 8px;
+}
+.column-composer__textarea, .card-composer__textarea {
+	height: 54px;
+	max-height: 162px;
+	min-height: 54px;
+}
+.column-title__textarea {
+	height: 25px;
+	max-height: 162px;
+	min-height: 25px;
 }
 .card-composer {
 	.add-card {
@@ -66,22 +73,6 @@
 			opacity: 0.9;
 		}
 	}
-	// .card-composer__textarea {
-	// 	overflow: hidden;
-	// 	overflow-wrap: break-word;
-	// 	resize: none;
-	// 	height: 54px;
-	// 	max-height: 162px;
-	// 	min-height: 54px;
-	// 	background: none;
-	// 	border: none;
-	// 	box-shadow: none;
-	// 	width: 100%;
-	// 	padding: 0;
-	// 	background-color: $white;
-	// 	box-sizing: border-box;
-	// 	padding: 5px 8px;
-	// }
 }
 .popover-container {
 	position: absolute;
