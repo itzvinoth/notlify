@@ -156,7 +156,6 @@ export default {
 		cardTitleUpdate() {
 			KanbanApi.updateCard(this.cardId, {
 				title: this.cardTitle,
-				checklist: this.cardDetail.checklist,
 			});
 			CARD_TITLE = this.cardTitle;
 			this.$store.dispatch("kanban/getColumns");
