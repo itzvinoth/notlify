@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import NotesApi from "../../api/notes/index";
+import NotesApi from "../../api/kanban/card-notes";
 import { mapGetters } from "vuex";
 
 export default {
