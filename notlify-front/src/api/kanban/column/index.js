@@ -26,9 +26,22 @@ export default class ColumnApi {
 		save(data);
 	}
 
-    static updateColumn() {
+	static updateColumn(updatedColumn) {
+		const data = read();
+		const columns = data;
 
-    }
+		let cols = [];
+		for (let i = 0; i < columns.length; i++) {
+			let column = columns[i];
+			if (column.id === updatedColumn.id) {
+				column = updatedColumn;
+			}
+			cols.push(column);
+		}
+		save(cols);
+
+		return cols;
+	}
 }
 
 function read() {

@@ -1,5 +1,3 @@
-import { updateColumnTitle } from "../../js/kanban/column";
-
 import {
 	addCardSection,
 	deleteCardSection,
@@ -39,17 +37,6 @@ const actions = {
 	},
 	async getColumnId({ commit }, columnId) {
 		commit("SET_COLUMN_ID", columnId);
-	},
-	async updateColumnTitle({ commit }, detail) {
-		const columns = await localStorage.getItem("kanban-data");
-		let d = {
-			detail: detail,
-		};
-		let c = {
-			columns: JSON.parse(columns),
-		};
-		let payload = { ...d, ...c };
-		commit("UPDATE_COLUMN_TITLE", payload);
 	},
 	// card
 	async getCardId({ commit }, cardId) {
@@ -136,13 +123,6 @@ const mutations = {
 	},
 	SET_COLUMN_ID(state, columnId) {
 		state.columnId = columnId;
-	},
-	UPDATE_COLUMN_TITLE(state, payload) {
-		let detail = payload.detail;
-		let updatedColumn = detail.column;
-		let columns = updateColumnTitle(payload.columns, updatedColumn);
-		save(columns);
-		state.columns = columns;
 	},
 	// card
 	SET_CARD_ID(state, cardId) {

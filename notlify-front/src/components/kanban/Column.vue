@@ -227,10 +227,9 @@ export default {
 		},
 		columnTitleUpdate(column) {
 			let updatedColumn = { ...column, title: this.columnTitle };
-			let detail = {
-				column: updatedColumn,
-			};
-			this.$store.dispatch("kanban/updateColumnTitle", detail);
+			ColumnApi.updateColumn(updatedColumn);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
 		},
 		resetColumn() {
 			this.columnTitle = "";
