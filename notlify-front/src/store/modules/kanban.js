@@ -6,8 +6,6 @@ import {
 	deleteSectionChecklist,
 } from "../../js/kanban/checklist";
 
-import { updateCardDescription } from "../../js/kanban/description";
-
 function save(data) {
 	localStorage.setItem("kanban-data", JSON.stringify(data));
 }
@@ -100,18 +98,6 @@ const actions = {
 		};
 		let payload = { ...d, ...c };
 		commit("DELETE_SECTION_CHECKLIST", payload);
-	},
-	// card description
-	async updateCardDescription({ commit }, detail) {
-		const columns = await localStorage.getItem("kanban-data");
-		let d = {
-			detail: detail,
-		};
-		let c = {
-			columns: JSON.parse(columns),
-		};
-		let payload = { ...d, ...c };
-		commit("UPDATE_CARD_DESCRIPTION", payload);
 	}
 };
 
@@ -188,19 +174,6 @@ const mutations = {
 			cardId,
 			sectionItemId,
 			rowId
-		);
-		save(columns);
-		state.columns = columns;
-	},
-	// card description
-	UPDATE_CARD_DESCRIPTION(state, payload) {
-		let detail = payload.detail;
-		let cardId = detail.cardId;
-		let description = detail.description;
-		let columns = updateCardDescription(
-			payload.columns,
-			cardId,
-			description,
 		);
 		save(columns);
 		state.columns = columns;

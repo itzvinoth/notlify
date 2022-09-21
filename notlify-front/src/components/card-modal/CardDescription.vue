@@ -13,6 +13,7 @@
 <script>
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import CardDescriptionApi from "../../api/kanban/card-description/index";
 
 export default {
 	name: "CardDescription",
@@ -55,7 +56,9 @@ export default {
 				cardId: this.cardId,
 				description,
 			};
-			this.$store.dispatch("kanban/updateCardDescription", detail);
+			CardDescriptionApi.updateCardDescription(detail);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
 		},
 	},
 	// mounted () {
