@@ -133,6 +133,7 @@ let COLUMN_TITLE = "";
 
 import Card from "@/components/kanban/Card.vue";
 import KanbanApi from "../../api/kanban/index";
+import ColumnApi from "../../api/kanban/column/index";
 import CardDropdown from "@/components/kanban/CardDropdown.vue";
 import Popover from "@/components/Popover.vue";
 
@@ -193,7 +194,7 @@ export default {
 				title: this.columnTitle,
 				cards: [],
 			};
-			KanbanApi.insertColumn(column);
+			ColumnApi.insertColumn(column);
 			this.$store.dispatch("kanban/getColumns");
 		},
 		resetColumnComposer() {
@@ -249,7 +250,7 @@ export default {
 			};
 		},
 		onDeleteColumn(id) {
-			KanbanApi.deleteColumn(id);
+			ColumnApi.deleteColumn(id);
 			// vuex commit update kanban
 			this.$store.dispatch("kanban/getColumns");
 		},
