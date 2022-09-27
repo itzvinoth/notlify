@@ -258,7 +258,9 @@ export default {
 				cardId: this.cardId,
 				item: item,
 			};
-			this.$store.dispatch("kanban/deleteCardSection", detail);
+			CardChecklistApi.deleteCardSection(detail);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
 		},
 		// Checklist
 		addItem() {

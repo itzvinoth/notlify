@@ -23,9 +23,12 @@ export default class CardChecklistApi {
 		return cols;
 	}
 
-	static deleteCardSection(cardId, sectionItem) {
+	static deleteCardSection(detail) {
 		const data = read();
 		const columns = data;
+
+		const cardId = detail.cardId;
+		const sectionItem = detail.item;
 
 		let cols = [];
 		for (let i = 0; i < columns.length; i++) {
