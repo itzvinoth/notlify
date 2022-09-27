@@ -275,7 +275,9 @@ export default {
 				sectionItemId: this.sectionItemId,
 				row: row,
 			};
-			this.$store.dispatch("kanban/addSectionChecklist", detail);
+			CardChecklistApi.addSectionChecklist(detail);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
 			this.resetSectionChecklist();
 		},
 		cancelItem() {

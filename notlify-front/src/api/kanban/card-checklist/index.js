@@ -50,9 +50,13 @@ export default class CardChecklistApi {
 		return cols;
 	}
 
-	static addSectionChecklist(cardId, sectionItemId, row) {
+	static addSectionChecklist(detail) {
 		const data = read();
 		const columns = data;
+
+		const cardId = detail.cardId;
+		const sectionItemId = detail.sectionItemId;
+		const row = detail.row;
 
 		let cols = [];
 		for (let i = 0; i < columns.length; i++) {
