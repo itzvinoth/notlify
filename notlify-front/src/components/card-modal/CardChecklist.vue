@@ -171,6 +171,7 @@ let CHECKLIST_TEXT = "";
 import { mapGetters } from "vuex";
 
 import Datepicker from "vue3-datepicker";
+import CardChecklistApi from "../../api/kanban/card-checklist/index";
 
 export default {
 	components: {
@@ -229,10 +230,9 @@ export default {
 				cardId: this.cardId,
 				item: newChecklistSection,
 			};
-			this.$store.dispatch(
-				"kanban/addCardSection",
-				newChecklistSectionDetail
-			);
+			CardChecklistApi.addCardSection(newChecklistSectionDetail);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
 			this.reset();
 		},
 		cancelChecklistItem() {

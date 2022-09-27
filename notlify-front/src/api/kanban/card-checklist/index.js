@@ -1,7 +1,10 @@
 export default class CardChecklistApi {
-	static addCardSection(cardId, item) {
+	static addCardSection(detail) {
 		const data = read();
 		const columns = data;
+
+		const cardId = detail.cardId;
+		const item = detail.item;
 
 		let cols = [];
 		for (let i = 0; i < columns.length; i++) {
