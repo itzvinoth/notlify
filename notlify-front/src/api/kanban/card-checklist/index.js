@@ -1,5 +1,8 @@
 export default class CardChecklistApi {
-	static addCardSection(columns, cardId, item) {
+	static addCardSection(cardId, item) {
+		const data = read();
+		const columns = data;
+
 		let cols = [];
 		for (let i = 0; i < columns.length; i++) {
 			let column = columns[i];
@@ -13,10 +16,14 @@ export default class CardChecklistApi {
 			}
 			cols.push(column);
 		}
+		save(cols);
 		return cols;
 	}
 
-	static deleteCardSection(columns, cardId, sectionItem) {
+	static deleteCardSection(cardId, sectionItem) {
+		const data = read();
+		const columns = data;
+
 		let cols = [];
 		for (let i = 0; i < columns.length; i++) {
 			let column = columns[i];
@@ -33,10 +40,14 @@ export default class CardChecklistApi {
 			}
 			cols.push(column);
 		}
+		save(cols);
 		return cols;
 	}
 
-	static addSectionChecklist(columns, cardId, sectionItemId, row) {
+	static addSectionChecklist(cardId, sectionItemId, row) {
+		const data = read();
+		const columns = data;
+
 		let cols = [];
 		for (let i = 0; i < columns.length; i++) {
 			let column = columns[i];
@@ -53,10 +64,14 @@ export default class CardChecklistApi {
 			}
 			cols.push(column);
 		}
+		save(cols);
 		return cols;
 	}
 
-	static updateSectionChecklist(columns, cardId, sectionItemId, row, param) {
+	static updateSectionChecklist(cardId, sectionItemId, row, param) {
+		const data = read();
+		const columns = data;
+
 		let cols = [];
 		for (let i = 0; i < columns.length; i++) {
 			let column = columns[i];
@@ -85,10 +100,14 @@ export default class CardChecklistApi {
 			}
 			cols.push(column);
 		}
+		save(cols);
 		return cols;
 	}
 
-	static deleteSectionChecklist(columns, cardId, sectionItemId, rowId) {
+	static deleteSectionChecklist(cardId, sectionItemId, rowId) {
+		const data = read();
+		const columns = data;
+
 		let cols = [];
 		for (let i = 0; i < columns.length; i++) {
 			let column = columns[i];
@@ -109,6 +128,25 @@ export default class CardChecklistApi {
 			}
 			cols.push(column);
 		}
+		save(cols);
 		return cols;
 	}    
+}
+
+function read() {
+	const json = localStorage.getItem("kanban-data");
+	if (!json) {
+		return [
+			{
+				id: 1,
+				title: "First column",
+				cards: [],
+			},
+		];
+	}
+	return JSON.parse(json);
+}
+
+function save(data) {
+	localStorage.setItem("kanban-data", JSON.stringify(data));
 }

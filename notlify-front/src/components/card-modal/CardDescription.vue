@@ -56,6 +56,7 @@ export default {
 				cardId: this.cardId,
 				description,
 			};
+			// this.$store.dispatch("kanban/updateCardDescription", detail);
 			CardDescriptionApi.updateCardDescription(detail);
 			// vuex commit update kanban
 			this.$store.dispatch("kanban/getColumns");
