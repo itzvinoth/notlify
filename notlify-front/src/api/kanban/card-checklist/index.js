@@ -78,9 +78,14 @@ export default class CardChecklistApi {
 		return cols;
 	}
 
-	static updateSectionChecklist(cardId, sectionItemId, row, param) {
+	static updateSectionChecklist(detail) {
 		const data = read();
 		const columns = data;
+
+		const cardId = detail.cardId;
+		const sectionItemId = detail.sectionItemId;
+		const row = detail.row;
+		const param = detail.param;
 
 		let cols = [];
 		for (let i = 0; i < columns.length; i++) {
@@ -114,9 +119,13 @@ export default class CardChecklistApi {
 		return cols;
 	}
 
-	static deleteSectionChecklist(cardId, sectionItemId, rowId) {
+	static deleteSectionChecklist(detail) {
 		const data = read();
 		const columns = data;
+
+		const cardId = detail.cardId;
+		const sectionItemId = detail.sectionItemId;
+		const rowId = detail.rowId;
 
 		let cols = [];
 		for (let i = 0; i < columns.length; i++) {

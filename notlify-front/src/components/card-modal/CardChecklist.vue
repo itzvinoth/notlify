@@ -290,7 +290,9 @@ export default {
 				row: row,
 				param: param,
 			};
-			this.$store.dispatch("kanban/updateSectionChecklist", detail);
+			CardChecklistApi.updateSectionChecklist(detail);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
 		},
 		onChecklistTextChange(event) {
 			this.checklistText = event.target.value;
@@ -332,7 +334,9 @@ export default {
 				row: updatedRow,
 				param: param,
 			};
-			this.$store.dispatch("kanban/updateSectionChecklist", detail);
+			CardChecklistApi.updateSectionChecklist(detail);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
 		},
 		deleteChecklistItem(event, itemId, row) {
 			let detail = {
@@ -340,7 +344,9 @@ export default {
 				sectionItemId: itemId,
 				rowId: row.id,
 			};
-			this.$store.dispatch("kanban/deleteSectionChecklist", detail);
+			CardChecklistApi.deleteSectionChecklist(detail);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
 		},
 		onChecklistPriorityChange(event, itemId, row, param) {
 			let updatedRow = { ...row, priority: event.target.value };
@@ -350,7 +356,9 @@ export default {
 				row: updatedRow,
 				param: param,
 			};
-			this.$store.dispatch("kanban/updateSectionChecklist", detail);
+			CardChecklistApi.updateSectionChecklist(detail);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
 		},
 		onUpdateReminder(event, itemId, row, param) {
 			let formattedDate = this.pickedDate.toISOString().slice(0, 10);
@@ -361,7 +369,9 @@ export default {
 				row: updatedRow,
 				param: param,
 			};
-			this.$store.dispatch("kanban/updateSectionChecklist", detail);
+			CardChecklistApi.updateSectionChecklist(detail);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
 		},
 	},
 };
