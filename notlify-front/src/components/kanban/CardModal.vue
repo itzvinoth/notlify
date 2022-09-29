@@ -38,10 +38,11 @@
 						</div>
 						<div class="section" id="checklist" default>
 							<h3 class="title">Checklist</h3>
-							<card-checklist :card-detail="cardDetail" :card-id="cardId"></card-checklist>							
+							<card-checklist :card-detail="cardDetail" :card-id="cardId"></card-checklist>
 						</div>
 						<div class="section" id="notes">
 							<h3 class="title">Notes</h3>
+							<card-notes :card-detail="cardDetail" :card-id="cardId"></card-notes>
 						</div>
 					</tiny-tabs>
 				</template>
@@ -58,6 +59,7 @@ import Modal from "@/components/Modal.vue";
 import TinyTabs from "@/components/TinyTabs.vue";
 import CardChecklist from "@/components/card-modal/CardChecklist.vue";
 import CardDescription from "@/components/card-modal/CardDescription.vue";
+import CardNotes from "@/components/card-modal/CardNotes.vue";
 
 import { mapGetters } from "vuex";
 
@@ -71,6 +73,7 @@ export default {
 		QuillEditor,
 		"card-checklist": CardChecklist,
 		"card-description": CardDescription,
+		"card-notes": CardNotes,
 	},
 	props: {
 		show: {
