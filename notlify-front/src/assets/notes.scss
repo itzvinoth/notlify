@@ -4,13 +4,13 @@
 }
 
 .notes-sidebar {
-    border-right: 1px solid #ddd;
     padding: 12px 0;
     box-sizing: border-box;
     width: 35%;
 }
 
 .notes-list {
+    border-right: 1px solid #ddd;
     overflow-y: auto;
     width: 100%;
     height: 98vh;
