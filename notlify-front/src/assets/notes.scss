@@ -5,11 +5,14 @@
 
 .notes-sidebar {
     border-right: 1px solid #ddd;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.notes-list {
     overflow-y: auto;
     width: 25vw;
     height: 98vh;
-    padding: 12px;
-    box-sizing: border-box;
 }
 
 .note-add--btn {
