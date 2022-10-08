@@ -31,7 +31,8 @@
 							</template>
 							<template #body>
 								<card-dropdown
-									:pos="'right'"
+									v-if="isColorPaletteShown"
+									:pos="'left'"
 									v-click-outside="onClickingOutsideColorPalette"
 									:on-window-resize="'adjustable'"
 								>
@@ -82,6 +83,8 @@ import TinyTabs from "@/components/TinyTabs.vue";
 import CardChecklist from "@/components/card-modal/CardChecklist.vue";
 import CardDescription from "@/components/card-modal/CardDescription.vue";
 import CardNotes from "@/components/card-modal/CardNotes.vue";
+import Popover from "@/components/Popover.vue";
+import CardDropdown from "@/components/kanban/CardDropdown.vue";
 
 import { mapGetters } from "vuex";
 
@@ -96,6 +99,8 @@ export default {
 		"card-checklist": CardChecklist,
 		"card-description": CardDescription,
 		"card-notes": CardNotes,
+		"popover": Popover,
+		"card-dropdown": CardDropdown,
 	},
 	props: {
 		show: {
@@ -113,6 +118,7 @@ export default {
 			cardTitle: "",
 			isCardTitleChanged: false,
 			isCardTitleSelected: false,
+			isColorPaletteShown: false,
 		};
 	},
 	computed: {
@@ -184,6 +190,9 @@ export default {
 			});
 			CARD_TITLE = this.cardTitle;
 			this.$store.dispatch("kanban/getColumns");
+		},
+		showColorPalette () {
+			this.isColorPaletteShown = !this.isColorPaletteShown
 		},
 	},
 };
