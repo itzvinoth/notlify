@@ -21,6 +21,28 @@
 					>
 						{{ cardDetail.title }}
 					</textarea>
+					<div class="color-picker__container">
+						<popover>
+							<template #trigger>
+								<vue-feather
+									type="more-horizontal"
+									@click.prevent.stop="showColorPalette($event)"
+								></vue-feather>
+							</template>
+							<template #body>
+								<card-dropdown
+									:pos="'right'"
+									v-click-outside="onClickingOutsideColorPalette"
+									:on-window-resize="'adjustable'"
+								>
+									<template #title></template>
+									<template #list>
+										color list
+									</template>
+								</card-dropdown>
+							</template>
+						</popover>
+					</div>
 				</template>
 				<template #body>
 					<tiny-tabs
