@@ -46,7 +46,11 @@
 													class="item"
 													@click="selectColor(item)"
 												>
-													<div :style="{ 'background': item, 'height': '20px', 'margin-bottom': '5px', 'cursor': 'pointer' }" class="color" />
+													<div
+														:style="{ 'background': item }"
+														class="color"
+														:class="(item === selectedColor) ? 'choosen-color' : ''"
+													/>
 												</li>
 											</ul>
 										</div>
@@ -130,7 +134,8 @@ export default {
 			isCardTitleChanged: false,
 			isCardTitleSelected: false,
 			isColorPaletteShown: false,
-			colors: ["#BEB7DF", "#EF959D", "#66A182", "#EEE5BF", "#F6AF65"]
+			colors: ["#FFFFFF", "#BEB7DF", "#EF959D", "#66A182", "#EEE5BF", "#F6AF65"],
+			selectedColor: "#FFFFFF",
 		};
 	},
 	computed: {
@@ -206,6 +211,9 @@ export default {
 		showColorPalette () {
 			this.isColorPaletteShown = !this.isColorPaletteShown
 		},
+		selectColor (item) {
+			this.selectedColor = item
+		}
 	},
 };
 </script>

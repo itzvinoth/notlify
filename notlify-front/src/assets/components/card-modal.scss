@@ -37,6 +37,27 @@
 		// white-space: nowrap;
 	}
 
+	.color-picker__container {
+		.popover-container {
+			cursor: pointer;
+		}
+		.colors .color {
+			height: 20px;
+			margin-bottom: 5px;
+			cursor: pointer;
+			border: 1px solid #ccc;
+			&.choosen-color {
+				&::after {
+					content: "\2713";
+					display: inline-block;
+    				width: 100%;
+					text-align: right;
+					font-size: 20px;
+				}
+			}
+		}
+	}
+
 	.addto-card__container .checklist__container {
 		.checklist-list {
 			.checklist-list__item {
