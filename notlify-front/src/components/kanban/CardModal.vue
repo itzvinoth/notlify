@@ -36,9 +36,20 @@
 									v-click-outside="onClickingOutsideColorPalette"
 									:on-window-resize="'adjustable'"
 								>
-									<template #title></template>
-									<template #list>
-										color list
+									<template #title><div>Color picker</div></template>
+									<template #body>
+										<div>
+											<ul class="colors">
+												<li
+													v-for="item in colors"
+													:key="item"
+													class="item"
+													@click="selectColor(item)"
+												>
+													<div :style="{ background: item }" class="color" />
+												</li>
+											</ul>
+										</div>
 									</template>
 								</card-dropdown>
 							</template>
@@ -119,6 +130,7 @@ export default {
 			isCardTitleChanged: false,
 			isCardTitleSelected: false,
 			isColorPaletteShown: false,
+			colors: []
 		};
 	},
 	computed: {

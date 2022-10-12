@@ -1,6 +1,7 @@
 <template>
 	<div class="menu-dropdown">
 		<slot name="title" />
+		<slot name="body" />
 		<ul class="list">
 			<slot name="list" />
 		</ul>
