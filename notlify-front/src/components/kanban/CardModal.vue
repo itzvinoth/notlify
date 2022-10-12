@@ -24,10 +24,11 @@
 					<div class="color-picker__container">
 						<popover>
 							<template #trigger>
-								<vue-feather
-									type="more-horizontal"
+								<div
+									class="trigger-container"
 									@click.prevent.stop="showColorPalette($event)"
-								></vue-feather>
+									:style="{ 'background': selectedColor }"
+								/>
 							</template>
 							<template #body>
 								<card-dropdown
