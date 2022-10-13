@@ -10,6 +10,7 @@
 			<div
 				class="kb__card"
 				draggable="true"
+				:style="{ 'background': card.color }"
 				@click.self="onCardClick(card)"
 				@dragstart="onDragStart($event, card.id)"
 				@dragend="onDragEnd"

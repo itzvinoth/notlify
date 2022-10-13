@@ -73,6 +73,7 @@ export default class KanbanApi {
 		}
 
 		card.title = newProps.title === undefined ? card.title : newProps.title;
+		card.color = newProps.color === undefined ? card.color : newProps.color;
 		card.checklist =
 			newProps.checklist && newProps.checklist.length < 1
 				? card.checklist

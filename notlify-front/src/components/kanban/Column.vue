@@ -282,6 +282,7 @@ export default {
 			KanbanApi.updateCard(id, {
 				title: this.newCardTitle,
 				checklist: [],
+				color: "#FFFFFF",
 				description: {
 					content: "",
 				},

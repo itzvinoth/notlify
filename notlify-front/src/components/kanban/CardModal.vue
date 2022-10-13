@@ -27,7 +27,7 @@
 								<div
 									class="trigger-container"
 									@click.prevent.stop="showColorPalette($event)"
-									:style="{ 'background': selectedColor }"
+									:style="{ 'background': cardDetail.color }"
 								/>
 							</template>
 							<template #body>
@@ -45,12 +45,12 @@
 													v-for="item in colors"
 													:key="item"
 													class="item"
-													@click="selectColor(item)"
+													@click="cardColorUpdate(item)"
 												>
 													<div
 														:style="{ 'background': item }"
 														class="color"
-														:class="(item === selectedColor) ? 'choosen-color' : ''"
+														:class="(item === cardDetail.color) ? 'choosen-color' : ''"
 													/>
 												</li>
 											</ul>
@@ -212,8 +212,15 @@ export default {
 		showColorPalette () {
 			this.isColorPaletteShown = !this.isColorPaletteShown
 		},
-		selectColor (item) {
+		onClickingOutsideColorPalette () {
+			this.isColorPaletteShown = false
+		},
+		cardColorUpdate (item) {
 			this.selectedColor = item
+			KanbanApi.updateCard(this.cardId, {
+				color: this.selectedColor,
+			});
+			this.$store.dispatch("kanban/getColumns");
 		}
 	},
 };
