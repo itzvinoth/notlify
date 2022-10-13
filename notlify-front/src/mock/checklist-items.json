@@ -7,6 +7,7 @@
                 "id": 45798,
                 "title": "Set of lists is a board",
                 "checklist": [],
+                "color": "#FFF",
                 "description": {
                     "content": "<h1>hola</h1><br><h2>hello</h2>"
                 }
@@ -15,6 +16,7 @@
                 "id": 25798,
                 "title": "Set of cards is a list",
                 "checklist": [],
+                "color": "#FFF",
                 "description": {
                     "content": ""
                 }
@@ -23,6 +25,7 @@
                 "id": 15798,
                 "title": "All data is saved",
                 "checklist": [],
+                "color": "#FFF",
                 "description": {
                     "content": ""
                 }
@@ -37,6 +40,7 @@
                 "id": 72714,
                 "title": "Click on a card to edit",
                 "checklist": [],
+                "color": "#FFF",
                 "description": {
                     "content": ""
                 }
@@ -56,6 +60,7 @@
                         "rows": []
                     }
                 ],
+                "color": "#FFF",
                 "description": {
                     "content": ""
                 }
@@ -64,6 +69,7 @@
                 "id": 22714,
                 "title": "To discard chages press esc",
                 "checklist": [],
+                "color": "#FFF",
                 "description": {
                     "content": ""
                 }
@@ -78,6 +84,7 @@
                 "id": 23044,
                 "title": "Drag notes around to rearrange.",
                 "checklist": [],
+                "color": "#FFF",
                 "description": {
                     "content": ""
                 }
@@ -86,6 +93,7 @@
                 "id": 13044,
                 "title": "Works between the lists too",
                 "checklist": [],
+                "color": "#FFF",
                 "description": {
                     "content": ""
                 }
@@ -139,6 +147,7 @@
                         "rows": []
                     }
                 ],
+                "color": "#FFF",
                 "description": {
                     "content": "<h1>hola</h1><br><h2>hello</h2><h2>world</h2>"
                 }
@@ -206,6 +215,7 @@
                         "rows": []
                     }
                 ],
+                "color": "#FFF",
                 "description": {
                     "content": ""
                 }
@@ -220,6 +230,7 @@
                 "id": 49583,
                 "title": "hello robo",
                 "checklist": [],
+                "color": "#FFF",
                 "description": {
                     "content": ""
                 }
@@ -228,6 +239,7 @@
                 "id": 21102,
                 "title": "hello testng",
                 "checklist": [],
+                "color": "#FFF",
                 "description": {
                     "content": ""
                 }
@@ -257,6 +269,7 @@
                         ]
                     }
                 ],
+                "color": "#FFF",
                 "description": {
                     "content": ""
                 }
