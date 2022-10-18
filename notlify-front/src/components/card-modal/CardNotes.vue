@@ -7,7 +7,7 @@
 			<div class="notes-list">
 				<div
 					class="notes-list__item"
-					v-for="note in notes"
+					v-for="note in cardDetail.notes"
 					:key="note.id"
 				>
 					<div class="notes-title">{{ note.title }}</div>
@@ -40,6 +40,14 @@ import { mapGetters } from "vuex";
 
 export default {
 	name: "Notes",
+	props: {
+		cardId: {
+			type: Number,
+		},
+		cardDetail: {
+			type: Object,
+		},
+	},
 	data() {
 		return {
 			title: "Title",
