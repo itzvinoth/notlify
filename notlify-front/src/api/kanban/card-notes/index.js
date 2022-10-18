@@ -1,4 +1,4 @@
-export default class NotesApi {
+export default class CardNotesApi {
 	static getNotes () {
 		const json = localStorage.getItem('notes-data');
 		if (!json) {
@@ -8,7 +8,7 @@ export default class NotesApi {
 	}
 
 	static addNote (note) {
-		const notes = NotesApi.getNotes();
+		const notes = CardNotesApi.getNotes();
 		note.id = Math.floor(Math.random() * 10000000);
 		note.updated = new Date().toISOString()
 
@@ -17,7 +17,7 @@ export default class NotesApi {
 	}
 
 	static updateNote (note) {
-		const notes = NotesApi.getNotes();
+		const notes = CardNotesApi.getNotes();
 		const selectedNote = notes.find(n => n.id === note.id)
 		selectedNote.title = ''
 		selectedNote.body = ''
@@ -27,7 +27,7 @@ export default class NotesApi {
 	}
 
 	static deleteNote (id) {
-		const notes = NotesApi.getNotes();
+		const notes = CardNotesApi.getNotes();
 
 		const newNotes = notes.filter(note => note.id !== id)
 		localStorage.setItem('notes-data', JSON.stringify(newNotes));

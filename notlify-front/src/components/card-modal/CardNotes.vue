@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import NotesApi from "../../api/kanban/card-notes";
-import { mapGetters } from "vuex";
+import CardNotesApi from "../../api/kanban/card-notes";
+// import { mapGetters } from "vuex";
 
 export default {
 	name: "Notes",
@@ -53,11 +53,11 @@ export default {
 			title: "Title",
 		};
 	},
-	computed: {
-		...mapGetters("notes", {
-			notes: "notes",
-		}),
-	},
+	// computed: {
+	// 	...mapGetters("notes", {
+	// 		notes: "notes",
+	// 	}),
+	// },
 	created() {
 		this.$store.dispatch("notes/getNotes");
 	},
@@ -66,7 +66,7 @@ export default {
 			let newNote = {};
 			newNote.title = "New note";
 			newNote.body = "Body of the content";
-			NotesApi.addNote(newNote);
+			CardNotesApi.addNote(newNote);
 			this.$store.dispatch("notes/getNotes");
 		},
 		onEditNote() {
