@@ -1,6 +1,6 @@
 .notes {
     display: flex;
-    height: 45vh;
+    height: 400px;
 }
 
 .notes-sidebar {
@@ -13,7 +13,7 @@
     border-right: 1px solid #ddd;
     overflow-y: auto;
     width: 100%;
-    height: 98vh;
+    height: 350px;
 }
 
 .note-add--btn {
@@ -21,7 +21,7 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    margin-bottom: 16px;
+    // margin-bottom: 16px;
     padding: 12px 0;
     width: 100%;
     background-color: #3498db;
@@ -58,7 +58,7 @@
 .notes-editor {
     display: flex;
     flex-direction: column;
-    padding: 20px 30px;
+    padding: 20px 5px 20px 30px;
     flex-grow: 1;
 }
 
@@ -76,14 +76,16 @@
 }
 
 .notes-editor__body {
-    margin-top: 20px;
+    margin-top: 5px;
+    height: 80%;
     textarea {
         font-size: 16px;
         border: none;
         outline: none;
         resize: none;
         width: 100%;
-        height: 80vh;
-        overflow-y: auto;
+        height: 100%;
+        // height: 80vh;
+        // overflow-y: auto;
     }
 }

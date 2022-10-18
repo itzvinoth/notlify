@@ -2,7 +2,7 @@
 	<div class="notes">
 		<div class="notes-sidebar">
 			<button type="button" class="note-add--btn" @click="onAddNote">
-				+ Add a note
+				+ Add new note
 			</button>
 			<div class="notes-list">
 				<div
