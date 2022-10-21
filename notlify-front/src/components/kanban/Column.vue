@@ -132,7 +132,8 @@
 let COLUMN_TITLE = "";
 
 import Card from "@/components/kanban/Card.vue";
-import KanbanApi from "../../api/kanban/index";
+// import KanbanApi from "../../api/kanban/index";
+import CardApi from "../../api/kanban/card/index";
 import ColumnApi from "../../api/kanban/column/index";
 import CardDropdown from "@/components/kanban/CardDropdown.vue";
 import Popover from "@/components/Popover.vue";
@@ -278,8 +279,8 @@ export default {
 		},
 		addCard(columnId) {
 			let id = this.newCardId;
-			KanbanApi.insertCard(columnId, id);
-			KanbanApi.updateCard(id, {
+			CardApi.insertCard(columnId, id);
+			CardApi.updateCard(id, {
 				title: this.newCardTitle,
 				checklist: [],
 				color: "#FFFFFF",

@@ -93,7 +93,8 @@
 <script>
 let CARD_TITLE = "";
 
-import KanbanApi from "../../api/kanban/index";
+// import KanbanApi from "../../api/kanban/index";
+import CardApi from "../../api/kanban/card/index";
 import Modal from "@/components/Modal.vue";
 import TinyTabs from "@/components/TinyTabs.vue";
 import CardChecklist from "@/components/card-modal/CardChecklist.vue";
@@ -203,7 +204,7 @@ export default {
 			}
 		},
 		cardTitleUpdate() {
-			KanbanApi.updateCard(this.cardId, {
+			CardApi.updateCard(this.cardId, {
 				title: this.cardTitle,
 			});
 			CARD_TITLE = this.cardTitle;
@@ -217,7 +218,7 @@ export default {
 		},
 		cardColorUpdate (item) {
 			this.selectedColor = item
-			KanbanApi.updateCard(this.cardId, {
+			CardApi.updateCard(this.cardId, {
 				color: this.selectedColor,
 			});
 			this.$store.dispatch("kanban/getColumns");

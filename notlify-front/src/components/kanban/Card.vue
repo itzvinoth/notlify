@@ -64,7 +64,7 @@
 
 <script>
 import DropZone from "@/components/kanban/DropZone.vue";
-import KanbanApi from "../../api/kanban/index";
+import CardApi from "../../api/kanban/card/index";
 import CardDropdown from "@/components/kanban/CardDropdown.vue";
 import Popover from "@/components/Popover.vue";
 import Modal from "@/components/Modal.vue";
@@ -170,7 +170,7 @@ export default {
 		// 	if (newContent === this.content) {
 		// 		return
 		// 	}
-		// 	KanbanApi.updateeeeeeCard(id, {
+		// 	KanbanaApi.updateeeeeeCard(id, {
 		// 		'title': newContent
 		// 	})
 		// },
@@ -181,7 +181,7 @@ export default {
 			}
 		},
 		onDeleteCard(id) {
-			KanbanApi.deleteCard(id);
+			CardApi.deleteCard(id);
 			// vuex commit update kanban
 			this.$store.dispatch("kanban/getColumns");
 		},

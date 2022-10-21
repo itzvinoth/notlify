@@ -9,7 +9,8 @@
 </template>
 
 <script>
-import KanbanApi from "../../api/kanban/index";
+// import KanbanApi from "../../api/kanban/index";
+import CardApi from "../../api/kanban/card/index";
 import { mapGetters } from "vuex";
 
 export default {
@@ -75,7 +76,7 @@ export default {
 
 			// updating the UI
 			insertAfter.after(droppedItemElement);
-			KanbanApi.updateCard(cardId, {
+			CardApi.updateCard(cardId, {
 				columnId,
 				position: droppedIndex,
 			});
