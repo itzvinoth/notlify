@@ -12,8 +12,8 @@
 					<label>Notlify / {{ columnTitle }}</label>
 					<h2 @click="onCardTitleClick" v-if="!isCardTitleSelected">{{ cardDetail.title }}</h2>
 					<textarea
-						@blur="onCardTextareaBlur"
-						@keypress.enter="onCardTextareaBlur"
+						@blur="onCardTextareaBlur(cardDetail)"
+						@keypress.enter="onCardTextareaBlur(cardDetail)"
 						v-if="isCardTitleSelected"
 						ref="cardtitle"
 						:value="cardDetail.title"
@@ -45,7 +45,7 @@
 													v-for="item in colors"
 													:key="item"
 													class="item"
-													@click="cardColorUpdate(item)"
+													@click="cardColorUpdate(item, cardDetail)"
 												>
 													<div
 														:style="{ 'background': item }"
@@ -195,18 +195,17 @@ export default {
 		onChangeCardTitle(event) {
 			this.cardTitle = event.target.value;
 		},
-		onCardTextareaBlur() {
+		onCardTextareaBlur(cardDetail) {
 			this.isCardTitleSelected = false;
 			if (this.isCardTitleChanged) {
 				this.$nextTick(() => {
-					this.cardTitleUpdate();
+					this.cardTitleUpdate(cardDetail);
 				});
 			}
 		},
-		cardTitleUpdate() {
-			CardApi.updateCard(this.cardId, {
-				title: this.cardTitle,
-			});
+		cardTitleUpdate(cardDetail) {
+			let updatedCard = {...cardDetail, ...{title: this.cardTitle}};
+			CardApi.updateCard(this.cardId, updatedCard);
 			CARD_TITLE = this.cardTitle;
 			this.$store.dispatch("kanban/getColumns");
 		},
@@ -216,11 +215,10 @@ export default {
 		onClickingOutsideColorPalette () {
 			this.isColorPaletteShown = false
 		},
-		cardColorUpdate (item) {
+		cardColorUpdate (item, cardDetail) {
 			this.selectedColor = item
-			CardApi.updateCard(this.cardId, {
-				color: this.selectedColor,
-			});
+			let updatedCard = {...cardDetail, ...{color: this.selectedColor}};
+			CardApi.updateCard(this.cardId, updatedCard);
 			this.$store.dispatch("kanban/getColumns");
 		}
 	},

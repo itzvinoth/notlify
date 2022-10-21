@@ -1,11 +1,3 @@
-import {
-	addCardSection,
-	deleteCardSection,
-	addSectionChecklist,
-	updateSectionChecklist,
-	deleteSectionChecklist,
-} from "../../js/kanban/checklist";
-
 function save(data) {
 	localStorage.setItem("kanban-data", JSON.stringify(data));
 }
@@ -42,62 +34,6 @@ const actions = {
 	},
 	async getDraggingElemHeight({ commit }, height) {
 		commit("SET_DRAGGING_ELEM_HEIGHT", height);
-	},
-	// card checklist
-	async addCardSection({ commit }, detail) {
-		const columns = await localStorage.getItem("kanban-data");
-		let d = {
-			detail: detail,
-		};
-		let c = {
-			columns: JSON.parse(columns),
-		};
-		let payload = { ...d, ...c };
-		commit("CREATE_NEW_CARD_SECTION", payload);
-	},
-	async deleteCardSection({ commit }, detail) {
-		const columns = await localStorage.getItem("kanban-data");
-		let d = {
-			detail: detail,
-		};
-		let c = {
-			columns: JSON.parse(columns),
-		};
-		let payload = { ...d, ...c };
-		commit("DELETE_CARD_SECTION", payload);
-	},
-	async addSectionChecklist({ commit }, detail) {
-		const columns = await localStorage.getItem("kanban-data");
-		let d = {
-			detail: detail,
-		};
-		let c = {
-			columns: JSON.parse(columns),
-		};
-		let payload = { ...d, ...c };
-		commit("CREATE_NEW_SECTION_CHECKLIST", payload);
-	},
-	async updateSectionChecklist({ commit }, detail) {
-		const columns = await localStorage.getItem("kanban-data");
-		let d = {
-			detail: detail,
-		};
-		let c = {
-			columns: JSON.parse(columns),
-		};
-		let payload = { ...d, ...c };
-		commit("UPDATE_SECTION_CHECKLIST", payload);
-	},
-	async deleteSectionChecklist({ commit }, detail) {
-		const columns = await localStorage.getItem("kanban-data");
-		let d = {
-			detail: detail,
-		};
-		let c = {
-			columns: JSON.parse(columns),
-		};
-		let payload = { ...d, ...c };
-		commit("DELETE_SECTION_CHECKLIST", payload);
 	}
 };
 
@@ -116,67 +52,6 @@ const mutations = {
 	},
 	SET_DRAGGING_ELEM_HEIGHT(state, height) {
 		state.draggingElemHeight = height;
-	},
-	// card checklist
-	CREATE_NEW_CARD_SECTION(state, payload) {
-		let detail = payload.detail;
-		let cardId = detail.cardId;
-		let item = detail.item;
-		let columns = addCardSection(payload.columns, cardId, item);
-		save(columns);
-		state.columns = columns;
-	},
-	DELETE_CARD_SECTION(state, payload) {
-		let detail = payload.detail;
-		let cardId = detail.cardId;
-		let item = detail.item;
-		let columns = deleteCardSection(payload.columns, cardId, item);
-		save(columns);
-		state.columns = columns;
-	},
-	CREATE_NEW_SECTION_CHECKLIST(state, payload) {
-		let detail = payload.detail;
-		let cardId = detail.cardId;
-		let sectionItemId = detail.sectionItemId;
-		let row = detail.row;
-		let columns = addSectionChecklist(
-			payload.columns,
-			cardId,
-			sectionItemId,
-			row
-		);
-		save(columns);
-		state.columns = columns;
-	},
-	UPDATE_SECTION_CHECKLIST(state, payload) {
-		let detail = payload.detail;
-		let cardId = detail.cardId;
-		let sectionItemId = detail.sectionItemId;
-		let row = detail.row;
-		let param = detail.param;
-		let columns = updateSectionChecklist(
-			payload.columns,
-			cardId,
-			sectionItemId,
-			row,
-			param
-		);
-		save(columns);
-		state.columns = columns;
-	},
-	DELETE_SECTION_CHECKLIST(state, payload) {
-		let detail = payload.detail;
-		let cardId = detail.cardId;
-		let sectionItemId = detail.sectionItemId;
-		let rowId = detail.rowId;
-		let columns = deleteSectionChecklist(
-			payload.columns,
-			cardId,
-			sectionItemId,
-			rowId
-		);
-		save(columns);
-		state.columns = columns;
 	}
 };
 
