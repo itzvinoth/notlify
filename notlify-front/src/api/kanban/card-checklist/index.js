@@ -50,24 +50,23 @@ export default class CardChecklistApi {
 		const sectionItemId = detail.sectionItemId;
 		const row = detail.row;
 
-		let cols = [];
-		for (let i = 0; i < columns.length; i++) {
-			let column = columns[i];
-			for (let j = 0; j < columns[i].cards.length; j++) {
-				let card = columns[i].cards[j];
-				for (let k = 0; k < card.checklist.length; k++) {
-					let section = columns[i].cards[j].checklist[k];
-					if (section.id === sectionItemId) {
-						let s = section.rows || [];
-						s.push(row);
-						section.rows = s;
+		const [section, card] = (() => {
+			for (const column of columns) {
+				const card = column.cards.find((card) => card.id === cardId);
+
+				if (card) {
+					const section = card.checklist.find((section) => section.id === sectionItemId);
+
+					if (section) {
+						return [section, card];
 					}
 				}
 			}
-			cols.push(column);
-		}
-		save(cols);
-		return cols;
+		})();
+
+		section.rows.push(row);
+		
+		save(data);
 	}
 
 	static updateSectionChecklist(detail) {
@@ -76,39 +75,40 @@ export default class CardChecklistApi {
 
 		const cardId = detail.cardId;
 		const sectionItemId = detail.sectionItemId;
-		const row = detail.row;
+		const rowDetail = detail.row;
 		const param = detail.param;
 
-		let cols = [];
-		for (let i = 0; i < columns.length; i++) {
-			let column = columns[i];
-			for (let j = 0; j < columns[i].cards.length; j++) {
-				let card = columns[i].cards[j];
-				for (let k = 0; k < card.checklist.length; k++) {
-					let section = columns[i].cards[j].checklist[k];
-					if (section.id === sectionItemId) {
-						let rows = section.rows || [];
-						for (let l = 0; l < rows.length; l++) {
-							if (rows[l].id === row.id) {
-								if (param === "completed") {
-									rows[l].completed = !rows[l].completed;
-								} else if (param === "name") {
-									rows[l].name = row.name;
-								} else if (param === "priority") {
-									rows[l].priority = row.priority;
-								} else if (param === "reminder") {
-									rows[l].reminder = row.reminder;
-								}
-							}
-						}
-						section.rows = rows;
+		const [row, section] = (() => {
+			for (const column of columns) {
+				const card = column.cards.find((card) => card.id === cardId);
+
+				if (card) {
+					const section = card.checklist.find((section) => section.id === sectionItemId);
+
+					if (section) {
+						const row = section.rows.find((row) => row.id === rowDetail.id);
+
+						return [row, section];
 					}
 				}
 			}
-			cols.push(column);
+		})();
+		switch (param) {
+			case "completed":
+				row.completed = !rowDetail.completed;
+				break;
+			case "name":
+				row.name = rowDetail.name;
+				break;
+			case "priority":
+				row.priority = rowDetail.priority;
+				break;
+			case "reminder":
+				row.reminder = rowDetail.reminder;
+				break;
 		}
-		save(cols);
-		return cols;
+
+		save(data);
 	}
 
 	static deleteSectionChecklist(detail) {
@@ -119,28 +119,20 @@ export default class CardChecklistApi {
 		const sectionItemId = detail.sectionItemId;
 		const rowId = detail.rowId;
 
-		let cols = [];
-		for (let i = 0; i < columns.length; i++) {
-			let column = columns[i];
-			for (let j = 0; j < columns[i].cards.length; j++) {
-				let card = columns[i].cards[j];
-				for (let k = 0; k < card.checklist.length; k++) {
-					let section = columns[i].cards[j].checklist[k];
-					if (section.id === sectionItemId) {
-						let rows = section.rows || [];
-						for (let l = 0; l < rows.length; l++) {
-							if (rows[l].id === rowId) {
-								rows.splice(l, 1);
-							}
-						}
-						section.rows = rows;
-					}
+		const [section, card] = (() => {
+			for (const column of columns) {
+				const card = column.cards.find((card) => card.id === cardId);
+
+				if (card) {
+					const section = card.checklist.find((section) => section.id === sectionItemId);
+
+					return [section, card];
 				}
 			}
-			cols.push(column);
-		}
-		save(cols);
-		return cols;
+		})();
+		section.rows = section.rows.filter(row => row.id !== rowId);
+
+		save(data);
 	}    
 }
 
