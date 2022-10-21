@@ -6,21 +6,19 @@ export default class CardChecklistApi {
 		const cardId = detail.cardId;
 		const item = detail.item;
 
-		let cols = [];
-		for (let i = 0; i < columns.length; i++) {
-			let column = columns[i];
-			for (let j = 0; j < column.cards.length; j++) {
-				let card = column.cards[j];
-				if (card.id === cardId) {
-					let c = card.checklist || [];
-					c.push(item);
-					card.checklist = c;
+		const [card, currentColumn] = (() => {
+			for (const column of columns) {
+				const card = column.cards.find((card) => card.id === cardId);
+
+				if (card) {
+					return [card, column];
 				}
 			}
-			cols.push(column);
-		}
-		save(cols);
-		return cols;
+		})();
+
+		card.checklist.push(item);
+
+		save(data);
 	}
 
 	static deleteCardSection(detail) {
@@ -30,24 +28,18 @@ export default class CardChecklistApi {
 		const cardId = detail.cardId;
 		const sectionItem = detail.item;
 
-		let cols = [];
-		for (let i = 0; i < columns.length; i++) {
-			let column = columns[i];
-			for (let j = 0; j < column.cards.length; j++) {
-				let card = columns[i].cards[j];
-				let newChecklist = [];
-				for (let k = 0; k < card.checklist.length; k++) {
-					let section = card.checklist[k];
-					if (section.id !== sectionItem.id) {
-						newChecklist.push(section);
-					}
+		const [card, currentColumn] = (() => {
+			for (const column of columns) {
+				const card = column.cards.find((card) => card.id === cardId);
+
+				if (card) {
+					return [card, column];
 				}
-				card.checklist = newChecklist;
 			}
-			cols.push(column);
-		}
-		save(cols);
-		return cols;
+		})();
+		card.checklist = card.checklist.filter(checklist => checklist.id !== sectionItem.id);
+		
+		save(data);
 	}
 
 	static addSectionChecklist(detail) {
