@@ -7,12 +7,14 @@
 			<div class="notes-list">
 				<div
 					class="notes-list__item"
+					:class="selectedNoteId === note.id ? 'notes-list__item--selected' : ''"
 					v-for="note in cardDetail.notes"
 					:key="note.id"
+					@click="onSelectNote(note)"
 				>
-					<div class="notes-title">{{ note.title }}</div>
-					<div class="notes-body">{{ note.body }}</div>
-					<div class="notes-updated">
+					<div class="note-title">{{ note.title }}</div>
+					<div class="note-body">{{ note.body }}</div>
+					<div class="note-updated">
 						{{ new Date(note.updated).toLocaleString() }}
 					</div>
 				</div>
@@ -29,6 +31,9 @@
 			</div>
 			<div class="notes-editor__body">
 				<textarea @blur="onEditNote">Body of the content</textarea>
+				<button type="button" style="float: right;" @click="onSaveNote">
+					Save
+				</button>
 			</div>
 		</div>
 	</div>
@@ -36,7 +41,6 @@
 
 <script>
 import CardNotesApi from "../../api/kanban/card-notes";
-// import { mapGetters } from "vuex";
 
 export default {
 	name: "Notes",
@@ -51,13 +55,9 @@ export default {
 	data() {
 		return {
 			title: "Title",
+			selectedNoteId: "",
 		};
 	},
-	// computed: {
-	// 	...mapGetters("notes", {
-	// 		notes: "notes",
-	// 	}),
-	// },
 	created() {
 		this.$store.dispatch("notes/getNotes");
 	},
@@ -74,6 +74,12 @@ export default {
 			};
 			CardNotesApi.addCardNote(newNoteDetail);
 			this.$store.dispatch("kanban/getColumns");
+		},
+		onSelectNote(note) {
+			this.selectedNoteId = note.id
+		},
+		onSaveNote() {
+
 		},
 		onEditNote() {
 			console.log("on edit note");
