@@ -60,6 +60,11 @@ export default {
 		};
 	},
 	created() {
+		let notes = this.cardDetail.notes;
+		let selectedNote = notes[0];
+		this.selectedNoteId = selectedNote["id"];
+		this.noteTitle = selectedNote["title"];
+		this.noteContent = selectedNote["body"];
 		this.$store.dispatch("notes/getNotes");
 	},
 	methods: {
