@@ -67,7 +67,12 @@ export default {
 			newNote["id"] = Math.floor(Math.random() * 100000000);
 			newNote["title"] = "New note";
 			newNote["body"] = "Body of the content";
-			CardNotesApi.addNote(newNote);
+			newNote["updated"] = new Date();
+			let newNoteDetail = {
+				cardId: this.cardId,
+				item: newNote,
+			};
+			CardNotesApi.addCardNote(newNoteDetail);
 			this.$store.dispatch("kanban/getColumns");
 		},
 		onEditNote() {

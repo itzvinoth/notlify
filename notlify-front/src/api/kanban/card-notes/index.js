@@ -1,19 +1,24 @@
-export default class CardNotesApi {
-	static getNotes () {
-		const json = localStorage.getItem('notes-data');
-		if (!json) {
-			return []
-		}
-		return JSON.parse(json);
-	}
+export default class CardNotesApi {	
+	static addCardNote(detail) {
+		const data = read();
+		const columns = data;
 
-	static addNote (note) {
-		const notes = CardNotesApi.getNotes();
-		note.id = Math.floor(Math.random() * 10000000);
-		note.updated = new Date().toISOString()
+		const cardId = detail.cardId;
+		const item = detail.item;
 
-		notes.push(note);
-		localStorage.setItem('notes-data', JSON.stringify(notes));
+		const [card, currentColumn] = (() => {
+			for (const column of columns) {
+				const card = column.cards.find((card) => card.id === cardId);
+
+				if (card) {
+					return [card, column];
+				}
+			}
+		})();
+
+		card.notes.unshift(item);
+
+		save(data);
 	}
 
 	static updateNote (note) {
@@ -32,4 +37,22 @@ export default class CardNotesApi {
 		const newNotes = notes.filter(note => note.id !== id)
 		localStorage.setItem('notes-data', JSON.stringify(newNotes));
 	}
+}
+
+function read() {
+	const json = localStorage.getItem("kanban-data");
+	if (!json) {
+		return [
+			{
+				id: 1,
+				title: "First column",
+				cards: [],
+			},
+		];
+	}
+	return JSON.parse(json);
+}
+
+function save(data) {
+	localStorage.setItem("kanban-data", JSON.stringify(data));
 }
