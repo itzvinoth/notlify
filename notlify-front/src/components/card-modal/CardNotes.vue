@@ -25,12 +25,12 @@
 				<input
 					type="text"
 					placeholder="Enter a title"
-					v-model="title"
+					v-model="noteTitle"
 					@blur="onEditNote"
 				/>
 			</div>
 			<div class="notes-editor__body">
-				<textarea @blur="onEditNote">Body of the content</textarea>
+				<textarea @blur="onEditNote" v-model="noteContent">Body of the content</textarea>
 				<button type="button" style="float: right;" @click="onSaveNote">
 					Save
 				</button>
@@ -54,7 +54,8 @@ export default {
 	},
 	data() {
 		return {
-			title: "Title",
+			noteTitle: "Title",
+			noteContent: "Body of the content",
 			selectedNoteId: "",
 		};
 	},
@@ -76,10 +77,24 @@ export default {
 			this.$store.dispatch("kanban/getColumns");
 		},
 		onSelectNote(note) {
-			this.selectedNoteId = note.id
+			this.selectedNoteId = note.id;
+			let notes = this.cardDetail.notes
+			let selectedNote = notes.find(n => n.id === this.selectedNoteId);
+			this.noteTitle = selectedNote.title;
+			this.noteContent = selectedNote.body;
 		},
 		onSaveNote() {
-
+			let updatedNote = {};
+			updatedNote["id"] = this.selectedNoteId;
+			updatedNote["title"] = this.noteTitle;
+			updatedNote["body"] = this.noteContent;
+			updatedNote["updated"] = new Date();
+			let selectedNoteDetail = {
+				cardId: this.cardId,
+				item: updatedNote,
+			};
+			CardNotesApi.updateCardNote(selectedNoteDetail);
+			this.$store.dispatch("kanban/getColumns");
 		},
 		onEditNote() {
 			console.log("on edit note");

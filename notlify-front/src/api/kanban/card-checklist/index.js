@@ -88,7 +88,9 @@ export default class CardChecklistApi {
 					if (section) {
 						const row = section.rows.find((row) => row.id === rowDetail.id);
 
-						return [row, section];
+						if (row) {
+							return [row, section];
+						}
 					}
 				}
 			}
@@ -126,7 +128,9 @@ export default class CardChecklistApi {
 				if (card) {
 					const section = card.checklist.find((section) => section.id === sectionItemId);
 
-					return [section, card];
+					if (section) {
+						return [section, card];
+					}
 				}
 			}
 		})();

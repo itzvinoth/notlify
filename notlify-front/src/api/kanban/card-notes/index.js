@@ -21,14 +21,33 @@ export default class CardNotesApi {
 		save(data);
 	}
 
-	static updateNote (note) {
-		const notes = CardNotesApi.getNotes();
-		const selectedNote = notes.find(n => n.id === note.id)
-		selectedNote.title = ''
-		selectedNote.body = ''
-		selectedNote.updated = ''
+	static updateCardNote(detail) {
+		const data = read();
+		const columns = data;
 
-		localStorage.setItem('notes-data', JSON.stringify(notes));
+		const cardId = detail.cardId;
+		const item = detail.item;
+
+		const [note, card] = (() => {
+			for (const column of columns) {
+				const card = column.cards.find((card) => card.id === cardId);
+
+				if (card) {
+					const note = card.notes.find((note) => note.id === item.id);
+
+					if (note) {
+						console.log("note: ", note);
+						return [note, card];
+					}
+				}
+			}
+		})();
+
+		note.title = item.title;
+		note.body = item.body;
+		note.updated = item.updated;
+
+		save(data);
 	}
 
 	static deleteNote (id) {
