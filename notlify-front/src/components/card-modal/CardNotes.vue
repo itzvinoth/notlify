@@ -64,10 +64,11 @@ export default {
 	methods: {
 		onAddNote() {
 			let newNote = {};
-			newNote.title = "New note";
-			newNote.body = "Body of the content";
+			newNote["id"] = Math.floor(Math.random() * 100000000);
+			newNote["title"] = "New note";
+			newNote["body"] = "Body of the content";
 			CardNotesApi.addNote(newNote);
-			this.$store.dispatch("notes/getNotes");
+			this.$store.dispatch("kanban/getColumns");
 		},
 		onEditNote() {
 			console.log("on edit note");
