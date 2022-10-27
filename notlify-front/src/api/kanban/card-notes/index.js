@@ -36,7 +36,6 @@ export default class CardNotesApi {
 					const note = card.notes.find((note) => note.id === item.id);
 
 					if (note) {
-						console.log("note: ", note);
 						return [note, card];
 					}
 				}
