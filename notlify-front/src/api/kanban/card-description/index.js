@@ -3,19 +3,21 @@ export default class CardDescriptionApi {
 		const data = read();
 		const columns = data;
 
-		let cols = [];
-		for (let i = 0; i < columns.length; i++) {
-			let column = columns[i];
-			for (let j = 0; j < columns[i].cards.length; j++) {
-				let card = columns[i].cards[j];
-				if (card.id === detail.cardId) {
-					card.description = detail.description
+		const cardId = detail.cardId;
+		const description = detail.description;
+
+		const [card, currentColumn] = (() => {
+			for (const column of columns) {
+				const card = column.cards.find((card) => card.id === cardId);
+
+				if (card) {
+					return [card, column];
 				}
 			}
-			cols.push(column);
-		}
-		save(cols);
-		return cols;
+		})();
+
+		card.description = description;
+		save(data);
 	}
 }
 
