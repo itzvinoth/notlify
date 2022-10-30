@@ -16,7 +16,8 @@ export default class CardApi {
 			color: "#FFFFFF",
 			description: {
 				content: "",
-			}
+			},
+			notes: []
 		};
 
 		if (!column) {

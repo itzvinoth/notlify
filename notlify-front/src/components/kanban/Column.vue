@@ -132,7 +132,6 @@
 let COLUMN_TITLE = "";
 
 import Card from "@/components/kanban/Card.vue";
-// import KanbanApi from "../../api/kanban/index";
 import CardApi from "../../api/kanban/card/index";
 import ColumnApi from "../../api/kanban/column/index";
 import CardDropdown from "@/components/kanban/CardDropdown.vue";
@@ -287,6 +286,7 @@ export default {
 				description: {
 					content: "",
 				},
+				notes: [],
 			});
 			// vuex commit update kanban
 			this.$store.dispatch("kanban/getColumns");

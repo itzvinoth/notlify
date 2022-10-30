@@ -9,7 +9,6 @@
 </template>
 
 <script>
-// import KanbanApi from "../../api/kanban/index";
 import CardApi from "../../api/kanban/card/index";
 import { mapGetters } from "vuex";
 

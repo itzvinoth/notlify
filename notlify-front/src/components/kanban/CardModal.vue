@@ -93,7 +93,6 @@
 <script>
 let CARD_TITLE = "";
 
-// import KanbanApi from "../../api/kanban/index";
 import CardApi from "../../api/kanban/card/index";
 import Modal from "@/components/Modal.vue";
 import TinyTabs from "@/components/TinyTabs.vue";
