@@ -11,14 +11,14 @@
 				class="kb__card"
 				draggable="true"
 				:style="{ 'background': card.color }"
-				@click.self="onCardClick(card)"
+				@click="onCardClick(card)"
 				@dragstart="onDragStart($event, card.id)"
 				@dragend="onDragEnd"
 				@drag="onDrag"
 				@dragenter.prevent
 				@dragover.prevent
 			>
-				{{ card.title }}
+				<div>{{ card.title }}</div>
 				<popover>
 					<template #trigger>
 						<vue-feather

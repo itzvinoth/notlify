@@ -21,6 +21,7 @@
 					>
 						{{ cardDetail.title }}
 					</textarea>
+					<div style="border: 2px dashed #acacac; padding: 3px 10px; display: inline-block; border-radius: 15px; margin-bottom: 4px; color: #555;">+ Add tag</div>
 					<div class="color-picker__container">
 						<popover>
 							<template #trigger>
