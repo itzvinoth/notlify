@@ -45,7 +45,7 @@
 								</div>
 								<div class="tag-color">
 									<div>
-										<ul class="tag-color__list">
+										<ul class="tag-color__list flex">
 											<li v-for="tagcolor in tagColors" :key="`tag-${tagcolor}`" @click="tagColorUpdate(tagcolor)" style="margin-right: 4px;">
 												<div
 													:style="{ 'background': tagcolor }"
