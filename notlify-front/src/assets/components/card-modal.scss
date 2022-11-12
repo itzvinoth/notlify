@@ -37,6 +37,26 @@
 		// white-space: nowrap;
 	}
 
+	.tags-container {
+		.tags {
+			border: 2px dashed #acacac;
+			padding: 3px 10px;
+			display: inline-block;
+			border-radius: 15px;
+			margin-bottom: 4px;
+			color: #555;
+			margin-right: 15px;
+			cursor: pointer;
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+	}
+	.new-tags-dropdown {
+		width: 300px !important;
+		box-sizing: border-box;
+	}
+
 	.color-picker__container {
 		.popover-container {
 			cursor: pointer;
@@ -158,4 +178,7 @@
 			}
 		}
 	}
+}
+.card-tags__modal {
+
 }

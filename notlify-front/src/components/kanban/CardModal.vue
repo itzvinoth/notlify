@@ -21,7 +21,31 @@
 					>
 						{{ cardDetail.title }}
 					</textarea>
-					<div style="border: 2px dashed #acacac; padding: 3px 10px; display: inline-block; border-radius: 15px; margin-bottom: 4px; color: #555;">+ Add tag</div>
+					<div class="tags-container">
+						<div class="tags">+ Add tag</div>
+						<div class="tags" @click="addTag">+ Add tag</div>
+					</div>
+					<card-dropdown
+						v-if="isTagsModalShown"
+						:pos="'down'"
+						v-click-outside="onClickingOutsideTagMenu"
+						:on-window-resize="'adjustable'"
+						class="new-tags-dropdown"
+					>
+						<template #title>
+							<div style="display: flex; justify-content: space-between;">
+								<div><h3>New tag</h3></div>
+								<div @click="onCloseNewTag" style="cursor: pointer;"><span>&#10006;</span></div>
+							</div>
+						</template>
+						<template #body>
+							<div style="display: flex; justify-content: space-between;">
+								<div class="tag-name">Tag 1</div>
+								<div class="tag-color">Color</div>
+								<div class="tag-button">save</div>
+							</div>							
+						</template>
+					</card-dropdown>
 					<div class="color-picker__container">
 						<popover>
 							<template #trigger>
@@ -138,6 +162,7 @@ export default {
 			isColorPaletteShown: false,
 			colors: ["#FFFFFF", "#BEB7DF", "#EF959D", "#66A182", "#EEE5BF", "#F6AF65"],
 			selectedColor: "#FFFFFF",
+			isTagsModalShown: false,
 		};
 	},
 	computed: {
@@ -220,6 +245,12 @@ export default {
 			let updatedCard = {...cardDetail, ...{color: this.selectedColor}};
 			CardApi.updateCard(this.cardId, updatedCard);
 			this.$store.dispatch("kanban/getColumns");
+		},
+		addTag () {
+			this.isTagsModalShown = true
+		},
+		onCloseNewTag () {
+			this.isTagsModalShown = false
 		}
 	},
 };
