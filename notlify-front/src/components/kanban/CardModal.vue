@@ -35,15 +35,37 @@
 						<template #title>
 							<div style="display: flex; justify-content: space-between;">
 								<div><h3>New tag</h3></div>
-								<div @click="onCloseNewTag" style="cursor: pointer;"><span>&#10006;</span></div>
+								<div @click="onCloseNewTag" style="cursor: pointer;"><span>&#x2715;</span></div>
 							</div>
 						</template>
 						<template #body>
 							<div style="display: flex; justify-content: space-between;">
-								<div class="tag-name">Tag 1</div>
-								<div class="tag-color">Color</div>
-								<div class="tag-button">save</div>
-							</div>							
+								<div class="tag-name">
+									<input type="text" v-model="tagName" style="width: 100px;" />
+								</div>
+								<div class="tag-color">
+									<div>
+										<ul class="tag-color__list">
+											<li v-for="tagcolor in tagColors" :key="`tag-${tagcolor}`" @click="tagColorUpdate(tagcolor)" style="margin-right: 4px;">
+												<div
+													:style="{ 'background': tagcolor }"
+													style="height: 20px; width: 20px; cursor: pointer;"
+													class="color"
+												/>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="tag-button">
+									<button
+										type="button"
+										@click="columnComposer('save')"
+										class="add-tag__button"
+									>
+										Add tag
+									</button>
+								</div>
+							</div>
 						</template>
 					</card-dropdown>
 					<div class="color-picker__container">
@@ -163,6 +185,8 @@ export default {
 			colors: ["#FFFFFF", "#BEB7DF", "#EF959D", "#66A182", "#EEE5BF", "#F6AF65"],
 			selectedColor: "#FFFFFF",
 			isTagsModalShown: false,
+			tagName: "",
+			tagColors: ["#BEB7DF", "#EF959D", "#66A182", "#EEE5BF", "#F6AF65"],
 		};
 	},
 	computed: {
@@ -251,6 +275,9 @@ export default {
 		},
 		onCloseNewTag () {
 			this.isTagsModalShown = false
+		},
+		tagColorUpdate (color) {
+
 		}
 	},
 };
