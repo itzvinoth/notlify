@@ -25,49 +25,6 @@
 						<div class="tags">+ Add tag</div>
 						<div class="tags" @click="addTag">+ Add tag</div>
 					</div>
-					<card-dropdown
-						v-if="isTagsModalShown"
-						:pos="'down'"
-						v-click-outside="onClickingOutsideTagMenu"
-						:on-window-resize="'adjustable'"
-						class="new-tags-dropdown"
-					>
-						<template #title>
-							<div style="display: flex; justify-content: space-between;">
-								<div><h3>New tag</h3></div>
-								<div @click="onCloseNewTag" style="cursor: pointer;"><span>&#x2715;</span></div>
-							</div>
-						</template>
-						<template #body>
-							<div style="display: flex; justify-content: space-between;">
-								<div class="tag-name">
-									<input type="text" v-model="tagName" style="width: 100px;" />
-								</div>
-								<div class="tag-color">
-									<div>
-										<ul class="tag-color__list flex">
-											<li v-for="tagcolor in tagColors" :key="`tag-${tagcolor}`" @click="tagColorUpdate(tagcolor)" style="margin-right: 4px;">
-												<div
-													:style="{ 'background': tagcolor }"
-													style="height: 20px; width: 20px; cursor: pointer;"
-													class="color"
-												/>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<div class="tag-button">
-									<button
-										type="button"
-										@click="columnComposer('save')"
-										class="add-tag__button"
-									>
-										Add tag
-									</button>
-								</div>
-							</div>
-						</template>
-					</card-dropdown>
 					<div class="color-picker__container">
 						<popover>
 							<template #trigger>
@@ -107,6 +64,49 @@
 							</template>
 						</popover>
 					</div>
+					<card-dropdown
+						v-if="isTagsModalShown"
+						:pos="'down'"
+						v-click-outside="onClickingOutsideTagMenu"
+						:on-window-resize="'adjustable'"
+						class="new-tags-dropdown"
+					>
+						<template #title>
+							<div style="display: flex; justify-content: space-between;">
+								<div><h3>New tag</h3></div>
+								<div @click="onCloseNewTag" style="cursor: pointer;"><span style="padding: 2px; border: 1px solid #ccc;">&#x2715;</span></div>
+							</div>
+						</template>
+						<template #body>
+							<div style="display: flex; justify-content: space-between;">
+								<div class="tag-name">
+									<input type="text" v-model="tagName" style="width: 100px;" />
+								</div>
+								<div class="tag-color">
+									<div>
+										<ul class="tag-color__list flex">
+											<li v-for="tagcolor in tagColors" :key="`tag-${tagcolor}`" @click="tagColorUpdate(tagcolor)" style="margin-right: 4px;">
+												<div
+													:style="{ 'background': tagcolor }"
+													style="height: 20px; width: 20px; cursor: pointer;"
+													class="color"
+												/>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="tag-button">
+									<button
+										type="button"
+										@click="addNewTag"
+										class="add-tag__button"
+									>
+										Add tag
+									</button>
+								</div>
+							</div>
+						</template>
+					</card-dropdown>
 				</template>
 				<template #body>
 					<tiny-tabs
@@ -186,6 +186,7 @@ export default {
 			selectedColor: "#FFFFFF",
 			isTagsModalShown: false,
 			tagName: "",
+			tagColor: "",
 			tagColors: ["#BEB7DF", "#EF959D", "#66A182", "#EEE5BF", "#F6AF65"],
 		};
 	},
@@ -259,25 +260,30 @@ export default {
 			this.$store.dispatch("kanban/getColumns");
 		},
 		showColorPalette () {
-			this.isColorPaletteShown = !this.isColorPaletteShown
+			this.isColorPaletteShown = !this.isColorPaletteShown;
 		},
 		onClickingOutsideColorPalette () {
-			this.isColorPaletteShown = false
+			this.isColorPaletteShown = false;
 		},
 		cardColorUpdate (item, cardDetail) {
-			this.selectedColor = item
+			this.selectedColor = item;
 			let updatedCard = {...cardDetail, ...{color: this.selectedColor}};
 			CardApi.updateCard(this.cardId, updatedCard);
 			this.$store.dispatch("kanban/getColumns");
 		},
 		addTag () {
-			this.isTagsModalShown = true
+			this.isTagsModalShown = true;
 		},
 		onCloseNewTag () {
-			this.isTagsModalShown = false
+			this.isTagsModalShown = false;
 		},
 		tagColorUpdate (color) {
-
+			this.tagColor = color;
+		},
+		addNewTag () {
+			let tagDetail = {};
+			tagDetail.name = this.tagName;
+			tagDetail.color = this.tagColor;
 		}
 	},
 };
