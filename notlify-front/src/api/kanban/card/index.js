@@ -17,7 +17,8 @@ export default class CardApi {
 			description: {
 				content: "",
 			},
-			notes: []
+			notes: [],
+			tags: []
 		};
 
 		if (!column) {

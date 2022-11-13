@@ -21,10 +21,6 @@
 					>
 						{{ cardDetail.title }}
 					</textarea>
-					<div class="tags-container">
-						<div class="tags">+ Add tag</div>
-						<div class="tags" @click="addTag">+ Add tag</div>
-					</div>
 					<div class="color-picker__container">
 						<popover>
 							<template #trigger>
@@ -64,10 +60,18 @@
 							</template>
 						</popover>
 					</div>
+					<div class="tags-container">
+						<div
+							class="tags"
+							v-for="tag in cardDetail.tags"
+							:key="tag.name"
+							:style="{'border': `2px dashed ${tag.color}`, 'color': `${tag.color}`}"
+						>{{ tag.name }}</div>
+						<div class="tags" @click="addTag">+ Add tag</div>
+					</div>
 					<card-dropdown
 						v-if="isTagsModalShown"
 						:pos="'down'"
-						v-click-outside="onClickingOutsideTagMenu"
 						:on-window-resize="'adjustable'"
 						class="new-tags-dropdown"
 					>
@@ -85,11 +89,12 @@
 								<div class="tag-color">
 									<div>
 										<ul class="tag-color__list flex">
-											<li v-for="tagcolor in tagColors" :key="`tag-${tagcolor}`" @click="tagColorUpdate(tagcolor)" style="margin-right: 4px;">
+											<li v-for="color in tagColors" :key="`tag-${color}`" @click="tagColorUpdate(color)" style="margin-right: 4px;">
 												<div
-													:style="{ 'background': tagcolor }"
+													:style="{ 'background': color }"
 													style="height: 20px; width: 20px; cursor: pointer;"
 													class="color"
+													:class="(color === tagColor) ? 'choosen-color' : ''"
 												/>
 											</li>
 										</ul>
@@ -141,6 +146,7 @@
 let CARD_TITLE = "";
 
 import CardApi from "../../api/kanban/card/index";
+import CardTagsApi from "../../api/kanban/card-tags/index";
 import Modal from "@/components/Modal.vue";
 import TinyTabs from "@/components/TinyTabs.vue";
 import CardChecklist from "@/components/card-modal/CardChecklist.vue";
@@ -281,9 +287,22 @@ export default {
 			this.tagColor = color;
 		},
 		addNewTag () {
-			let tagDetail = {};
-			tagDetail.name = this.tagName;
-			tagDetail.color = this.tagColor;
+			let tag = {};
+			tag.name = this.tagName;
+			tag.color = this.tagColor;
+			let tagDetail = {
+				cardId: this.cardId,
+				item: tag,
+			};
+			CardTagsApi.addCardTag(tagDetail);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
+			this.isTagsModalShown = false;
+			this.resetTagsDetail()
+		},
+		resetTagsDetail () {
+			this.tagName = "";
+			this.tagColor = "";
 		}
 	},
 };
