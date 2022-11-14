@@ -66,14 +66,15 @@
 							v-for="tag in cardDetail.tags"
 							:key="tag.name"
 							:style="{'border': `2px dashed ${tag.color}`, 'color': `${tag.color}`}"
+							@click="editTag(tag)"
 						>{{ tag.name }}</div>
-						<div class="tags" @click="addTag">+ Add tag</div>
+						<div class="tags" @click="addTag">{{cardDetail.tags.length > 0 ? '&plus;' : '+ Add tag'}}</div>
 					</div>
 					<card-dropdown
-						v-if="isTagsModalShown"
+						v-if="isTagsAddModalShown"
 						:pos="'down'"
 						:on-window-resize="'adjustable'"
-						class="new-tags-dropdown"
+						class="tags-dropdown"
 					>
 						<template #title>
 							<div style="display: flex; justify-content: space-between;">
@@ -89,7 +90,7 @@
 								<div class="tag-color">
 									<div>
 										<ul class="tag-color__list flex">
-											<li v-for="color in tagColors" :key="`tag-${color}`" @click="tagColorUpdate(color)" style="margin-right: 4px;">
+											<li v-for="color in tagColors" :key="`tag-${color}`" @click="addTagColor(color)" style="margin-right: 4px;">
 												<div
 													:style="{ 'background': color }"
 													style="height: 20px; width: 20px; cursor: pointer;"
@@ -103,10 +104,53 @@
 								<div class="tag-button">
 									<button
 										type="button"
-										@click="addNewTag"
+										@click="addTagDetail"
 										class="add-tag__button"
 									>
 										Add tag
+									</button>
+								</div>
+							</div>
+						</template>
+					</card-dropdown>
+					<card-dropdown
+						v-if="isTagsEditModalShown"
+						:pos="'down'"
+						:on-window-resize="'adjustable'"
+						class="tags-dropdown"
+					>
+						<template #title>
+							<div style="display: flex; justify-content: space-between;">
+								<div><h3>Edit tag</h3></div>
+								<div @click="onCloseEditTag" style="cursor: pointer;"><span style="padding: 2px; border: 1px solid #ccc;">&#x2715;</span></div>
+							</div>
+						</template>
+						<template #body>
+							<div style="display: flex; justify-content: space-between;">
+								<div class="tag-name">
+									<input type="text" v-model="editedTagName" style="width: 100px;" />
+								</div>
+								<div class="tag-color">
+									<div>
+										<ul class="tag-color__list flex">
+											<li v-for="color in tagColors" :key="`tag-${color}`" @click="editTagColor(color)" style="margin-right: 4px;">
+												<div
+													:style="{ 'background': color }"
+													style="height: 20px; width: 20px; cursor: pointer;"
+													class="color"
+													:class="(color === editedTagColor) ? 'choosen-color' : ''"
+												/>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="tag-button">
+									<button
+										type="button"
+										@click="updateTagDetail"
+										class="add-tag__button"
+									>
+										Edit tag
 									</button>
 								</div>
 							</div>
@@ -190,10 +234,17 @@ export default {
 			isColorPaletteShown: false,
 			colors: ["#FFFFFF", "#BEB7DF", "#EF959D", "#66A182", "#EEE5BF", "#F6AF65"],
 			selectedColor: "#FFFFFF",
-			isTagsModalShown: false,
+			
+			isTagsAddModalShown: false,
+			isTagsEditModalShown: false,
+			
 			tagName: "",
 			tagColor: "",
 			tagColors: ["#BEB7DF", "#EF959D", "#66A182", "#EEE5BF", "#F6AF65"],
+
+			editedTagId: "",
+			editedTagName: "",
+			editedTagColor: "",
 		};
 	},
 	computed: {
@@ -278,16 +329,17 @@ export default {
 			this.$store.dispatch("kanban/getColumns");
 		},
 		addTag () {
-			this.isTagsModalShown = true;
+			this.isTagsAddModalShown = true;
 		},
 		onCloseNewTag () {
-			this.isTagsModalShown = false;
+			this.isTagsAddModalShown = false;
 		},
-		tagColorUpdate (color) {
+		addTagColor (color) {
 			this.tagColor = color;
 		},
-		addNewTag () {
+		addTagDetail () {
 			let tag = {};
+			tag.id = Math.floor(Math.random() * 10000000);
 			tag.name = this.tagName;
 			tag.color = this.tagColor;
 			let tagDetail = {
@@ -297,12 +349,42 @@ export default {
 			CardTagsApi.addCardTag(tagDetail);
 			// vuex commit update kanban
 			this.$store.dispatch("kanban/getColumns");
-			this.isTagsModalShown = false;
+			this.isTagsAddModalShown = false;
 			this.resetTagsDetail()
 		},
 		resetTagsDetail () {
 			this.tagName = "";
 			this.tagColor = "";
+		},
+		editTag (tag) {
+			this.isTagsEditModalShown = true;
+			this.editedTagName = tag.name;
+			this.editedTagId = tag.id;
+		},
+		onCloseEditTag () {
+			this.isTagsEditModalShown = false;
+		},
+		editTagColor (color) {
+			this.editedTagColor = color;
+		},
+		updateTagDetail () {
+			let tag = {};
+			tag.id = this.editedTagId;
+			tag.name = this.editedTagName;
+			tag.color = this.editedTagColor;
+			let tagDetail = {
+				cardId: this.cardId,
+				item: tag,
+			};
+			CardTagsApi.updateCardTag(tagDetail);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
+			this.isTagsEditModalShown = false;
+			this.resetEditTagsDetail()
+		},
+		resetEditTagsDetail () {
+			this.editedTagName = "";
+			this.editedTagColor = "";
 		}
 	},
 };
