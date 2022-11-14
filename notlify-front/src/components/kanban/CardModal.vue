@@ -360,6 +360,7 @@ export default {
 			this.isTagsEditModalShown = true;
 			this.editedTagName = tag.name;
 			this.editedTagId = tag.id;
+			this.editedTagColor = tag.color;
 		},
 		onCloseEditTag () {
 			this.isTagsEditModalShown = false;
