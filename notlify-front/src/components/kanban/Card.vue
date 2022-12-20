@@ -20,9 +20,9 @@
 			>
 				<div>{{ card.title }}</div>
 				<div class="kb__card-sub--section flex">
-					<div class="sub--section__checklist" v-if="card.checklist.length > 0">
-						<input type="checkbox" /> 4/5
-					</div>					
+					<div class="sub--section__checklist" v-if="totalChecklist(card) > 0">
+						<input type="checkbox" :checked="finishedChecklist(card) === totalChecklist(card)" disabled /> {{ finishedChecklist(card) }}/{{ totalChecklist(card) }}
+					</div>
 				</div>
 				<popover>
 					<template #trigger>
@@ -117,6 +117,31 @@ export default {
 		...mapGetters("kanban", {
 			cardId: "cardId",
 		}),
+		totalChecklist () {
+			return (card) => {
+				let total = 0;
+				let cardChecklist = card.checklist;
+				for (let i = 0; i < cardChecklist.length; i++) {
+					total += cardChecklist[i].rows.length;
+				}
+				return total;
+			}
+		},
+		finishedChecklist () {
+			return (card) => {
+				let total = 0;
+				let cardChecklist = card.checklist;
+				for (let i = 0; i < cardChecklist.length; i++) {
+					let rows = cardChecklist[i].rows;
+					for (let j = 0; j < rows.length; j++) {
+						if (rows[j].completed) {
+							total += 1;
+						}
+					}
+				}
+				return total;
+			}
+		}
 	},
 	methods: {
 		onUpdate() {
