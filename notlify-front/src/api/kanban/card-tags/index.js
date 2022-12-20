@@ -47,6 +47,28 @@ export default class CardTagsApi {
 
         save(data);
     }
+
+	static deleteCardTag(detail) {
+		const data = read();
+		const columns = data;
+
+		const cardId = detail.cardId;
+		const item = detail.item;
+        const tagItemId = item.id;
+
+		const [card] = (() => {
+			for (const column of columns) {
+				const card = column.cards.find((card) => card.id === cardId);
+
+				if (card) {
+					return [card];
+				}
+			}
+		})();
+		card.tags = card.tags && card.tags.filter(tag => tag.id !== tagItemId);
+
+		save(data);
+	}
 }
 
 function read() {

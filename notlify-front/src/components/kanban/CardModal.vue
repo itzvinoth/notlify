@@ -67,7 +67,7 @@
 							:key="tag.name"
 							:style="{'border': `2px dashed ${tag.color}`, 'color': `${tag.color}`}"
 							@click="editTag(tag)"
-						>{{ tag.name }}</div>
+						>{{ tag.name }}<span style="padding: 2px; margin-left: 5px;" @click="deleteTag(tag)">&#x2715;</span></div>
 						<div class="tags" @click="addTag">{{cardDetail.tags.length > 0 ? '&plus;' : '+ Add tag'}}</div>
 					</div>
 					<card-dropdown
@@ -240,7 +240,7 @@ export default {
 			
 			tagName: "",
 			tagColor: "",
-			tagColors: ["#BEB7DF", "#EF959D", "#66A182", "#EEE5BF", "#F6AF65"],
+			tagColors: ["#BEB7DF", "#EF959D", "#66A182", /* "#EEE5BF",*/ "#F6AF65"],
 
 			editedTagId: "",
 			editedTagName: "",
@@ -386,6 +386,16 @@ export default {
 		resetEditTagsDetail () {
 			this.editedTagName = "";
 			this.editedTagColor = "";
+		},
+		deleteTag (tag) {
+			let tagDetail = {
+				cardId: this.cardId,
+				item: tag,
+			};
+			console.log('tagDetail: ', tagDetail);
+			CardTagsApi.deleteCardTag(tagDetail);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
 		}
 	},
 };
