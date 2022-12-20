@@ -19,6 +19,11 @@
 				@dragover.prevent
 			>
 				<div>{{ card.title }}</div>
+				<div class="kb__card-sub--section flex">
+					<div class="sub--section__checklist" v-if="card.checklist.length > 0">
+						<input type="checkbox" /> 4/5
+					</div>					
+				</div>
 				<popover>
 					<template #trigger>
 						<vue-feather
