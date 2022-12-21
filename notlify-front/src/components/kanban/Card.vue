@@ -21,7 +21,11 @@
 				<div>{{ card.title }}</div>
 				<div class="kb__card-sub--section flex">
 					<div class="sub--section__checklist" v-if="totalChecklist(card) > 0">
-						<input type="checkbox" :checked="finishedChecklist(card) === totalChecklist(card)" disabled /> {{ finishedChecklist(card) }}/{{ totalChecklist(card) }}
+						<input
+							type="checkbox"
+							:checked="finishedChecklist(card) === totalChecklist(card)"
+							disabled 
+						/> {{ finishedChecklist(card) }}/{{ totalChecklist(card) }}
 					</div>
 				</div>
 				<popover>
