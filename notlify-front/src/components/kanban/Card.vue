@@ -19,13 +19,19 @@
 				@dragover.prevent
 			>
 				<div>{{ card.title }}</div>
-				<div class="kb__card-sub--section flex">
-					<div class="sub--section__checklist" v-if="totalChecklist(card) > 0">
+				<div class="kb__card-sub--section row">
+					<div class="sub--section__checklist four columns" v-if="totalChecklist(card) > 0">
 						<input
 							type="checkbox"
 							:checked="finishedChecklist(card) === totalChecklist(card)"
 							disabled 
 						/> {{ finishedChecklist(card) }}/{{ totalChecklist(card) }}
+					</div>
+					<div v-if="isCardDescAvailable(card)" class="four columns">
+						<vue-feather
+							type="align-justify"
+							@click.prevent.stop="showCardMenu($event, card.id)"
+						></vue-feather>
 					</div>
 				</div>
 				<popover>
@@ -144,6 +150,12 @@ export default {
 					}
 				}
 				return total;
+			}
+		},
+		isCardDescAvailable () {
+			return (card) => {
+				let cardDescription = card.description.content;
+				return cardDescription;
 			}
 		}
 	},

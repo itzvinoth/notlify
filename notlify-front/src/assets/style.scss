@@ -1,5 +1,6 @@
 @import "./grid";
 @import "./colors";
+@import "./skeleton";
 #app {
 	margin: 0 auto;
 	padding: 2px;
@@ -53,7 +54,11 @@ ul li {
 
 .flex {
 	display: flex;
+	&.justify-content-between {
+		justify-content: space-between;
+	}
 }
+
 
 // @media (min-width: 1024px) {
 
