@@ -27,11 +27,11 @@
 							disabled 
 						/> {{ finishedChecklist(card) }}/{{ totalChecklist(card) }}
 					</div>
-					<div v-if="isCardDescAvailable(card)" class="four columns">
-						<vue-feather
-							type="align-justify"
-							@click.prevent.stop="showCardMenu($event, card.id)"
-						></vue-feather>
+					<div v-if="isCardDescAvailable(card)" class="three columns">
+						<vue-feather type="align-justify"></vue-feather>
+					</div>
+					<div v-if="isCardNotesAvailable(card)" class="four columns">
+						<vue-feather type="edit"></vue-feather>
 					</div>
 				</div>
 				<popover>
@@ -156,6 +156,13 @@ export default {
 			return (card) => {
 				let cardDescription = card.description.content;
 				return cardDescription;
+			}
+		},
+		isCardNotesAvailable () {
+			return (card) => {
+				console.log('card.notes: ', card.notes.length)
+				let cardNotesExists = card.notes.length > 0;
+				return cardNotesExists;
 			}
 		}
 	},
