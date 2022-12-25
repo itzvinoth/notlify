@@ -9,10 +9,12 @@
 			<div style="position: absolute; right: 30px; top: 2px;">			
 				<vue-feather
 					type="chevron-left"
+					style="cursor: pointer;"
 					@click.prevent.stop="moveColumnLeft($event, column.id)"
 				></vue-feather>
 				<vue-feather
 					type="chevron-right"
+					style="cursor: pointer;"
 					@click.prevent.stop="moveColumnRight($event, column.id)"
 				></vue-feather>
 			</div>
