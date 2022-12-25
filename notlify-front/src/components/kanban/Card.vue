@@ -54,7 +54,7 @@
 								<li>
 									<a
 										href=""
-										@click.prevent
+										@click.prevent.stop
 										@dblclick="onDblClick($event, card.id)"
 									>Delete</a>
 								</li>

@@ -9,9 +9,11 @@
 			<div style="position: absolute; right: 30px; top: 2px;">			
 				<vue-feather
 					type="chevron-left"
+					@click.prevent.stop="moveColumnLeft($event, column.id)"
 				></vue-feather>
 				<vue-feather
 					type="chevron-right"
+					@click.prevent.stop="moveColumnRight($event, column.id)"
 				></vue-feather>
 			</div>
 			<popover>
@@ -198,7 +200,7 @@ export default {
 		},
 		addColumn() {
 			const column = {
-				id: this.columns.length + 1,
+				id: Math.floor(Math.random() * 1000),
 				title: this.columnTitle,
 				cards: [],
 			};
@@ -242,6 +244,12 @@ export default {
 		resetColumn() {
 			this.columnTitle = "";
 			this.selectedColumnId = null;
+		},
+		moveColumnLeft (event, id) {
+
+		},
+		moveColumnRight (event, id) {
+
 		},
 		showColumnMenu(event, id) {
 			if (this.columnId === id) {
