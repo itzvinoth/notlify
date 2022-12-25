@@ -6,6 +6,14 @@
 			:key="column.id"
 			:data-id="column.id"
 		>
+			<div style="position: absolute; right: 30px; top: 2px;">			
+				<vue-feather
+					type="chevron-left"
+				></vue-feather>
+				<vue-feather
+					type="chevron-right"
+				></vue-feather>
+			</div>
 			<popover>
 				<template #trigger>
 					<vue-feather

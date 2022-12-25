@@ -12,7 +12,7 @@
 	min-width: 245px;
 	background-color: #efefef;
 	margin-right: 15px;
-	padding: 10px;
+	padding: 25px 10px 10px 10px;
 	min-height: 10px;
 	border-radius: 3px;
 	& > .vue-feather.vue-feather--more-horizontal {
@@ -72,6 +72,11 @@
 			opacity: 0.9;
 		}
 	}
+}
+.vue-feather.vue-feather--chevron-left, .vue-feather.vue-feather--chevron-right {
+	width: 20px;
+	height: 20px;
+	color: #9b9b9b;
 }
 .popover-container {
 	position: absolute;

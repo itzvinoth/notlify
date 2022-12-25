@@ -160,7 +160,6 @@ export default {
 		},
 		isCardNotesAvailable () {
 			return (card) => {
-				console.log('card.notes: ', card.notes.length)
 				let cardNotesExists = card.notes.length > 0;
 				return cardNotesExists;
 			}
