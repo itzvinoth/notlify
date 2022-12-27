@@ -2,19 +2,19 @@
 	<div class="kb__columns">
 		<div
 			class="kb__column"
-			v-for="column in columns"
+			v-for="(column, index) in columns"
 			:key="column.id"
 			:data-id="column.id"
 		>
-			<div style="position: absolute; right: 30px; top: 2px;">			
+			<div style="position: absolute; right: 30px; top: 2px;">
 				<vue-feather
 					type="chevron-left"
-					style="cursor: pointer;"
+					:style="`display: ${(index === 0) ? 'none' : 'inline-block'};`"
 					@click.prevent.stop="moveColumnLeft($event, column.id)"
 				></vue-feather>
 				<vue-feather
 					type="chevron-right"
-					style="cursor: pointer;"
+					:style="`display: ${(index === (columns.length - 1)) ? 'none' : 'inline-block'};`"
 					@click.prevent.stop="moveColumnRight($event, column.id)"
 				></vue-feather>
 			</div>
@@ -248,7 +248,8 @@ export default {
 			this.selectedColumnId = null;
 		},
 		moveColumnLeft (event, id) {
-
+			let x = this.columns.map(x => x.id).indexOf(id);
+			console.log('columns: ', this.columns, 'pos: ', x)
 		},
 		moveColumnRight (event, id) {
 
