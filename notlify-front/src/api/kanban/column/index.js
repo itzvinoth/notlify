@@ -42,6 +42,11 @@ export default class ColumnApi {
 
 		return cols;
 	}
+
+	static updateColumns (updatedColumns) {
+		save(updatedColumns);
+		return updatedColumns;
+	}
 }
 
 function read() {

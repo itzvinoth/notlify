@@ -9,12 +9,12 @@
 			<div style="position: absolute; right: 30px; top: 2px;">
 				<vue-feather
 					type="chevron-left"
-					:style="`display: ${(index === 0) ? 'none' : 'inline-block'};`"
+					:style="`display: ${(index === 0) ? 'none' : 'inline-block'}; cursor: pointer;`"
 					@click.prevent.stop="moveColumnLeft($event, column.id)"
 				></vue-feather>
 				<vue-feather
 					type="chevron-right"
-					:style="`display: ${(index === (columns.length - 1)) ? 'none' : 'inline-block'};`"
+					:style="`display: ${(index === (columns.length - 1)) ? 'none' : 'inline-block'}; cursor: pointer;`"
 					@click.prevent.stop="moveColumnRight($event, column.id)"
 				></vue-feather>
 			</div>
@@ -248,11 +248,27 @@ export default {
 			this.selectedColumnId = null;
 		},
 		moveColumnLeft (event, id) {
-			let x = this.columns.map(x => x.id).indexOf(id);
-			console.log('columns: ', this.columns, 'pos: ', x)
+			let fromIndex = this.columns.map(x => x.id).indexOf(id);
+			let toIndex = fromIndex - 1;
+			let columns = [...this.columns];
+			var temp = columns[fromIndex];
+			columns.splice(fromIndex, 1);
+			columns.splice(toIndex, 0, temp);
+			ColumnApi.updateColumns(columns);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
+			// console.log('columns: ', this.columns, 'pos: ', fromIndex);
 		},
 		moveColumnRight (event, id) {
-
+			let fromIndex = this.columns.map(x => x.id).indexOf(id);
+			let toIndex = fromIndex + 1;
+			let columns = [...this.columns];
+			var temp = columns[fromIndex];
+			columns.splice(fromIndex, 1);
+			columns.splice(toIndex, 0, temp);
+			ColumnApi.updateColumns(columns);
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
 		},
 		showColumnMenu(event, id) {
 			if (this.columnId === id) {
