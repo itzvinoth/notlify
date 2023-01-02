@@ -1,8 +1,8 @@
 # notlify
 
-![Notlify](https://github.com/itzvinoth/notlify/blob/main/notlify-screenshot.png)
-
 This is a simple kanban board based application, developed using vuejs3 for frontend. currently it is on initial development stage, still lot more yet to do and it's been slowly progressing.
+
+![Notlify](https://github.com/itzvinoth/notlify/blob/main/notlify-screenshot.png)
 
 You can find the demo [here](https://www.youtube.com/watch?v=LFFGYJQNGFM)
 
