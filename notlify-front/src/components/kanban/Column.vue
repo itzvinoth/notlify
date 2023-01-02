@@ -39,7 +39,7 @@
 								<a
 									href=""
 									@click.prevent
-									@dblclick="onDblClickColumnDeleteMenu($event, column.id)"
+									@click="onClickColumnDeleteMenu($event, column.id)"
 								>Delete</a>
 							</li>
 						</template>
@@ -277,7 +277,7 @@ export default {
 			}
 			this.$store.dispatch("kanban/getColumnId", id);
 		},
-		onDblClickColumnDeleteMenu(event, id) {
+		onClickColumnDeleteMenu(event, id) {
 			let check = confirm("Are you sure you want to delete this column");
 			if (check) {
 				this.onDeleteColumn(id);

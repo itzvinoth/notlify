@@ -55,7 +55,7 @@
 									<a
 										href=""
 										@click.prevent.stop
-										@dblclick="onDblClick($event, card.id)"
+										@click="onDeleteCardComposer($event, card.id)"
 									>Delete</a>
 								</li>
 							</template>
@@ -226,7 +226,7 @@ export default {
 		// 		'title': newContent
 		// 	})
 		// },
-		onDblClick(event, id) {
+		onDeleteCardComposer(event, id) {
 			let check = confirm("Are you sure you want to delete this card");
 			if (check) {
 				this.onDeleteCard(id);
