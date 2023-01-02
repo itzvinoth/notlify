@@ -104,7 +104,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="kb__column" style="cursor: pointer;">
+		<div class="kb__column kb__column-create--container" style="cursor: pointer;">
 			<div class="column-composer">
 				<div
 					v-if="!isComposingNewColumn"

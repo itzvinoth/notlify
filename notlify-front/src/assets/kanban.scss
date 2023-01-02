@@ -1,5 +1,5 @@
 .kb-container {
-	// display: flex;	
+	// display: flex;
 }
 .kb__columns {
 	display: flex;
@@ -18,6 +18,9 @@
 	& > .vue-feather.vue-feather--more-horizontal {
 		right: 10px;
 	}
+}
+.kb__column-create--container {
+	padding: 12px 10px !important;
 }
 .kb__column--title {
 	font-weight: 500;
