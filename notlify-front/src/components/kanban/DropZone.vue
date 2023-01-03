@@ -78,7 +78,10 @@ export default {
 			CardApi.updateCard(cardId, {
 				columnId,
 				position: droppedIndex,
+				checklist: []
 			});
+			// vuex commit update kanban
+			this.$store.dispatch("kanban/getColumns");
 		},
 	},
 };

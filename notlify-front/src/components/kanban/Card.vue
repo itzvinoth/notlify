@@ -130,7 +130,6 @@ export default {
 		totalChecklist () {
 			return (card) => {
 				let total = 0;
-				console.log("card: ", card)
 				let cardChecklist = card && card.checklist;
 				for (let i = 0; i < cardChecklist.length; i++) {
 					total += cardChecklist[i].rows.length;
