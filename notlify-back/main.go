@@ -1,26 +1,56 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-	"github.com/gorilla/mux"
+    // "fmt"
+    "net/http"
+	
+	"github.com/gin-gonic/gin"
 )
 
-func newRouter() *mux.Router {
-	r := mux.NewRouter()
-	r.HandleFunc("/hello", handler).Methods("GET")
-	r.HandleFunc("/board", getBoardHandler).Methods("GET")
-	r.HandleFunc("/board", createBoardHandler).Methods("POST")
-	return r
+type card struct {
+    ID    int   `json:"id"`
+}
+
+// board represents data about a record board.
+type board struct {
+    ID      int  `json:"id"`
+    Title   string  `json:"title"`
+    Cards   []card   `json:"cards"`
+}
+
+// boards slice to seed record board data.
+var boards = []board{
+    {ID: 356, Title: "User manual", Cards: []card{
+        card{
+            ID: 35656,
+        },
+    }},
+    {ID: 899, Title: "Things to try", Cards: []card{
+        card{
+            ID: 75050,
+        },
+    }},
+    {ID: 740, Title: "More to try", Cards: []card{
+        card{
+            ID: 44646,
+        },
+    }},
+}
+
+// func hello(w http.ResponseWriter, req *http.Request) {
+//     fmt.Fprintf(w, "hello\n")
+// }
+
+// getBoards responds with the list of all boards as JSON.
+func getBoards(c *gin.Context) {
+    c.IndentedJSON(http.StatusOK, boards)
 }
 
 func main() {
-	// The router is now formed by calling the `newRouter` constructor function
-	// that we defined above. The rest of the code stays the same
-	r := newRouter()
-	http.ListenAndServe(":8080", r)
-}
+    router := gin.Default()
+    router.GET("/api/boards", getBoards)
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello World!")
+    router.Run("localhost:8080")
+    // http.HandleFunc("/hello", hello)
+    // http.ListenAndServe(":8080", nil)
 }

@@ -80,8 +80,6 @@ export default {
 				position: droppedIndex,
 				checklist: []
 			});
-			// vuex commit update kanban
-			this.$store.dispatch("kanban/getColumns");
 		},
 	},
 };
