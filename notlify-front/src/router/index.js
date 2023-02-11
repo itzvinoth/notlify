@@ -17,11 +17,11 @@ const router = createRouter({
 		// 	name: "home",
 		// 	component: HomeView,
 		// },
-		// {
-		// 	path: "/boards",
-		// 	name: "Boards",
-		// 	component: BoardsView,
-		// },
+		{
+			path: "/boards",
+			name: "Boards",
+			component: BoardsView,
+		},
 		// {
 		// 	path: "/new",
 		// 	name: "kanban",
