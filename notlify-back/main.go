@@ -3,7 +3,9 @@ package main
 import (
     // "fmt"
     "net/http"
+    "io/ioutil"
     "log"
+    // "strings"
     // "os"
 
     "github.com/go-chi/chi/v5"
@@ -59,8 +61,33 @@ func main() {
 
     r := chi.NewRouter()
     r.Use(middleware.Logger)
-    r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-        w.Write([]byte("Hello World!"))
-    })
+    r.Route("/api/boards", func(r chi.Router) {
+        r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+            resp, err := http.Get("https://jsonplaceholder.typicode.com/posts")
+            if err != nil {
+                log.Fatalln(err)
+            }
+            body, err := ioutil.ReadAll(resp.Body)
+            if err != nil {
+                log.Fatalln(err)
+            }
+            sb := string(body)
+            // log.Printf(sb)
+            w.Write([]byte(sb))
+        })
+		r.Post("/create", func(w http.ResponseWriter, r *http.Request) {
+			w.Write([]byte("api boards create"))
+		})
+		r.Delete("/remove", func(w http.ResponseWriter, r *http.Request) {
+			w.Write([]byte("api boards remove"))
+		})
+		r.Put("/modify", func(w http.ResponseWriter, r *http.Request) {
+			w.Write([]byte("api boards modify"))
+		})
+	})
+    // r.Put("/ping", Ping)
+
+    // r.Mount("/boards", boardsResource{}.Routes())
+    
     http.ListenAndServe(":"+port, r)
 }
